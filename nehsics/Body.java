@@ -18,14 +18,17 @@ public abstract class Body {
 	protected Vector2d position; // m (pixels)
 	protected Vector2d velocity; // m/s
 	protected Shape shape;
-
+	protected boolean visible = true;
 	public Body(Vector2d pos, Vector2d vel, double m, Shape s) {
 		position = pos;
 		velocity = vel;
 		mass = m;
 		shape = s;
 	}
-
+	public void setVisible(boolean v)
+	{
+		visible = v;
+	}
 	public void setRadius(double r) {
 		radius = r;
 	}
@@ -87,6 +90,8 @@ public abstract class Body {
 	}
 
 	public void paint(Graphics2D g2d) {
+		if(!visible)
+			return;
 		g2d.setColor(Color.BLACK);
 		AffineTransform af = AffineTransform.getTranslateInstance(
 			position.getX()-radius, position.getY()-radius);

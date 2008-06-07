@@ -11,14 +11,21 @@ public class SquareTester extends Tester {
 		world.setGravityEnabled(false);
 		for (int i=0; i < 10; i++) {
 			for (int j=0; j < 10; j++) {
-				Circle c = new Circle(2, 2);
-				c.setPosition(v(j*10,i*10));
+				Circle c = new Circle(10, 10);
+				c.setPosition(v(j*20,i*20));
 				world.addBody(c);
+				c.setVisible(false);
 			}
 		}
-		Circle x = new Circle(10, 100);
-		x.setPosition(v(-300, 45));
-		x.setVelocity(v(350,1));
+	/*	for(int i = 0; i<5; i++)
+		{
+			Circle c = new Circle(10,10);
+			c.setPosition(v(0,i*17));
+			world.addBody(c);
+		}*/
+		Circle x = new Circle(50, 200);
+		x.setPosition(v(-300, 35));
+		x.setVelocity(v(750,1));
 		world.addBody(x);
 	}
 
