@@ -1,0 +1,34 @@
+<project name="NEHsics" default="compile" basedir=".">
+
+	<description>
+		NEHsics, some sort of physics engine
+	</description>
+
+	<target name="compile">
+		<javac srcdir="nehsics" destdir="." debug="true" target="5">
+			<compilerarg value="-Xlint"/>
+		</javac>
+	</target>
+
+	<target name="jar" depends="compile">
+		<jar jarfile="NEHsics.jar" update="true">
+			<manifest>
+				<attribute name="Main-Class" value="nehsics.Tester"/>
+			</manifest>
+			<fileset dir=".">
+				<include name="nehsics/**/*.class"/>
+			</fileset>
+		</jar>
+	</target>
+
+	<target name="clean">
+		<delete>
+			<fileset dir="." defaultexcludes="false">
+				<include name="**/*.class"/>
+				<include name="**/#*#"/>
+				<include name="**/*.jar"/>
+				<include name="**/*~"/>
+			</fileset>
+		</delete>
+	</target>
+</project>
