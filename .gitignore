@@ -1,0 +1,9 @@
+*.class
+*.jar
+.hidden
+.classpath
+.project
+*.html
+*.jar
+#*#
+*~

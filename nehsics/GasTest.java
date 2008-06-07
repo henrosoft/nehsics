@@ -1,6 +1,4 @@
 package nehsics;
-import nehsics.math.*;
-import java.awt.*;
 import static nehsics.math.Util.*;
 
 public class GasTest extends Tester {
