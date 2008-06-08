@@ -1,7 +1,7 @@
 <project name="NEHsics" default="compile" basedir=".">
 
 	<description>
-		NEHsics, some sort of physics engine
+		NEHsics, not just any physics engine. 
 	</description>
 
 	<target name="compile">
@@ -13,7 +13,7 @@
 	<target name="jar" depends="compile">
 		<jar jarfile="NEHsics.jar" update="true">
 			<manifest>
-				<attribute name="Main-Class" value="nehsics.Tester"/>
+				<attribute name="Main-Class" value="nehsics.Starter"/>
 			</manifest>
 			<fileset dir=".">
 				<include name="nehsics/**/*.class"/>

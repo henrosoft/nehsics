@@ -13,7 +13,7 @@ public class Tester {
 
 	public Tester() {
 		frame = new JFrame();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationByPlatform(true);
 		frame.setSize(500,500);
 		frame.setTitle("NEHsics");
