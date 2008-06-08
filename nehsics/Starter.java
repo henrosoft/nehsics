@@ -2,6 +2,7 @@ package nehsics;
 import java.awt.event.*;
 import javax.swing.*;
 import java.awt.FlowLayout;
+
 public class Starter implements Runnable{
 	protected JFrame frame;
 	protected JComboBox combo;
