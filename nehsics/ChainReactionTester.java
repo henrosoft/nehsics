@@ -1,7 +1,12 @@
 package nehsics;
+import java.awt.*;
 import static nehsics.math.Util.*;
 
 public class ChainReactionTester extends Tester {
+
+	public ChainReactionTester(Canvas c) {
+		super(c);
+	}
 
 	protected void setup() {
 		PRECISION = 1;
@@ -20,9 +25,5 @@ public class ChainReactionTester extends Tester {
 		world.addBody(x);
 		world.addBody(a);
 		world.addBody(b);
-	}
-
-	public static void main(String[] args) {
-		new ChainReactionTester();
 	}
 }

@@ -1,8 +1,13 @@
 package nehsics;
+import java.awt.*;
 import static nehsics.math.Util.*;
 
 public class CannonTester extends Tester {
-	protected int count = 1; // XXX go by dt
+	protected int count = 0; // XXX go by dt
+
+	public CannonTester(Canvas c) {
+		super(c);
+	}
 
 	protected void update(double dt) {
 		if (count++ % 100 == 0 && count < 800)
@@ -26,9 +31,5 @@ public class CannonTester extends Tester {
 		earth.setPosition(v(0,0));
 
 		world.addBody(earth);
-	}
-
-	public static void main(String[] args) {
-		new CannonTester();
 	}
 }

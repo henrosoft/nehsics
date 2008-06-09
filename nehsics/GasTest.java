@@ -1,7 +1,12 @@
 package nehsics;
+import java.awt.*;
 import static nehsics.math.Util.*;
 
 public class GasTest extends Tester {
+
+	public GasTest(Canvas c) {
+		super(c);
+	}
 
 	protected void setup() {
 		PRECISION = 1;
@@ -14,9 +19,5 @@ public class GasTest extends Tester {
 				c.setPosition(v(50+50*i-250, 50+50*j-250));
 				c.setVelocity(v(temp*(Math.random()-.5), temp*(Math.random()-.5)));
 			}
-	}
-
-	public static void main(String[] args) {
-		new GasTest();
 	}
 }

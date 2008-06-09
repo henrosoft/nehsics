@@ -1,8 +1,12 @@
 package nehsics;
-import nehsics.math.*;
+import java.awt.*;
 import static nehsics.math.Util.*;
 
 public class SquareTester extends Tester {
+
+	public SquareTester(Canvas c) {
+		super(c);
+	}
 
 	protected void setup() {
 		PRECISION = 1;
@@ -29,7 +33,8 @@ public class SquareTester extends Tester {
 		world.addBody(x);
 	}
 
-	public static void main(String[] args) {
-		new SquareTester();
+	public void postWorld() {
+		Graphics2D g2d = display.getGraphics();
+		g2d.drawString("WARNING INVISIBLE CIRCLES", 30, 30);
 	}
 }

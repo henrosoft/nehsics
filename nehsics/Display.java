@@ -5,18 +5,16 @@ import java.awt.image.*;
 public class Display {
 	protected BufferStrategy strategy;
 	protected Graphics2D buf;
-	protected Frame frame;
+	protected Canvas canvas;
 	protected double scale = 1; // scale is set by the program
 	protected double zoom = 1; // zoom is controlled by the user
 	protected boolean fade;
 	public int x, y;
 
-	public Display(Frame f) {
-		frame = f;
-		frame.setVisible(true);
-		frame.setIgnoreRepaint(true);
-		frame.createBufferStrategy(2);
-		strategy = frame.getBufferStrategy();
+	public Display(Canvas c) {
+		canvas = c;
+		canvas.createBufferStrategy(2);
+		strategy = canvas.getBufferStrategy();
 		buf = (Graphics2D)strategy.getDrawGraphics();
 	}
 
@@ -44,6 +42,10 @@ public class Display {
 		world.paint(buf);
 	}
 
+	public Graphics2D getGraphics() {
+		return buf;
+	}
+
 	public void show() {
 		buf.dispose();
 		strategy.show();
@@ -54,9 +56,9 @@ public class Display {
 	public void clearBuffer() {
 		buf = (Graphics2D)strategy.getDrawGraphics();
 		buf.setColor(fade ? new Color(255,255,255,50) : Color.WHITE);
-		buf.fillRect(0, 0, frame.getWidth(), frame.getHeight());
-		buf.translate(x+frame.getWidth()/2,
-			y+frame.getHeight()/2);
+		buf.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+		buf.translate(x+canvas.getWidth()/2,
+			y+canvas.getHeight()/2);
 		buf.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 			RenderingHints.VALUE_ANTIALIAS_ON);
 	}
