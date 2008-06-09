@@ -19,6 +19,8 @@ public class Starter implements Runnable{
 		combo.addItem("Orbit test");
 		combo.addItem("Gravity test");
 		combo.addItem("Square test");
+		combo.addItem("Gas test");
+		combo.addItem("Cannon test");
 		frame.add(combo);
 		frame.setVisible(true);
 		combo.addActionListener(new ActionListener(){
@@ -42,6 +44,10 @@ public class Starter implements Runnable{
 			new Tester();
 		if(s.equals("Square test"))
 			new SquareTester();
+		if(s.equals("Gas test"))
+			new GasTest();
+		if(s.equals("Cannon test"))
+			new CannonTester();
 	}
 	public static void main(String[] args) {
 		new Starter();
