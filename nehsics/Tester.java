@@ -3,16 +3,20 @@ import static nehsics.math.Util.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class Tester extends Thread {
-	private volatile boolean running = true;
+public class Tester extends Test {
+	protected volatile boolean running = true;
+	private final static Font f = new Font("Serif", Font.PLAIN, 12);
 	protected Canvas canvas;
 	protected Display display;
 	protected World world;
 	protected Timer timer;
-	protected static double SPEED = 1;
-	protected static double FPS = 60;
-	protected static int PRECISION = 5;
+	protected double SPEED = 1;
+	protected double speed = 1;
+	protected double FPS = 60;
+	private boolean sign = true;
+	protected int PRECISION = 5;
 	protected int following = -1;
+	public final static String NAME = "Falling Spheres";
 
 	public void quit() {
 		running = false;	
@@ -23,15 +27,30 @@ public class Tester extends Thread {
 		c.addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
 				switch (e.getKeyCode()) {
-					case KeyEvent.VK_LEFT: display.x += 10; return;
-					case KeyEvent.VK_RIGHT: display.x -= 10; return;
-					case KeyEvent.VK_UP: display.y += 10; return;
-					case KeyEvent.VK_DOWN: display.y -= 10; return;
+					case KeyEvent.VK_LEFT:
+						display.setX(display.getX() + 10);
+						return;
+					case KeyEvent.VK_RIGHT:
+						display.setX(display.getX() - 10);
+						return;
+					case KeyEvent.VK_UP:
+						display.setY(display.getY() + 10);
+						return;
+					case KeyEvent.VK_DOWN:
+						display.setY(display.getY() - 10);
+						return;
 				}
 				switch (e.getKeyChar()) {
+					case 'r': reset(); return;
+					case 'f': display.setFadeEnabled(!display.getFadeEnabled()); return;
+					case '!': sign = !sign; return;
+					case 'k': speed *= 1.2; return;
+					case 'h': speed /= 1.2; return;
+					case 'j': speed = 1; return;
 					case '+': case '=': display.zoomIn(); return;
 					case '-': display.zoomOut(); return;
-					case '0': display.zoomDefault(); following = -1; display.x = display.y = 0; return;
+					case '0': display.zoomDefault(); following = -1;
+							display.setX(0); display.setY(0); return;
 					case 'q': following = world.nextBodyIndex(following); return;
 					case 'a': following = world.prevBodyIndex(following); return;
 				}
@@ -43,17 +62,20 @@ public class Tester extends Thread {
 		timer = new Timer(FPS);
 	}
 
+	private void reset() {
+		world = new World();
+		display.reset();
+		speed = 1;
+		sign = true;
+		following = -1;
+		setup();
+	}
+
 	public void run() {
 		while (running) {
-			double dt = timer.tick();
-			if (following >= 0) {
-				Body fBody = world.getBodyFromIndex(following);
-				double fX = fBody.getPosition().getX();
-				double fY = fBody.getPosition().getY();
-				display.centerDisplay(fX, fY);
-			}
+			double dt = (sign ? 1 : -1)*timer.tick();
 			for (int i=0; i < PRECISION; i++)
-				world.step(SPEED*dt/PRECISION);
+				world.step(SPEED*speed*dt/PRECISION);
 			update(dt);
 			preWorld();
 			display.drawWorld(world);
@@ -62,7 +84,15 @@ public class Tester extends Thread {
 		}
 	}
 
-	protected void update(double dt) {}
+	protected void update(double dt) {
+		if (following >= 0) {
+			Body fBody = world.getBodyFromIndex(following);
+			double fX = fBody.getPosition().getX();
+			double fY = fBody.getPosition().getY();
+			display.centerDisplay(fX, fY);
+		}
+	}
+
 	protected void preWorld() {}
 	protected void postWorld() {}
 

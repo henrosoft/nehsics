@@ -19,16 +19,18 @@ public abstract class Body {
 	protected Vector2d velocity; // m/s
 	protected Shape shape;
 	protected boolean visible = true;
+
 	public Body(Vector2d pos, Vector2d vel, double m, Shape s) {
 		position = pos;
 		velocity = vel;
 		mass = m;
 		shape = s;
 	}
-	public void setVisible(boolean v)
-	{
+
+	public void setVisible(boolean v) {
 		visible = v;
 	}
+
 	public void setRadius(double r) {
 		radius = r;
 	}
