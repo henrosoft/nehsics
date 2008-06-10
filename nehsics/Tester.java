@@ -12,6 +12,7 @@ public class Tester extends Thread {
 	protected static double SPEED = 1;
 	protected static double FPS = 60;
 	protected static int PRECISION = 5;
+	protected int following = -1;
 
 	public void quit() {
 		running = false;	
@@ -30,7 +31,9 @@ public class Tester extends Thread {
 				switch (e.getKeyChar()) {
 					case '+': case '=': display.zoomIn(); return;
 					case '-': display.zoomOut(); return;
-					case '0': display.zoomDefault(); display.x = display.y = 0; return;
+					case '0': display.zoomDefault(); following = -1; display.x = display.y = 0; return;
+					case 'q': following = world.nextBodyIndex(following); return;
+					case 'a': following = world.prevBodyIndex(following); return;
 				}
 			}
 		});
@@ -43,6 +46,12 @@ public class Tester extends Thread {
 	public void run() {
 		while (running) {
 			double dt = timer.tick();
+			if (following >= 0) {
+				Body fBody = world.getBodyFromIndex(following);
+				double fX = fBody.getPosition().getX();
+				double fY = fBody.getPosition().getY();
+				display.centerDisplay(fX, fY);
+			}
 			for (int i=0; i < PRECISION; i++)
 				world.step(SPEED*dt/PRECISION);
 			update(dt);

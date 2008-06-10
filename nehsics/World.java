@@ -87,4 +87,16 @@ public class World {
 		for (Body body : bodies)
 			body.paint(g2d);
 	}
+	
+	public int nextBodyIndex(int current) {
+		return (current + 1) % bodies.size();
+	}
+	
+	public int prevBodyIndex(int current) {
+		return (current - 1 + bodies.size()) % bodies.size();
+	}
+	
+	public Body getBodyFromIndex(int current) {
+		return bodies.get(current);
+	}
 }
