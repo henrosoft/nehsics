@@ -42,7 +42,8 @@ public class Tester extends Test {
 				}
 				switch (e.getKeyChar()) {
 					case 'r': reset(); return;
-					case 'f': display.setFadeEnabled(!display.getFadeEnabled()); return;
+					case 'f':
+						display.setFadeEnabled(!display.getFadeEnabled()); return;
 					case '!': sign = !sign; return;
 					case 'k': speed *= 1.2; return;
 					case 'h': speed /= 1.2; return;
@@ -50,9 +51,11 @@ public class Tester extends Test {
 					case '+': case '=': display.zoomIn(); return;
 					case '-': display.zoomOut(); return;
 					case '0': display.zoomDefault(); following = -1;
-							display.setX(0); display.setY(0); return;
-					case 'q': following = world.nextBodyIndex(following); return;
-					case 'a': following = world.prevBodyIndex(following); return;
+						display.setX(0); display.setY(0); return;
+					case 'q': display.setX(0); display.setY(0);
+						following = world.nextBodyIndex(following); return;
+					case 'a': display.setX(0); display.setY(0);
+						following = world.prevBodyIndex(following); return;
 				}
 			}
 		});
@@ -77,6 +80,7 @@ public class Tester extends Test {
 			for (int i=0; i < PRECISION; i++)
 				world.step(SPEED*speed*dt/PRECISION);
 			update(dt);
+			display.clear();
 			preWorld();
 			display.drawWorld(world);
 			postWorld();
@@ -87,9 +91,7 @@ public class Tester extends Test {
 	protected void update(double dt) {
 		if (following >= 0) {
 			Body fBody = world.getBodyFromIndex(following);
-			double fX = fBody.getPosition().getX();
-			double fY = fBody.getPosition().getY();
-			display.centerDisplay(fX, fY);
+			display.centerDisplay(fBody.getPosition());
 		}
 	}
 

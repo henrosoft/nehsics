@@ -1,4 +1,6 @@
 package nehsics;
+import static nehsics.math.Util.*;
+import nehsics.math.*;
 import java.awt.*;
 import java.awt.image.*;
 
@@ -9,14 +11,15 @@ public class Display {
 	private double scale = 1; // scale is set by the program
 	private double zoom = 1; // zoom is controlled by the user
 	private boolean fade, clear;
-	private int x, y;
+	private Vector2d center = v();
+	private double x, y;
 
 	public Display(Canvas c) {
 		canvas = c;
 		canvas.setIgnoreRepaint(true);
 		canvas.createBufferStrategy(2);
 		strategy = canvas.getBufferStrategy();
-		clearBuffer();
+		clear();
 	}
 
 	public void reset() {
@@ -25,27 +28,26 @@ public class Display {
 		x = y = 0;
 	}
 
-	public int getX() {
+	public double getX() {
 		return x;
 	}
 
-	public int getY() {
+	public double getY() {
 		return y;
 	}
 
-	public void setX(int newX) {
+	public void setX(double newX) {
 		x = newX;	
 		clear = true;
 	}
 
-	public void setY(int newY) {
+	public void setY(double newY) {
 		y = newY;
 		clear = true;
 	}
 	
-	public void centerDisplay(double newx, double newy) {
-		x = - (int) (newx * scale * zoom); // + frame.getWidth()/2;
-		y = - (int) (newy * scale * zoom);
+	public void centerDisplay(Vector2d v2d) {
+		center = scale(v2d,-scale*zoom);
 		clear = true;
 	}
 
@@ -88,18 +90,17 @@ public class Display {
 	public void show() {
 		buf.dispose();
 		strategy.show();
-		clearBuffer();
-		buf.scale(scale*zoom, scale*zoom);
 	}
 
-	public void clearBuffer() {
+	public void clear() {
 		buf = (Graphics2D)strategy.getDrawGraphics();
 		buf.setColor((fade && !clear) ? new Color(255,255,255,50) : Color.WHITE);
 		clear = false;
 		buf.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-		buf.translate(x+canvas.getWidth()/2,
-			y+canvas.getHeight()/2);
+		buf.translate(center.getX()+x+(double)canvas.getWidth()/2,
+			center.getY()+y+(double)canvas.getHeight()/2);
 		buf.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 			RenderingHints.VALUE_ANTIALIAS_ON);
+		buf.scale(scale*zoom, scale*zoom);
 	}
 }
