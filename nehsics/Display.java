@@ -11,8 +11,8 @@ public class Display {
 	private double scale = 1; // scale is set by the program
 	private double zoom = 1; // zoom is controlled by the user
 	private boolean fade, clear;
-	private Vector2d center = v();
 	private double x, y;
+	private Body center;
 
 	public Display(Canvas c) {
 		canvas = c;
@@ -23,6 +23,7 @@ public class Display {
 	}
 
 	public void reset() {
+		center = null;
 		zoom = scale = 1;
 		fade = clear = false;
 		x = y = 0;
@@ -45,12 +46,12 @@ public class Display {
 		y = newY;
 		clear = true;
 	}
-	
-	public void centerDisplay(Vector2d v2d) {
-		center = scale(v2d,-scale*zoom);
+
+	public void setTrackedBody(Body b) {
+		center = b;
 		clear = true;
 	}
-
+	
 	public void setScale(double s) {
 		scale = s;
 		clear = true;
@@ -93,12 +94,15 @@ public class Display {
 	}
 
 	public void clear() {
+		Vector2d v2d = v();
+		if (center != null)
+			v2d = scale(center.getPosition(), -scale*zoom);
 		buf = (Graphics2D)strategy.getDrawGraphics();
 		buf.setColor((fade && !clear) ? new Color(255,255,255,50) : Color.WHITE);
 		clear = false;
 		buf.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-		buf.translate(center.getX()+x+(double)canvas.getWidth()/2,
-			center.getY()+y+(double)canvas.getHeight()/2);
+		buf.translate(v2d.getX()+x+(double)canvas.getWidth()/2,
+			v2d.getY()+y+(double)canvas.getHeight()/2);
 		buf.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 			RenderingHints.VALUE_ANTIALIAS_ON);
 		buf.scale(scale*zoom, scale*zoom);
