@@ -32,7 +32,11 @@ public class World {
                         ((Circle)b).hit(b2);
                 }
     }
-
+	public double maxKinectic()
+	{
+		double max = 0;
+		return max;
+	}
 	public void setWallsEnabled(boolean w) {
 		wall = w;
 	}

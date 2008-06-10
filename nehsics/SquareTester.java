@@ -14,7 +14,8 @@ public class SquareTester extends Tester {
 				Circle c = new Circle(10, 10);
 				c.setPosition(v(j*20,i*20));
 				world.addBody(c);
-				c.setVisible(false);
+//				c.setVisible(false);
+//				c.setTemperatureColor(true);
 			}
 		}
 	/*	for(int i = 0; i<5; i++)
