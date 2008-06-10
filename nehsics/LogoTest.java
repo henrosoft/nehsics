@@ -19,6 +19,7 @@ public class LogoTest extends Test {
 
 	public void repaint() {
 		display.show();
+		display.clear();
 		Graphics2D g2d = display.getGraphics();
 		g2d.setColor(Color.BLACK);
 		g2d.setFont(f);
