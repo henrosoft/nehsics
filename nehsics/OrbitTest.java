@@ -1,7 +1,12 @@
 package nehsics;
+import java.awt.*;
 import static nehsics.math.Util.*;
 
 public class OrbitTest extends Tester {
+
+	public OrbitTest(Canvas c) {
+		super(c);
+	}
 
 	protected void setup() {
 		display.setScale(1e-9);
@@ -30,9 +35,5 @@ public class OrbitTest extends Tester {
 		world.addBody(mercury);
 		world.addBody(venus);
 		world.addBody(mars);
-	}
-
-	public static void main(String[] args) {
-		new OrbitTest();
 	}
 }

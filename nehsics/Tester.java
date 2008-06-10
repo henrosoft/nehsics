@@ -1,23 +1,25 @@
 package nehsics;
 import static nehsics.math.Util.*;
+import java.awt.*;
 import java.awt.event.*;
-import javax.swing.*;
 
-public class Tester {
-	protected JFrame frame;
+public class Tester extends Thread {
+	private volatile boolean running = true;
+	protected Canvas canvas;
 	protected Display display;
 	protected World world;
+	protected Timer timer;
 	protected static double SPEED = 1;
 	protected static double FPS = 60;
 	protected static int PRECISION = 5;
 
-	public Tester() {
-		frame = new JFrame();
-//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setLocationByPlatform(true);
-		frame.setSize(500,500);
-		frame.setTitle("NEHsics");
-		frame.addKeyListener(new KeyAdapter() {
+	public void quit() {
+		running = false;	
+	}
+
+	public Tester(Canvas c) {
+		canvas = c;
+		c.addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
 				switch (e.getKeyCode()) {
 					case KeyEvent.VK_LEFT: display.x += 10; return;
@@ -32,23 +34,28 @@ public class Tester {
 				}
 			}
 		});
-		display = new Display(frame);
+		display = new Display(c);
 		world = new World();
 		setup();
-		Timer timer = new Timer(FPS);
-		while(true) {
+		timer = new Timer(FPS);
+	}
+
+	public void run() {
+		while (running) {
 			double dt = timer.tick();
 			for (int i=0; i < PRECISION; i++)
 				world.step(SPEED*dt/PRECISION);
 			update(dt);
+			preWorld();
 			display.drawWorld(world);
+			postWorld();
 			display.show();
 		}
 	}
 
-	protected void update(double dt) {
-
-	}
+	protected void update(double dt) {}
+	protected void preWorld() {}
+	protected void postWorld() {}
 
 	protected void setup() {
 
@@ -73,9 +80,5 @@ public class Tester {
 		world.addBody(b);
 		world.addBody(stationary);
 		world.addBody(earth);
-	}
-
-	public static void main(String[] args) {
-		new Tester();
 	}
 }
