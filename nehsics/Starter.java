@@ -31,8 +31,10 @@ public class Starter {
 		combo.addItem(OrbitTest.NAME);
 		combo.addItem(Tester.NAME);
 		combo.addItem(SquareTester.NAME);
+		combo.addItem(CollideTester.NAME);
 		combo.addItem(GasTest.NAME);
 		combo.addItem(CannonTester.NAME);
+		combo.addItem(CollapseTest.NAME);
 		frame.setContentPane(jsplit);
 		frame.setIgnoreRepaint(true);
 		frame.setVisible(true);
@@ -75,6 +77,10 @@ public class Starter {
 			return new GasTest(canvas);
 		else if (name.equals(CannonTester.NAME))
 			return new CannonTester(canvas);
+		else if (name.equals(CollapseTest.NAME))
+			return new CollapseTest(canvas);
+		else if (name.equals(CollideTester.NAME))
+			return new CollideTester(canvas);
 		return new LogoTest(canvas);
 	}
 

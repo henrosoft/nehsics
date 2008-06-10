@@ -51,7 +51,7 @@ public class Tester extends Test {
 					case '+': case '=': display.zoomIn(); return;
 					case '-': display.zoomOut(); return;
 					case '0': display.zoomDefault(); following = -1;
-						display.setX(0); display.setY(0); return;
+						display.setX(0); display.setY(0); display.setTrackedBody(null); return;
 					case 'q': display.setX(0); display.setY(0);
 						display.setTrackedBody(
 							world.getBodyFromIndex(following = world.nextBodyIndex(following))
