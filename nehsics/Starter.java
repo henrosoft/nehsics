@@ -31,6 +31,7 @@ public class Starter {
 		combo.addItem(OrbitTest.NAME);
 		combo.addItem(Tester.NAME);
 		combo.addItem(SquareTester.NAME);
+		combo.addItem(BrownianMotionTester.NAME);
 		combo.addItem(GasTest.NAME);
 		combo.addItem(CannonTester.NAME);
 		frame.setContentPane(jsplit);
@@ -71,6 +72,8 @@ public class Starter {
 			return new Tester(canvas);
 		else if (name.equals(SquareTester.NAME))
 			return new SquareTester(canvas);
+		else if (name.equals(BrownianMotionTester.NAME))
+			return new BrownianMotionTester(canvas);
 		else if (name.equals(GasTest.NAME))
 			return new GasTest(canvas);
 		else if (name.equals(CannonTester.NAME))

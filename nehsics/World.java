@@ -9,6 +9,7 @@ public class World {
 	private List<ForceField> fields = new LinkedList<ForceField>();
 	private boolean wall;
 	private boolean gravity = true;
+	private double resistiveConstantB = 0;
 
 	public void addForce(Vector2d f) {
 		for (Body b : bodies)
@@ -33,8 +34,12 @@ public class World {
 		wall = w;
 	}
 
-	public void setGravityEnabled(boolean w) {
-		gravity = w;
+	public void setGravityEnabled(boolean g) {
+		gravity = g;
+	}
+	
+	public void setResistiveForce(double b) {
+		resistiveConstantB = 0;
 	}
 
 	// XXX
@@ -68,9 +73,12 @@ public class World {
 
 	public void step(double dt) {
 		checkForCollisions();
-		for (Body body : bodies)
+		for (Body body : bodies) {
 			for (ForceField field : fields)
 				body.applyForce(field.getForce(body));
+			if (resistiveConstantB != 0)
+				body.applyForce(nehsics.math.Util.scale(body.getVelocity(), -1 * resistiveConstantB));
+		}
 		for (Body body : bodies)
 			body.step(dt);
 	}

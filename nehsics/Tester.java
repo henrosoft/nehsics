@@ -16,6 +16,7 @@ public class Tester extends Test {
 	private boolean sign = true;
 	protected int PRECISION = 5;
 	protected int following = -1;
+	protected boolean showVelocity = false;
 	public final static String NAME = "Falling Spheres";
 
 	public void quit() {
@@ -44,15 +45,19 @@ public class Tester extends Test {
 					case 'r': reset(); return;
 					case 'f': display.setFadeEnabled(!display.getFadeEnabled()); return;
 					case '!': sign = !sign; return;
-					case 'k': speed *= 1.2; return;
-					case 'h': speed /= 1.2; return;
-					case 'j': speed = 1; return;
+					
+					case 'w': speed *= 1.2; return;
+					case 'x': speed /= 1.2; return;
+					case 's': speed = 1; return;
+					
 					case '+': case '=': display.zoomIn(); return;
 					case '-': display.zoomOut(); return;
-					case '0': display.zoomDefault(); following = -1;
-							display.setX(0); display.setY(0); return;
+					case 'a': display.zoomDefault(); following = -1;
+							  display.setX(0); display.setY(0); return;
 					case 'q': following = world.nextBodyIndex(following); return;
-					case 'a': following = world.prevBodyIndex(following); return;
+					case 'z': following = world.prevBodyIndex(following); return;
+					
+					case 'v': showVelocity = !showVelocity; return;
 				}
 			}
 		});
@@ -73,23 +78,30 @@ public class Tester extends Test {
 
 	public void run() {
 		while (running) {
+			Graphics2D g2d = display.getGraphics();
+			g2d.setColor(Color.RED);
+				
 			double dt = (sign ? 1 : -1)*timer.tick();
 			for (int i=0; i < PRECISION; i++)
 				world.step(SPEED*speed*dt/PRECISION);
-			update(dt);
+				
+			if (following >= 0) {
+				Body fBody = world.getBodyFromIndex(following);
+				double fX = fBody.getPosition().getX();
+				double fY = fBody.getPosition().getY();
+				display.centerDisplay(fX, fY);
+				
+				if (showVelocity) {
+				   g2d.drawString("" + fBody.getVelocity().length(), 100, 100);
+					
+				}
+			}
+			
+			
 			preWorld();
 			display.drawWorld(world);
 			postWorld();
 			display.show();
-		}
-	}
-
-	protected void update(double dt) {
-		if (following >= 0) {
-			Body fBody = world.getBodyFromIndex(following);
-			double fX = fBody.getPosition().getX();
-			double fY = fBody.getPosition().getY();
-			display.centerDisplay(fX, fY);
 		}
 	}
 
@@ -110,6 +122,8 @@ public class Tester extends Test {
 		Circle stationary = new Circle(40,10);
 		stationary.setPosition(v(0,-150));
 		stationary.addForce(v(0,-SURFACE_G*stationary.getMass()));
+		
+		world.setResistiveForce(10);
 
 		// earth is down there (its the floor)
 		Circle earth = new Circle(EARTH_RADIUS, EARTH_MASS);
