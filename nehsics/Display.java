@@ -18,6 +18,12 @@ public class Display {
 		buf = (Graphics2D)strategy.getDrawGraphics();
 	}
 
+	
+	public void centerDisplay(double newx, double newy) {
+		x = - (int) (newx * zoom);// + frame.getWidth()/2;
+		y = - (int) (newy * zoom);
+	}
+
 	public void setScale(double s) {
 		scale = s;
 	}
