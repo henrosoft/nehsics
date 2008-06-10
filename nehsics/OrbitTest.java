@@ -3,6 +3,7 @@ import java.awt.*;
 import static nehsics.math.Util.*;
 
 public class OrbitTest extends Tester {
+	public final static String NAME = "Inner Solar System";
 
 	public OrbitTest(Canvas c) {
 		super(c);

@@ -3,6 +3,7 @@ import java.awt.*;
 import static nehsics.math.Util.*;
 
 public class SquareTester extends Tester {
+	public final static String NAME = "Brownian Motion";
 
 	public SquareTester(Canvas c) {
 		super(c);
@@ -36,6 +37,7 @@ public class SquareTester extends Tester {
 
 	public void postWorld() {
 		Graphics2D g2d = display.getGraphics();
-		g2d.drawString("WARNING INVISIBLE CIRCLES", 30, 30);
+		g2d.setColor(Color.BLACK);
+		g2d.drawString("INVISIBLE PARTICLES HERE", 30, 30);
 	}
 }

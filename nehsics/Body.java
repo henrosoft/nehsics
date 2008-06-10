@@ -21,16 +21,18 @@ public abstract class Body {
 	protected boolean visible = true;
 	protected boolean temperatureColor;
 	protected Color color = Color.black;
+
 	public Body(Vector2d pos, Vector2d vel, double m, Shape s) {
 		position = pos;
 		velocity = vel;
 		mass = m;
 		shape = s;
 	}
-	public void setVisible(boolean v)
-	{
+
+	public void setVisible(boolean v) {
 		visible = v;
 	}
+
 	public void setRadius(double r) {
 		radius = r;
 	}

@@ -10,7 +10,7 @@ public class Starter {
 	protected JComboBox combo;
 	protected String s;
 	protected Canvas canvas;
-	protected Tester t;
+	protected Test t;
 
 	public Starter() {
 		frame = new JFrame();
@@ -27,12 +27,14 @@ public class Starter {
 		canvas.setMinimumSize(new Dimension(30000,30000));
 		jsplit.setDividerLocation(432);
 		jsplit.setResizeWeight(1);
-		combo.addItem("Orbit test");
-		combo.addItem("Gravity test");
-		combo.addItem("Square test");
-		combo.addItem("Gas test");
-		combo.addItem("Cannon test");
+		combo.addItem(LogoTest.NAME);
+		combo.addItem(OrbitTest.NAME);
+		combo.addItem(Tester.NAME);
+		combo.addItem(SquareTester.NAME);
+		combo.addItem(GasTest.NAME);
+		combo.addItem(CannonTester.NAME);
 		frame.setContentPane(jsplit);
+		frame.setIgnoreRepaint(true);
 		frame.setVisible(true);
 		final KeyboardFocusManager manager =
 			KeyboardFocusManager.getCurrentKeyboardFocusManager();
@@ -46,26 +48,34 @@ public class Starter {
 		});
 		combo.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				if (t != null)
+				if (t != null) {
 					t.quit();
+					try {
+						t.join();
+					} catch (Exception t) {
+						t.printStackTrace();
+					}
+				}
 				t = makeTester((String)combo.getSelectedItem());
 				t.start();
 			}
 		});
+		t = new LogoTest(canvas);
+		t.start();
 	}
 
-	private Tester makeTester(String name) {
-		if (name.equals("Orbit test"))
+	private Test makeTester(String name) {
+		if (name.equals(OrbitTest.NAME))
 			return new OrbitTest(canvas);
-		else if (name.equals("Gravity test"))
+		else if (name.equals(Tester.NAME))
 			return new Tester(canvas);
-		else if (name.equals("Square test"))
+		else if (name.equals(SquareTester.NAME))
 			return new SquareTester(canvas);
-		else if (name.equals("Gas test"))
+		else if (name.equals(GasTest.NAME))
 			return new GasTest(canvas);
-		else if (name.equals("Cannon test"))
+		else if (name.equals(CannonTester.NAME))
 			return new CannonTester(canvas);
-		return null;
+		return new LogoTest(canvas);
 	}
 
 	public static void main(String[] args) {

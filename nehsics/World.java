@@ -22,13 +22,9 @@ public class World {
         for (Body b : bodies)
             for (Body b2 : bodies)
                 if (b2 != b) {
-                   /* if(b instanceof Square && ((Square)b).intersects(b2.getShape()) && b.getMass() == Double.POSITIVE_INFINITY)
-                    {
-                        System.out.println("here");
-                        Point2D.Double v = b2.getVelocity();
-                        b2.setVelocity(new Point2D.Double(v.x,-Math.abs(v.y)));
-                    }*/
-                    if(b instanceof Circle && b2 instanceof Circle && ((Circle)b).intersects((Circle)b2))
+                    if (b instanceof Circle
+							&& b2 instanceof Circle
+							&& ((Circle)b).intersects((Circle)b2))
                         ((Circle)b).hit(b2);
                 }
     }

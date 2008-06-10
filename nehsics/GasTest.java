@@ -3,6 +3,7 @@ import java.awt.*;
 import static nehsics.math.Util.*;
 
 public class GasTest extends Tester {
+	public final static String NAME = "Ideal Gas Model";
 
 	public GasTest(Canvas c) {
 		super(c);
