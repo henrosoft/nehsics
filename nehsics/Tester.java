@@ -53,9 +53,13 @@ public class Tester extends Test {
 					case '0': display.zoomDefault(); following = -1;
 						display.setX(0); display.setY(0); return;
 					case 'q': display.setX(0); display.setY(0);
-						following = world.nextBodyIndex(following); return;
+						display.setTrackedBody(
+							world.getBodyFromIndex(following = world.nextBodyIndex(following))
+						); return;
 					case 'a': display.setX(0); display.setY(0);
-						following = world.prevBodyIndex(following); return;
+						display.setTrackedBody(
+							world.getBodyFromIndex(following = world.prevBodyIndex(following))
+						); return;
 				}
 			}
 		});
@@ -88,13 +92,7 @@ public class Tester extends Test {
 		}
 	}
 
-	protected void update(double dt) {
-		if (following >= 0) {
-			Body fBody = world.getBodyFromIndex(following);
-			display.centerDisplay(fBody.getPosition());
-		}
-	}
-
+	protected void update(double dt) {}
 	protected void preWorld() {}
 	protected void postWorld() {}
 
