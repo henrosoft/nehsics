@@ -31,7 +31,7 @@ public class Starter {
 		combo.addItem(OrbitTest.NAME);
 		combo.addItem(Tester.NAME);
 		combo.addItem(SquareTester.NAME);
-		combo.addItem(CollideTester.NAME);
+		combo.addItem(BrownianMotionTester.NAME);
 		combo.addItem(GasTest.NAME);
 		combo.addItem(CannonTester.NAME);
 		combo.addItem(CollapseTest.NAME);
@@ -73,14 +73,14 @@ public class Starter {
 			return new Tester(canvas);
 		else if (name.equals(SquareTester.NAME))
 			return new SquareTester(canvas);
+		else if (name.equals(BrownianMotionTester.NAME))
+			return new BrownianMotionTester(canvas);
 		else if (name.equals(GasTest.NAME))
 			return new GasTest(canvas);
 		else if (name.equals(CannonTester.NAME))
 			return new CannonTester(canvas);
 		else if (name.equals(CollapseTest.NAME))
 			return new CollapseTest(canvas);
-		else if (name.equals(CollideTester.NAME))
-			return new CollideTester(canvas);
 		return new LogoTest(canvas);
 	}
 

@@ -10,7 +10,7 @@ public class CollideTester extends Tester {
 	}
 
 	protected void setup() {
-		PRECISION = 1;
+		PRECISION = 2;
 		SPEED = .2;
 		world.setGravityEnabled(false);
 		world.setWallsEnabled(true);
