@@ -2,10 +2,10 @@ package nehsics;
 import java.awt.*;
 import static nehsics.math.Util.*;
 
-public class SquareTester extends Tester {
-	public final static String NAME = "Collision";
+public class BrownianMotionTester extends Tester {
+	public final static String NAME = "Brownian Motion";
 
-	public SquareTester(Canvas c) {
+	public BrownianMotionTester(Canvas c) {
 		super(c);
 	}
 
@@ -16,12 +16,10 @@ public class SquareTester extends Tester {
 		world.setGravityEnabled(false);
 		for (int i=0; i < 10; i++) {
 			for (int j=0; j < 10; j++) {
-				Circle c = new Circle(5, 5);
-				c.setPosition(v(j*10,i*10));
+				Circle c = new Circle(10, 10);
+				c.setPosition(v(j*20,i*20));
 				world.addBody(c);
-//				c.setVisible(false);
-//				c.setTemperatureColor(true);
-				c.setVisible(true);
+				c.setVisible(false);
 			}
 		}
 	/*	for(int i = 0; i<5; i++)
@@ -30,15 +28,15 @@ public class SquareTester extends Tester {
 			c.setPosition(v(0,i*17));
 			world.addBody(c);
 		}*/
-		Circle x = new Circle(10, 10);
-		x.setPosition(v(-300, 20));
-		x.setVelocity(v(500, 1));
+		Circle x = new Circle(50, 200);
+		x.setPosition(v(-300, 35));
+		x.setVelocity(v(750,1));
 		world.addBody(x);
 	}
 
-	/* public void postWorld() {
+	public void postWorld() {
 		Graphics2D g2d = display.getGraphics();
 		g2d.setColor(Color.BLACK);
 		g2d.drawString("INVISIBLE PARTICLES HERE", 30, 30);
-	} */
+	}
 }

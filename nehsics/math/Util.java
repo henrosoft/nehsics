@@ -20,8 +20,8 @@ public class Util {
 	public static double MARS_ORBIT_R = 2.27e11;
 	public static double SUN_MASS = 1.9891e30;
 	public static double SUN_RADIUS = 6.955e8;
-	public static double SURFACE_G = 9.81;
-	public static double G = 6.67e-11;
+	public static double SURFACE_G = 9.80665;
+	public static double G = 6.67428e-11;
 
 	public static Vector2d v(Number x, Number y) {
 		return new Vector2d(x.doubleValue(), y.doubleValue());

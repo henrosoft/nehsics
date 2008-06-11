@@ -1,20 +1,23 @@
 package nehsics;
 import java.awt.*;
-import java.awt.event.*;
 
 public class LogoTest extends Test {
 	private final static Font f = new Font("Serif", Font.BOLD, 50);
 	public final static String NAME = "NEHSICS";
+	protected volatile boolean running = true;
 	private Display display;
 
 	public LogoTest(Canvas c) {
 		display = new Display(c);
-		c.addComponentListener(new ComponentAdapter() {
-			public void componentResized(ComponentEvent e) {
-				repaint();
-			}
-		});
-		repaint();
+	}
+
+	public void run() {
+		while (running) { // XXX can't be bothered to use paint() properly
+			repaint();
+			try {
+				Thread.sleep(100);
+			} catch (Exception e) {}
+		}
 	}
 
 	public void repaint() {
@@ -28,6 +31,6 @@ public class LogoTest extends Test {
 	}
 
 	public void quit() {
-		// already done...	
+		running = false;
 	}
 }
