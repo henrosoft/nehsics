@@ -6,7 +6,7 @@ import java.awt.Shape;
 import java.awt.Color;
 import java.awt.geom.AffineTransform;
 import java.util.*;
-
+import java.awt.geom.*;
 public abstract class Body {
 	// tmp forces will be cleared after each step!
 	protected Set<Vector2d> tmp = new HashSet<Vector2d>();
@@ -28,7 +28,13 @@ public abstract class Body {
 		mass = m;
 		shape = s;
 	}
-
+	public boolean intersectsRectangle(Rectangle2D r)
+	{
+		AffineTransform af = AffineTransform.getTranslateInstance(
+			position.getX()-radius, position.getY()-radius);
+		Shape transformed = af.createTransformedShape(shape);
+		return transformed.intersects(r);
+	}
 	public void setVisible(boolean v) {
 		visible = v;
 	}

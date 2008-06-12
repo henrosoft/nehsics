@@ -29,6 +29,42 @@ public class World {
                         ((Circle)b).hit(b2);
                 }
     }
+/*	public void checkForCollisions()
+	{
+		if (wall)
+			checkForWalls();
+		Vector2d minP = getMinP();
+		Vector2d maxP = getMaxP();
+		System.gc();
+		QuadTree q = new QuadTree(new LinkedList<QuadTree>(), bodies, minP, maxP);
+		q.checkForCollisions();
+	}*/
+	public Vector2d getMinP()
+	{
+		double x = 99999999;
+		double y = 99999999;
+		for(Body b: bodies)
+		{
+			if(b.getPosition().getX()<x)
+				x = b.getPosition().getX();
+			if(b.getPosition().getY()<y)
+				y = b.getPosition().getY();
+		}
+		return v(x,y);
+	}
+	public Vector2d getMaxP()
+	{
+		double x = -99999999;
+		double y = -99999999;
+		for(Body b: bodies)
+		{
+			if(b.getPosition().getX()>x)
+				x = b.getPosition().getX();
+			if(b.getPosition().getY()>y)
+				y = b.getPosition().getY();
+		}
+		return v(x,y);
+	}
 	public double maxKinectic()
 	{
 		double max = 0;

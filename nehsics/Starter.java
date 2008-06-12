@@ -35,6 +35,7 @@ public class Starter {
 		combo.addItem(GasTest.NAME);
 		combo.addItem(CannonTester.NAME);
 		combo.addItem(CollapseTest.NAME);
+		combo.addItem(TestOneD.NAME);
 		frame.setContentPane(jsplit);
 		frame.setIgnoreRepaint(true);
 		frame.setVisible(true);
@@ -81,6 +82,8 @@ public class Starter {
 			return new CannonTester(canvas);
 		else if (name.equals(CollapseTest.NAME))
 			return new CollapseTest(canvas);
+		else if (name.equals(TestOneD.NAME))
+			return new TestOneD(canvas);
 		return new LogoTest(canvas);
 	}
 
