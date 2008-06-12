@@ -21,6 +21,12 @@ public abstract class Body {
 	protected boolean visible = true;
 	protected boolean temperatureColor;
 	protected Color color = Color.black;
+	
+	public boolean canHit(Body other) {
+		return false;
+	}
+
+	public void hit(Body other) { }
 
 	public Body(Vector2d pos, Vector2d vel, double m, Shape s) {
 		position = pos;
@@ -36,12 +42,13 @@ public abstract class Body {
 	public void setRadius(double r) {
 		radius = r;
 	}
-	public void setTemperatureColor(boolean t)
-	{
+
+	public void setTempColorEnabled(boolean t) {
 		temperatureColor = t;
 	}
+
 	public void step(double dt) { // seconds
-		Vector2d accel = v(), disp = v();
+		Vector2d accel = v();
 		for (Vector2d f : forces)
 			accel = add(accel, scale(f, 1/mass));
 		for (Vector2d f : tmp)
@@ -95,32 +102,33 @@ public abstract class Body {
 	public void setPosition(Vector2d position) {
 		this.position = position;
 	}
-	public Color getColor(int iter, int maxiter)
-	{
+
+	public Color getColor(int iter, int maxiter) {
 		double r = Math.abs(Math.sin(iter*Math.PI*2/maxiter)*255);
 		double g = Math.abs(Math.cos(iter*Math.PI*2/maxiter)*255);
 		double b = Math.abs(Math.sin((iter*Math.PI*2/maxiter)+.7)*255);
 		return new Color((int)r,(int)g,(int)b);
 	}
-	public Color calculateColor()
-	{
+
+	public Color calculateColor() {
 		Color c;
-		double maxK = 8000000;
+		double maxK = 800000;
 		double k = .5*mass*Math.pow(velocity.length(),2);
 		double fraction = k/maxK;
-		if(fraction>1)
+		if (fraction>1)
 			c = new Color(255,0,0);
 		else if(fraction<1.0/2.0)
-			c = new Color((int)(255*2*fraction),(int)(255*2*fraction),(int)(255-(255*2*fraction)));
+			c = new Color((int)(255*2*fraction),
+				(int)(255*2*fraction),(int)(255-(255*2*fraction)));
 		else
-			c = new Color((int)(255),(int)(255-(255*2*(fraction-.5))),(int)(0));
+			c = new Color(255,(int)(255-(255*2*(fraction-.5))),0);
 		return c;
-		//return getColor((int)k,(int)maxK);
 	}
+
 	public void paint(Graphics2D g2d) {
-		if(!visible)
+		if (!visible)
 			return;
-		if(temperatureColor)
+		if (temperatureColor)
 			color = calculateColor();
 		g2d.setColor(color);
 		AffineTransform af = AffineTransform.getTranslateInstance(

@@ -9,7 +9,6 @@ public class World {
 	private List<ForceField> fields = new LinkedList<ForceField>();
 	private boolean wall;
 	private boolean gravity = true;
-	private double resistiveConstantB = 0;
 
 	public void addForce(Vector2d f) {
 		for (Body b : bodies)
@@ -22,31 +21,23 @@ public class World {
 			checkForWalls();
         for (Body b : bodies)
             for (Body b2 : bodies)
-                if (b2 != b) {
-                    if (b instanceof Circle
-							&& b2 instanceof Circle
-							&& ((Circle)b).intersects((Circle)b2))
-                        ((Circle)b).hit(b2);
-                }
+				if (b.canHit(b2))
+					b.hit(b2);
     }
-	public double maxKinectic()
-	{
-		double max = 0;
-		return max;
-	}
+
 	public void setWallsEnabled(boolean w) {
 		wall = w;
 	}
 
+	/**
+	 * @param g Whether gravity fields should be automatically added for bodies.
+	 * Note: only affects bodies added after gravity is set.
+	 */
 	public void setGravityEnabled(boolean g) {
 		gravity = g;
 	}
-	
-	public void setResistiveForce(double b) {
-		resistiveConstantB = 0;
-	}
 
-	// XXX
+	// XXX Implement real walls.
     public void checkForWalls() {
         for (Body b : bodies) {
             if (b.getMass() != Double.POSITIVE_INFINITY) {
@@ -77,12 +68,9 @@ public class World {
 
 	public void step(double dt) {
 		checkForCollisions();
-		for (Body body : bodies) {
+		for (Body body : bodies)
 			for (ForceField field : fields)
 				body.applyForce(field.getForce(body));
-			if (resistiveConstantB != 0)
-				body.applyForce(nehsics.math.Util.scale(body.getVelocity(), -1 * resistiveConstantB));
-		}
 		for (Body body : bodies)
 			body.step(dt);
 	}
