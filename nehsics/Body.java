@@ -134,7 +134,10 @@ public abstract class Body {
 		Shape transformed = af.createTransformedShape(shape);
 		g2d.fill(transformed);
 	}
-
+	public void setColor(Color c)
+	{
+		color = c;
+	}
 	public Set<Vector2d> getForces() {
 		return forces;
 	}

@@ -12,6 +12,7 @@ public class GasTest extends Tester {
 	protected void setup() {
 		PRECISION = 1;
 		world.setWallsEnabled(true);
+		world.setGravityEnabled(false);
         int temp = 100;
 		Circle c;
         for (int i = 0; i < 9; i++)

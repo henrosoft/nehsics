@@ -30,8 +30,8 @@ public class Circle extends Body {
 		double m2 = getMass();
 		Vector2d p2 = getPosition();
 		Vector2d v2 = getVelocity();
-//		if(!testDirection(p1,v1,p2,v2))
-//			return;
+		if(!testDirection(p1,v1,p2,v2))
+			return;
 		double theta = 0;
 		try {
 			theta = Math.atan((p1.getY()-p2.getY())/((p1.getX()-p2.getX())));
@@ -51,9 +51,9 @@ public class Circle extends Body {
 	public boolean testDirection(Vector2d p1, Vector2d v1, Vector2d p2, Vector2d v2)
 	{
 		double distance = distance(p1,p2); 
-		Vector2d p1f = add(p1,v1);
-		Vector2d p2f = add(p2,v2); 
+		Vector2d p1f = add(p1,scale(v1,.001));
+		Vector2d p2f = add(p2,scale(v2,.001)); 
 		double distance2 = distance(p1f,p2f); 
-		return distance2<=distance;
+		return distance2<distance;
 	}
 }
