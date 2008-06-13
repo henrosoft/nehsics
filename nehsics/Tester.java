@@ -112,8 +112,8 @@ public class Tester extends Test {
 	protected void postWorld() {}
 
 	protected void setup() {
-		SPEED *= 5;
-		PRECISION *= 3;
+		SPEED = 5;
+		PRECISION = 15;
 
 		// large circles... (low density here)
 		Circle a = new Circle(45,10);
