@@ -9,6 +9,7 @@ public class World {
 	private List<ForceField> fields = new LinkedList<ForceField>();
 	private boolean wall;
 	private boolean gravity = true;
+	private Collider collider = new QuadSpaceCollider();
 
 	public void addForce(Vector2d f) {
 		for (Body b : bodies)
@@ -16,14 +17,20 @@ public class World {
 				b.addForce(f);
 	}
 
-    public void checkForCollisions() {
+	public void checkForCollisions() {
 		if (wall)
 			checkForWalls();
-        for (Body b : bodies)
-            for (Body b2 : bodies)
-				if (b.canHit(b2))
-					b.hit(b2);
-    }
+		collider.resolveCollisions(new QuadSpace(bodies));
+	}
+
+//    public void checkForCollisions() {
+//		if (wall)
+//			checkForWalls();
+//        for (Body b : bodies)
+//            for (Body b2 : bodies)
+//				if (b != b2 && b.canHit(b2))
+//					b.hit(b2);
+//    }
 /*	public void checkForCollisions()
 	{
 		if (wall)

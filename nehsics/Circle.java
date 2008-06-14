@@ -24,9 +24,8 @@ public class Circle extends Body {
 	public void hit(Body b) {
 		if (!(b instanceof Circle))
 			return;
-
-		alreadyHit.add(b);
 		b.alreadyHit.add(this);
+		alreadyHit.add(b);
 
 		double m1 = b.getMass();
 		Vector2d p1 = b.getPosition();
@@ -52,8 +51,6 @@ public class Circle extends Body {
 
 		// TODO: show derivation
 		double p = m1*cv1.getX() + m2*cv2.getX();
-		if (Double.isNaN(p))
-			return; // why is it sometimes NaN?
 		cv1 = v((m1*cv1.getX() + (2*cv2.getX()-cv1.getX())*m2)/(m1+m2), cv1.getY());
 		cv2 = v(((p-m1*cv1.getX())/m2), cv2.getY());
 

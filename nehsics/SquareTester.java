@@ -3,7 +3,7 @@ import java.awt.*;
 import static nehsics.math.Util.*;
 
 public class SquareTester extends Tester {
-	public final static String NAME = "Collision";
+	public final static String NAME = "Collider Test";
 
 	public SquareTester(Canvas c) {
 		super(c);
@@ -11,11 +11,11 @@ public class SquareTester extends Tester {
 
 	protected void setup() {
 		PRECISION = 1;
-		SPEED = .2;
-		world.setWallsEnabled(true);	
+		SPEED = .1;
 		world.setGravityEnabled(false);
-		for (int i=0; i < 10; i++) {
-			for (int j=0; j < 10; j++) {
+		display.setScale(.5);
+		for (int i=0; i < 40; i++) {
+			for (int j=0; j < 40; j++) {
 				Circle c = new Circle(5, 5);
 				c.setPosition(v(j*10,i*10));
 				world.addBody(c);

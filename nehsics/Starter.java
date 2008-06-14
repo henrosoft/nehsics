@@ -6,7 +6,7 @@ import java.awt.FlowLayout;
 
 public class Starter {
 	protected JFrame frame;
-	protected JSplitPane jsplit;
+	protected JSplitPane jsplit ;
 	protected JComboBox combo;
 	protected String s;
 	protected Canvas canvas;
