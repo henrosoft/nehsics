@@ -25,7 +25,7 @@ public class QuadTree{
 		if(bodies.size() <= 1)
 			return;
 		else if(bodies.size() == 2){
-			if(((Circle)bodies.get(0)).intersects((Circle)bodies.get(1)))
+			if(((Circle)bodies.get(0)).canHit((Circle)bodies.get(1)))
 				((Circle)bodies.get(0)).hit((Circle)bodies.get(1));
 		}
 		else
