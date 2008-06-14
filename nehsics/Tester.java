@@ -112,13 +112,15 @@ public class Tester extends Test {
 	protected void postWorld() {}
 
 	protected void setup() {
+		SPEED = 5;
+		PRECISION = 15;
 
-		// large circles...
-		Circle a = new Circle(45,900);
+		// large circles... (low density here)
+		Circle a = new Circle(45,10);
 		a.setPosition(v(-110,-150));
 
-		// fall as fast as small circles	
-		Circle b = new Circle(15,150);
+		// fall as fast as small circles (high density here)	
+		Circle b = new Circle(15,500);
 		b.setPosition(v(-210,-150));
 
 		// normal force opposes gravity
@@ -126,7 +128,7 @@ public class Tester extends Test {
 		stationary.setPosition(v(0,-150));
 		stationary.addForce(v(0,-SURFACE_G*stationary.getMass()));
 		
-		world.setResistiveForce(10);
+		world.addField(new ResistiveForce(1));
 
 		// earth is down there (its the floor)
 		Circle earth = new Circle(EARTH_RADIUS, EARTH_MASS);

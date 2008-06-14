@@ -61,14 +61,6 @@ public class Util {
 		return v(a.getX()*b.doubleValue(), a.getY()*b.doubleValue());
 	}
 
-	public static double cos(double theta) {
-		return Math.cos(theta);
-	}
-
-	public static double sin(double theta) {
-		return Math.sin(theta);
-	}
-
 	public static void sleep(double seconds) {
 		try {
 			Thread.sleep((int)(seconds*1000));

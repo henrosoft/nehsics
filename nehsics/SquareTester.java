@@ -30,8 +30,8 @@ public class SquareTester extends Tester {
 			c.setPosition(v(0,i*17));
 			world.addBody(c);
 		}*/
-		Circle x = new Circle(10, 10);
-		x.setPosition(v(-300, 20));
+		Circle x = new Circle(30, 900);
+		x.setPosition(v(-200, 20));
 		x.setVelocity(v(500, 1));
 		world.addBody(x);
 	}
