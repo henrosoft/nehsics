@@ -1,4 +1,5 @@
-package nehsics;
+package nehsics.ui;
+import nehsics.test.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -12,12 +13,13 @@ public class Starter {
 	protected Canvas canvas;
 	protected Test t;
 
-	public Starter() {
+	public Starter(String init) {
 		frame = new JFrame();
 		frame.setLayout(new FlowLayout());
 		frame.setSize(500,500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setLocationByPlatform(true);
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		frame.setLocation((int)(dim.getWidth()/2-250),(int)(dim.getHeight()/2-250));
 		frame.setTitle("NEHsics");
 		combo = new JComboBox();
 		combo.setLightWeightPopupEnabled(false);
@@ -30,12 +32,13 @@ public class Starter {
 		combo.addItem(LogoTest.NAME);
 		combo.addItem(OrbitTest.NAME);
 		combo.addItem(Tester.NAME);
-		combo.addItem(SquareTester.NAME);
+		combo.addItem(CollideTester.NAME);
 		combo.addItem(BrownianMotionTester.NAME);
 		combo.addItem(GasTest.NAME);
 		combo.addItem(CannonTester.NAME);
 		combo.addItem(CollapseTest.NAME);
 		combo.addItem(TestOneD.NAME);
+		combo.setSelectedItem(init);
 		frame.setContentPane(jsplit);
 		frame.setIgnoreRepaint(true);
 		frame.setVisible(true);
@@ -49,7 +52,7 @@ public class Starter {
 				return true;
 			}
 		});
-		combo.addActionListener(new ActionListener(){
+		combo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (t != null) {
 					t.quit();
@@ -63,31 +66,31 @@ public class Starter {
 				t.start();
 			}
 		});
-		t = new LogoTest(canvas);
+		t = makeTester(init);
 		t.start();
 	}
 
 	private Test makeTester(String name) {
-		if (name.equals(OrbitTest.NAME))
+		if (OrbitTest.NAME.equals(name))
 			return new OrbitTest(canvas);
-		else if (name.equals(Tester.NAME))
+		else if (Tester.NAME.equals(name))
 			return new Tester(canvas);
-		else if (name.equals(SquareTester.NAME))
-			return new SquareTester(canvas);
-		else if (name.equals(BrownianMotionTester.NAME))
+		else if (CollideTester.NAME.equals(name))
+			return new CollideTester(canvas);
+		else if (BrownianMotionTester.NAME.equals(name))
 			return new BrownianMotionTester(canvas);
-		else if (name.equals(GasTest.NAME))
+		else if (GasTest.NAME.equals(name))
 			return new GasTest(canvas);
-		else if (name.equals(CannonTester.NAME))
+		else if (CannonTester.NAME.equals(name))
 			return new CannonTester(canvas);
-		else if (name.equals(CollapseTest.NAME))
+		else if (CollapseTest.NAME.equals(name))
 			return new CollapseTest(canvas);
-		else if (name.equals(TestOneD.NAME))
+		else if (TestOneD.NAME.equals(name))
 			return new TestOneD(canvas);
 		return new LogoTest(canvas);
 	}
 
 	public static void main(String[] args) {
-		new Starter();
+		new Starter(LogoTest.NAME);
 	}
 }

@@ -1,4 +1,5 @@
-package nehsics;
+package nehsics.collide;
+import nehsics.bodies.*;
 import nehsics.math.*;
 import java.util.*;
 import java.awt.geom.*;
@@ -14,6 +15,10 @@ public final class QuadSpace extends LinkedList<Body> {
 	public QuadSpace(List<Body> bodies) {
 		box = boundingBoxFor(bodies);
 		addAll(bodies);
+	}
+
+	public double dim() {
+		return Math.min(box[MAXX]-box[MINX], box[MAXY]-box[MINY]);
 	}
 
 	/**

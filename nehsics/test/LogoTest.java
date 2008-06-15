@@ -1,4 +1,5 @@
-package nehsics;
+package nehsics.test;
+import nehsics.ui.*;
 import java.awt.*;
 
 public class LogoTest extends Test {
@@ -6,6 +7,10 @@ public class LogoTest extends Test {
 	public final static String NAME = "NEHSICS";
 	protected volatile boolean running = true;
 	private Display display;
+
+	public static void main(String[] args) {
+		new Starter(NAME);
+	}
 
 	public LogoTest(Canvas c) {
 		display = new Display(c);

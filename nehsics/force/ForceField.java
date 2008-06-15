@@ -1,4 +1,5 @@
-package nehsics;
+package nehsics.force;
+import nehsics.bodies.*;
 import nehsics.math.*;
 
 public interface ForceField {

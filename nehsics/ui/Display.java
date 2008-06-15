@@ -1,4 +1,6 @@
-package nehsics;
+package nehsics.ui;
+import nehsics.world.*;
+import nehsics.bodies.*;
 import static nehsics.math.Util.*;
 import nehsics.math.*;
 import java.awt.*;

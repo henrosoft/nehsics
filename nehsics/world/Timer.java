@@ -1,4 +1,4 @@
-package nehsics;
+package nehsics.world;
 
 public class Timer {
 	private final double target_ns;

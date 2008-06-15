@@ -1,4 +1,7 @@
-package nehsics;
+package nehsics.world;
+import nehsics.collide.*;
+import nehsics.force.*;
+import nehsics.bodies.*;
 import nehsics.math.*;
 import static nehsics.math.Util.*;
 import java.awt.Graphics2D;
@@ -13,30 +16,21 @@ public class World {
 	private double averageMaxKinetic = 0;
 	private double numCalculations = 0;
 	private Collider collider = new QuadSpaceCollider();
-	private boolean quadspace = true;
-	public void addForce(Vector2d f) {
-		for (Body b : bodies)
-			if (b.getMass() < Double.POSITIVE_INFINITY)
-				b.addForce(f);
+
+	public void setCollider(Collider c) {
+		collider = c;
 	}
-	public void setQuadSpaceEnabled(boolean q)
-	{
-		quadspace = q;
-	}
+
 	public void checkForCollisions() {
-		if(!quadspace)
-		{
-			checkForCollisionsSquared();
-			return;
-		}
 		if (wall)
 			checkForWalls();
 		collider.resolveCollisions(new QuadSpace(bodies));
 	}
-	public void addBond(BindingForce b)
-	{
+
+	public void addBond(BindingForce b) {
 		bonds.add(b);
 	}
+
     public void checkForCollisionsSquared() {
 		if (wall)
 			checkForWalls();
@@ -45,52 +39,17 @@ public class World {
 				if (b != b2 && b.canHit(b2))
 					b.hit(b2);
     }
-/*	public void checkForCollisions()
-	{
-		if (wall)
-			checkForWalls();
-		Vector2d minP = getMinP();
-		Vector2d maxP = getMaxP();
-		System.gc();
-		QuadTree q = new QuadTree(new LinkedList<QuadTree>(), bodies, minP, maxP);
-		q.checkForCollisions();
-	}*/
-	public Vector2d getMinP()
-	{
-		double x = 99999999;
-		double y = 99999999;
-		for(Body b: bodies)
-		{
-			if(b.getPosition().getX()<x)
-				x = b.getPosition().getX();
-			if(b.getPosition().getY()<y)
-				y = b.getPosition().getY();
-		}
-		return v(x,y);
-	}
-	public Vector2d getMaxP()
-	{
-		double x = -99999999;
-		double y = -99999999;
-		for(Body b: bodies)
-		{
-			if(b.getPosition().getX()>x)
-				x = b.getPosition().getX();
-			if(b.getPosition().getY()>y)
-				y = b.getPosition().getY();
-		}
-		return v(x,y);
-	}
-	public double maxKineticEnergy()
-	{
+
+	public double maxKineticEnergy() {
 		double max = 0;
-		for(Body b: bodies)
-			if(b.getKineticEnergy()>max)
+		for (Body b : bodies)
+			if (b.getKineticEnergy() > max)
 				max = b.getKineticEnergy();
 		numCalculations++;
-		averageMaxKinetic+=max; 
-		return averageMaxKinetic/(double)numCalculations;
+		averageMaxKinetic += max; 
+		return averageMaxKinetic/numCalculations;
 	}
+
 	public void setWallsEnabled(boolean w) {
 		wall = w;
 	}
@@ -109,13 +68,13 @@ public class World {
             if (b.getMass() != Double.POSITIVE_INFINITY) {
                 Vector2d v = b.getVelocity();
                 Vector2d p = b.getPosition();
-                if(p.getX() < b.radius-250 && v.getX()<0)
+                if (p.getX() < b.getRadius()-250 && v.getX()<0)
                     v = v(Math.abs(v.getX()), v.getY());
-                if(p.getY()< b.radius-250 && v.getY()<0)
+                if (p.getY()< b.getRadius()-250 && v.getY()<0)
                     v = v(v.getX(), Math.abs(v.getY()));
-                if(p.getX()>250-b.radius && v.getX()>0)
+                if (p.getX()>250-b.getRadius() && v.getX()>0)
                     v = v(-Math.abs(v.getX()), v.getY());
-                if(p.getY()>250-b.radius && v.getY()>0)
+                if (p.getY()>250-b.getRadius() && v.getY()>0)
                     v = v(v.getX(), -Math.abs(v.getY()));
 				b.setVelocity(v);
             }

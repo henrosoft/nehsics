@@ -13,7 +13,7 @@
 	<target name="jar" depends="compile">
 		<jar jarfile="NEHsics.jar" update="true">
 			<manifest>
-				<attribute name="Main-Class" value="nehsics.Starter"/>
+				<attribute name="Main-Class" value="nehsics.ui.Starter"/>
 			</manifest>
 			<fileset dir=".">
 				<include name="nehsics/**/*.class"/>
@@ -31,4 +31,6 @@
 			</fileset>
 		</delete>
 	</target>
+
+	<target name="all" depends="clean,compile,jar"/>
 </project>

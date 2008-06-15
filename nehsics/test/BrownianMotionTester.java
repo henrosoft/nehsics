@@ -1,9 +1,15 @@
-package nehsics;
+package nehsics.test;
+import nehsics.ui.*;
+import nehsics.bodies.*;
 import java.awt.*;
 import static nehsics.math.Util.*;
 
 public class BrownianMotionTester extends Tester {
 	public final static String NAME = "Brownian Motion";
+
+	public static void main(String[] args) {
+		new Starter(NAME);
+	}
 
 	public BrownianMotionTester(Canvas c) {
 		super(c);
@@ -35,6 +41,7 @@ public class BrownianMotionTester extends Tester {
 	}
 
 	public void postWorld() {
+		super.postWorld();
 		Graphics2D g2d = display.getGraphics();
 		g2d.setColor(Color.BLACK);
 		g2d.drawString("INVISIBLE PARTICLES HERE", 30, 30);
