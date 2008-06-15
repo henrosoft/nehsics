@@ -1,4 +1,8 @@
-package nehsics;
+package nehsics.test;
+import nehsics.world.*;
+import nehsics.ui.*;
+import nehsics.force.*;
+import nehsics.bodies.*;
 import static nehsics.math.Util.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -18,6 +22,10 @@ public class Tester extends Test {
 	protected int following = -1;
 	protected boolean showVelocity = false;
 	public final static String NAME = "Falling Spheres";
+
+	public static void main(String[] args) {
+		new Starter(NAME);
+	}
 
 	public void quit() {
 		running = false;	
@@ -54,14 +62,17 @@ public class Tester extends Test {
 					case '+': case '=': display.zoomIn(); return;
 					case '-': display.zoomOut(); return;
 					case '0': display.zoomDefault(); following = -1;
-						display.setX(0); display.setY(0); display.setTrackedBody(null); return;
+						display.setX(0); display.setY(0);
+						display.setTrackedBody(null); return;
 					case 'q': display.setX(0); display.setY(0);
 						display.setTrackedBody(
-							world.getBodyFromIndex(following = world.nextBodyIndex(following))
+							world.getBodyFromIndex(
+							following = world.nextBodyIndex(following))
 						); return;
 					case 'a': display.setX(0); display.setY(0);
 						display.setTrackedBody(
-							world.getBodyFromIndex(following = world.prevBodyIndex(following))
+							world.getBodyFromIndex(
+							following = world.prevBodyIndex(following))
 						); return;
 					case 'v': showVelocity = !showVelocity; return;
 				}

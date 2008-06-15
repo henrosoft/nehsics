@@ -1,10 +1,16 @@
-package nehsics;
+package nehsics.test;
+import nehsics.ui.*;
+import nehsics.bodies.*;
 import java.awt.*;
 import static nehsics.math.Util.*;
 
 public class CannonTester extends Tester {
 	public final static String NAME = "Cannon Test";
 	protected int count = 0; // XXX go by dt
+
+	public static void main(String[] args) {
+		new Starter(NAME);
+	}
 
 	public CannonTester(Canvas c) {
 		super(c);

@@ -1,4 +1,4 @@
-package nehsics;
+package nehsics.bodies;
 import nehsics.math.*;
 import static nehsics.math.Util.*;
 import java.awt.Graphics;

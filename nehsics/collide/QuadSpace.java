@@ -1,4 +1,5 @@
-package nehsics;
+package nehsics.collide;
+import nehsics.bodies.*;
 import nehsics.math.*;
 import java.util.*;
 import java.awt.geom.*;

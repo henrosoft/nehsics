@@ -1,4 +1,5 @@
-package nehsics;
+package nehsics.force;
+import nehsics.bodies.*;
 import nehsics.math.*;
 import static nehsics.math.Util.*;
 
@@ -17,7 +18,7 @@ public class GravityField implements ForceField {
 			if (mag == Double.POSITIVE_INFINITY)
 				throw new IllegalArgumentException("Bodies too close!");
 			Vector2d direction = normalise(body.getPosition(), origin.getPosition());
-			grav = add(grav, scale(direction, mag));
+			grav = scale(direction, mag);
 		}
 		return grav;
 	}

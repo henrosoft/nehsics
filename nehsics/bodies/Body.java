@@ -1,4 +1,6 @@
-package nehsics;
+package nehsics.bodies;
+import nehsics.world.*;
+import nehsics.force.*;
 import nehsics.math.*;
 import static nehsics.math.Util.*;
 import java.awt.Graphics2D;
@@ -23,6 +25,11 @@ public abstract class Body {
 	protected boolean temperatureColor;
 	protected Color color = Color.black;
 	protected World world;	
+
+	public boolean canHitForce(Body c) {
+		return distance(position, c.getPosition()) <= radius + c.radius;
+	}
+
 	public boolean canHit(Body other) {
 		return false;
 	}
@@ -39,13 +46,14 @@ public abstract class Body {
 		mass = m;
 		shape = s;
 	}
-	public boolean intersectsRectangle(Rectangle2D r)
-	{
+
+	public boolean intersectsRectangle(Rectangle2D r) {
 		AffineTransform af = AffineTransform.getTranslateInstance(
 			position.getX()-radius, position.getY()-radius);
 		Shape transformed = af.createTransformedShape(shape);
 		return transformed.intersects(r);
 	}
+
 	public void setVisible(boolean v) {
 		visible = v;
 	}
@@ -72,10 +80,11 @@ public abstract class Body {
 		tmp.clear();
 		alreadyHit.clear();
 	}
-	public void addBond(BindingForce b)
-	{
+
+	public void addBond(BindingForce b) {
 		bonds.add(b);
 	}
+
 	public void applyForce(Vector2d f) {
 		tmp.add(f);
 	}
@@ -134,13 +143,6 @@ public abstract class Body {
 		double k = .5*mass*Math.pow(velocity.length(),2);
 		double fraction = k/maxK;
 		c = getColor(fraction);
-/*		if (fraction>1)
-			c = new Color(255,0,0);
-		else if(fraction<1.0/2.0)
-			c = new Color((int)(255*2*fraction),
-				(int)(255*2*fraction),(int)(255-(255*2*fraction)));
-		else
-			c = new Color(255,(int)(255-(255*2*(fraction-.5))),0);*/
 		return c;
 	}
 
@@ -155,15 +157,16 @@ public abstract class Body {
 		Shape transformed = af.createTransformedShape(shape);
 		g2d.fill(transformed);
 	}
-	public void setColor(Color c)
-	{
+
+	public void setColor(Color c) {
 		color = c;
 	}
+
 	public Set<Vector2d> getForces() {
 		return forces;
 	}
-	public double getKineticEnergy()
-	{
+
+	public double getKineticEnergy() {
 		double k = mass*.5*Math.pow(velocity.length(),2);
 		return k;
 	}

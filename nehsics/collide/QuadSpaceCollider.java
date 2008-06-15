@@ -1,4 +1,5 @@
-package nehsics;
+package nehsics.collide;
+import nehsics.bodies.*;
 import java.util.*;
 
 public class QuadSpaceCollider extends Collider {

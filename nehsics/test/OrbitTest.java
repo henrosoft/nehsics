@@ -1,9 +1,15 @@
-package nehsics;
+package nehsics.test;
+import nehsics.ui.*;
+import nehsics.bodies.*;
 import java.awt.*;
 import static nehsics.math.Util.*;
 
 public class OrbitTest extends Tester {
 	public final static String NAME = "Inner Solar System";
+
+	public static void main(String[] args) {
+		new Starter(NAME);
+	}
 
 	public OrbitTest(Canvas c) {
 		super(c);
