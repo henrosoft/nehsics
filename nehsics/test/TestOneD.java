@@ -7,7 +7,7 @@ import static nehsics.math.Util.*;
 import java.awt.*;
 
 public class TestOneD extends Tester {
-	public final static String NAME = "One Double";
+	public final static String NAME = "One D";
 
 	public static void main(String[] args) {
 		new Starter(NAME);
@@ -38,7 +38,7 @@ public class TestOneD extends Tester {
 		c1.setPosition(v(-100,-10));
 		c1.setVelocity(v(50,0));
 		world.addBody(c1 = new Circle(10,10));
-		c1.setPosition(v(100,-10));
+		c1.setPosition(v(100,10));
 		c1.setVelocity(v(-50,0));
 	}
 }
