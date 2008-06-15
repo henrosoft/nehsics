@@ -76,13 +76,13 @@ public final class QuadSpace extends LinkedList<Body> {
 			tmp = body.getPosition();
 			r = body.getRadius();
 			if (box[MINX] > tmp.getX()-r)
-				box[MINX] = tmp.getX();
+				box[MINX] = tmp.getX()-r;
 			else if (box[MAXX] < tmp.getX()+r)
-				box[MAXX] = tmp.getX();
+				box[MAXX] = tmp.getX()+r;
 			if (box[MINY] > tmp.getY()-r)
-				box[MINY] = tmp.getY();
+				box[MINY] = tmp.getY()-r;
 			else if (box[MAXY] < tmp.getY()+r)
-				box[MAXY] = tmp.getY();
+				box[MAXY] = tmp.getY()+r;
 		}
 		return box;
 	}
