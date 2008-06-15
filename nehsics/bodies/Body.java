@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.geom.AffineTransform;
 import java.util.*;
 import java.awt.geom.*;
+import java.awt.*;
 public abstract class Body {
 	// tmp forces will be cleared after each step!
 	protected Set<Vector2d> tmp = new HashSet<Vector2d>();
@@ -35,7 +36,13 @@ public abstract class Body {
 	public boolean canHit(Body other) {
 		return false;
 	}
-
+	public boolean intersects(Rectangle r)
+	{
+		AffineTransform af = AffineTransform.getTranslateInstance(
+			position.getX()-radius, position.getY()-radius);
+		Shape transformed = af.createTransformedShape(shape);
+		return transformed.intersects(r);
+	}
 	public double getRadius() {
 		return radius;
 	}
@@ -147,20 +154,20 @@ public abstract class Body {
 			b = 255;
 			g=255*5*(f-.2);
 		}
+	/*	else if(f<.45)
+		{
+			g=255;
+			b=255-(255*20*(f-.4));
+		}
 		else if(f<.5)
 		{
 			g=255;
-			b=255-(255*10*(f-.4));
-		}
-		else if(f<.6)
-		{
-			g=255;
-			r=(255*10*(f-.5));
-		}
+			r=(255*20*(f-.45));
+		}*/
 		else if(f<=1)
 		{
 			r=255;
-			g=255-(255*10*(f-.6)/4.0);	
+			g=255-(255*10*(f-.4)/6.0);	
 		}
 		else
 			r = 255;

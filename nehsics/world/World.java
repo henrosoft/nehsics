@@ -6,7 +6,7 @@ import nehsics.math.*;
 import static nehsics.math.Util.*;
 import java.awt.Graphics2D;
 import java.util.*;
-
+import java.awt.Rectangle;
 public class World {
 	private List<Body> bodies = new LinkedList<Body>();
 	private List<ForceField> fields = new LinkedList<ForceField>();
@@ -30,6 +30,20 @@ public class World {
 		if (wall)
 			checkForWalls();
 		collider.resolveCollisions(new QuadSpace(bodies));
+	}
+	public double averageKineticWithinBounds(double[] bounds)
+	{
+		double ave = 0;
+		double count = 0;
+		for(Body b: bodies)
+		{
+			if(b.intersects(new Rectangle((int)bounds[0],(int)bounds[1],(int)bounds[2],(int)bounds[3])))
+			{
+				count++;
+				ave+=b.getKineticEnergy();
+			}	
+		}
+		return (double)ave/(double)count;
 	}
 	public void setQuadSpaceEnabled(boolean q)
 	{
