@@ -1,4 +1,5 @@
 package nehsics.test;
+import nehsics.collide.*;
 import nehsics.ui.*;
 import nehsics.bodies.*;
 import java.awt.*;
@@ -19,6 +20,7 @@ public class GasTest extends Tester {
 		PRECISION = 1;
 		world.setWallsEnabled(true);
 		world.setGravityEnabled(false);
+		world.setCollider(new Collider());
         int temp = 100;
 		Circle c;
         for (int i = 0; i < 9; i++)
@@ -28,5 +30,13 @@ public class GasTest extends Tester {
 				c.setVelocity(v(temp*(Math.random()-.5), temp*(Math.random()-.5)));
 				c.setTempColorEnabled(true,world);
 			}
+	
+		for(int i = 0; i<2; i++)
+		{
+				world.addBody(c = new Circle(10,10));	
+				c.setPosition(v(5000+25*i, 0));
+				c.setVelocity(v(1000, 0));
+				c.setTempColorEnabled(true,world);
+		}
 	}
 }

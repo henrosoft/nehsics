@@ -17,16 +17,15 @@ public class CollideTester extends Tester {
 
 	protected void setup() {
 		PRECISION = 1;
-		SPEED = .05;
+		SPEED = .1;
 		world.setGravityEnabled(false);
-		for (int i=0; i < 30; i++) {
-			for (int j=0; j < 30; j++) {
+		for (int i=0; i < 20; i++)
+			for (int j=0; j < 20; j++) {
 				Circle c = new Circle(4, 4);
 				c.setPosition(v(j*8,i*8));
 				world.addBody(c);
 			}
-		}
-		Circle x = new Circle(60, 5000);
+		Circle x = new Circle(30, 5000);
 		x.setPosition(v(-200, 80));
 		x.setVelocity(v(500,0));
 		world.addBody(x);

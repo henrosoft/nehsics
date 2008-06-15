@@ -10,7 +10,7 @@ public class BindingForce extends SpringForce {
 	private Vector2d force = v();
 
 	public BindingForce(Body a, Body b) {
-		super(1000);
+		super(1);
 		b1 = a;
 		b2 = b;
 	}

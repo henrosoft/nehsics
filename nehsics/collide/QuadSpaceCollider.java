@@ -30,6 +30,7 @@ public class QuadSpaceCollider extends Collider {
 			visuals.add(space);
 			super.resolveCollisions(space);
 		} else for (QuadSpace qspace : space.divide())
-			resolveCollisions(qspace);
+			if (qspace.size() > 1)
+				resolveCollisions(qspace);
 	}
 }
