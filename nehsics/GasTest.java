@@ -13,19 +13,14 @@ public class GasTest extends Tester {
 		PRECISION = 1;
 		world.setWallsEnabled(true);
 		world.setGravityEnabled(false);
-        int temp = 1000;
+        int temp = 100;
 		Circle c;
         for (int i = 0; i < 9; i++)
             for (int j = 0; j < 9; j++) {
-				world.addBody(c = new Circle(5,10));	
-				c.setPosition(v(50+50*i-250, 50+50*j-250));
-				}
-        for (int i = 0; i < 13; i++)
-            for (int j = 0; j < 13; j++) {
-				world.addBody(c = new Circle(5,5));	
+				world.addBody(c = new Circle(10,10));	
 				c.setPosition(v(50+25*i-250, 50+25*j-250));
 				c.setVelocity(v(temp*(Math.random()-.5), temp*(Math.random()-.5)));
-				c.setTempColorEnabled(true);
+				c.setTempColorEnabled(true,world);
 			}
 	}
 }

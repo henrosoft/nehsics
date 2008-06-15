@@ -9,7 +9,8 @@ public class World {
 	private List<ForceField> fields = new LinkedList<ForceField>();
 	private boolean wall;
 	private boolean gravity = true;
-
+	private double averageMaxKinetic = 0;
+	private double numCalculations = 0;
 	public void addForce(Vector2d f) {
 		for (Body b : bodies)
 			if (b.getMass() < Double.POSITIVE_INFINITY)
@@ -60,10 +61,15 @@ public class World {
 		}
 		return v(x,y);
 	}
-	public double maxKinectic()
+	public double maxKineticEnergy()
 	{
 		double max = 0;
-		return max;
+		for(Body b: bodies)
+			if(b.getKineticEnergy()>max)
+				max = b.getKineticEnergy();
+		numCalculations++;
+		averageMaxKinetic+=max; 
+		return averageMaxKinetic/(double)numCalculations;
 	}
 	public void setWallsEnabled(boolean w) {
 		wall = w;
