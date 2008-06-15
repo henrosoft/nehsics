@@ -11,15 +11,15 @@ public class SquareTester extends Tester {
 
 	protected void setup() {
 		PRECISION = 1;
-		SPEED = .1;
 		SPEED = .2;
-//		world.setWallsEnabled(true);	
+		world.setWallsEnabled(true);	
 		world.setGravityEnabled(false);
+		world.setQuadSpaceEnabled(false);
 		display.setScale(.5);
-		for (int i=0; i < 40; i++) {
-			for (int j=0; j < 40; j++) {
+		for (int i=0; i < 10; i++) {
+			for (int j=0; j < 10; j++) {
 				Circle c = new Circle(5, 5);
-				c.setPosition(v(j*3,i*3));
+				c.setPosition(v(j*5,i*5));
 				world.addBody(c);
 				c.setVisible(false);
 //				c.setTemperatureColor(true);
@@ -32,9 +32,9 @@ public class SquareTester extends Tester {
 			c.setPosition(v(0,i*17));
 			world.addBody(c);
 		}*/
-		Circle x = new Circle(5, 5);
-		x.setPosition(v(-2500, 10));
-		x.setVelocity(v(4500, 1));
+		Circle x = new Circle(30, 100);
+		x.setPosition(v(-500, 10));
+		x.setVelocity(v(500, 1));
 		world.addBody(x);
 	}
 

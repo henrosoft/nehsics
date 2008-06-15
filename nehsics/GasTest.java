@@ -22,5 +22,13 @@ public class GasTest extends Tester {
 				c.setVelocity(v(temp*(Math.random()-.5), temp*(Math.random()-.5)));
 				c.setTempColorEnabled(true,world);
 			}
+	
+		for(int i = 0; i<3; i++)
+		{
+				world.addBody(c = new Circle(10,10));	
+				c.setPosition(v(5000+25*i, 0));
+				c.setVelocity(v(1000, 0));
+				c.setTempColorEnabled(true,world);
+		}
 	}
 }

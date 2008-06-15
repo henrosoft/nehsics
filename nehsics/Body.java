@@ -121,16 +121,42 @@ public abstract class Body {
 	}
 
 	public Color getColor(double f) {
-		f = 1.0-f;
+/*		f = 1.0-f;
 		double r = (Math.cos(f*Math.PI*2)+1)*(255.0/2.0);
 		double g = (-Math.cos((f*Math.PI*2)+Math.PI/3.0)+1)*(255.0/2.0);
-		double b = (-Math.cos((f*Math.PI*2)-Math.PI/3.0)+1)*(255.0/2.0);
+		double b = (-Math.cos((f*Math.PI*2)-Math.PI/3.0)+1)*(255.0/2.0);*/
+		double r=0,g=0,b=0;
+		if(f<.2)
+			b = 255*5*f;
+		else if(f<.4)
+		{
+			b = 255;
+			g=255*5*(f-.2);
+		}
+		else if(f<.5)
+		{
+			g=255;
+			b=255-(255*10*(f-.4));
+		}
+		else if(f<.6)
+		{
+			g=255;
+			r=(255*10*(f-.5));
+		}
+		else if(f<=1)
+		{
+			r=255;
+			g=255-(255*10*(f-.6)/4.0);	
+		}
+		else
+			r = 255;
 		return new Color((int)r,(int)g,(int)b);
 	}
 
 	public Color calculateColor() {
 		Color c;
-		double maxK = world.maxKineticEnergy();
+//		double maxK = world.maxKineticEnergy();
+		double maxK = 100000;
 		double k = .5*mass*Math.pow(velocity.length(),2);
 		double fraction = k/maxK;
 		c = getColor(fraction);
