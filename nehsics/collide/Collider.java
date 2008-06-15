@@ -1,6 +1,7 @@
 package nehsics.collide;
 import nehsics.bodies.*;
 import java.util.*;
+import java.awt.Graphics2D;
 
 public class Collider {
 	public void resolveCollisions(List<Body> bodies) {
@@ -9,4 +10,6 @@ public class Collider {
 				if (b != b2 && b.canHit(b2))
 					b.hit(b2);
 	}
+
+	public void paint(Graphics2D g2d) {}
 }

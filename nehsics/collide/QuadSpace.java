@@ -2,6 +2,8 @@ package nehsics.collide;
 import nehsics.bodies.*;
 import nehsics.math.*;
 import java.util.*;
+import java.awt.Graphics2D;
+import java.awt.Color;
 import java.awt.geom.*;
 
 public final class QuadSpace extends LinkedList<Body> {
@@ -17,6 +19,10 @@ public final class QuadSpace extends LinkedList<Body> {
 		addAll(bodies);
 	}
 
+	public double dim() {
+		return Math.min(box[MAXX]-box[MINX], box[MAXY]-box[MINY]);
+	}
+
 	/**
 	 * Generate quadspace containing only bodies within the bounds.
 	 */
@@ -27,6 +33,13 @@ public final class QuadSpace extends LinkedList<Body> {
 		for (Body body : parent)
 			if (body.intersectsRectangle(rect))
 				add(body);
+	}
+
+	public void paint(Graphics2D g2d) {
+		Rectangle2D.Double rect = new Rectangle2D.Double(
+			box[MINX], box[MINY], box[MAXX]-box[MINX], box[MAXY]-box[MINY]);	
+		g2d.setColor(Color.BLUE);
+		g2d.draw(rect);
 	}
 
 	/**

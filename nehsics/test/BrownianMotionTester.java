@@ -41,6 +41,7 @@ public class BrownianMotionTester extends Tester {
 	}
 
 	public void postWorld() {
+		super.postWorld();
 		Graphics2D g2d = display.getGraphics();
 		g2d.setColor(Color.BLACK);
 		g2d.drawString("INVISIBLE PARTICLES HERE", 30, 30);

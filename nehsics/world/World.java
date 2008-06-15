@@ -103,6 +103,7 @@ public class World {
 	}
 
 	public void paint(Graphics2D g2d) {
+		collider.paint(g2d);
 		for (Body body : bodies)
 			body.paint(g2d);
 	}

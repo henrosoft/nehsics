@@ -38,6 +38,7 @@ public class Starter {
 		combo.addItem(CannonTester.NAME);
 		combo.addItem(CollapseTest.NAME);
 		combo.addItem(TestOneD.NAME);
+		combo.setSelectedItem(init);
 		frame.setContentPane(jsplit);
 		frame.setIgnoreRepaint(true);
 		frame.setVisible(true);
@@ -90,6 +91,6 @@ public class Starter {
 	}
 
 	public static void main(String[] args) {
-		new Starter(null);
+		new Starter(LogoTest.NAME);
 	}
 }

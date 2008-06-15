@@ -1,24 +1,35 @@
 package nehsics.collide;
 import nehsics.bodies.*;
 import java.util.*;
+import java.awt.Graphics2D;
 
 public class QuadSpaceCollider extends Collider {
-	private final static int TARGET_SPACE_SIZE = 10;
-	private final static int MAX_DEPTH = 10;
-	private final static boolean verbose = false;
+	// some arbitrary constants; probably far from optimal
+	private final static int TARGET_SPACE_SIZE = 5;
+	private Set<QuadSpace> visuals = new HashSet<QuadSpace>();
+	private double avg_rad;
 
 	public void resolveCollisions(List<Body> bodies) {
-		if (verbose) System.out.println();
-		resolveCollisions(new QuadSpace(bodies), 1);
+		visuals.clear();
+		double i = 0, sum = 0;
+		for (Body body : bodies) {
+			i++;
+			sum += body.getRadius();
+		}
+		avg_rad = sum / i;
+		resolveCollisions(new QuadSpace(bodies));
 	}
 
-	private void resolveCollisions(QuadSpace space, int i) {
-		if (space.size() <= TARGET_SPACE_SIZE || i > MAX_DEPTH) {
+	public void paint(Graphics2D g2d) {
+		for (QuadSpace q : visuals)
+			q.paint(g2d);
+	}
+
+	private void resolveCollisions(QuadSpace space) {
+		if (space.size() <= TARGET_SPACE_SIZE || space.dim() < avg_rad*5) {
+			visuals.add(space);
 			super.resolveCollisions(space);
-		} else {
-			if (verbose) System.out.print(space.size() + " ");
-			for (QuadSpace qspace : space.divide())
-				resolveCollisions(qspace, i + 1);
-		}
+		} else for (QuadSpace qspace : space.divide())
+			resolveCollisions(qspace);
 	}
 }
