@@ -17,6 +17,10 @@ public final class QuadSpace extends LinkedList<Body> {
 		addAll(bodies);
 	}
 
+	public double dim() {
+		return Math.min(box[MAXX]-box[MINX], box[MAXY]-box[MINY]);
+	}
+
 	/**
 	 * Generate quadspace containing only bodies within the bounds.
 	 */

@@ -25,6 +25,8 @@ public abstract class Body {
 	protected boolean temperatureColor;
 	protected Color color = Color.black;
 	protected World world;	
+	// XXX collider stuff
+	protected static Set<Rectangle2D> visuals = new HashSet<Rectangle2D>();
 
 	public boolean canHitForce(Body c) {
 		return distance(position, c.getPosition()) <= radius + c.radius;
@@ -48,6 +50,9 @@ public abstract class Body {
 	}
 
 	public boolean intersectsRectangle(Rectangle2D r) {
+		// XXX collider stuff
+		visuals.add(r);
+
 		AffineTransform af = AffineTransform.getTranslateInstance(
 			position.getX()-radius, position.getY()-radius);
 		Shape transformed = af.createTransformedShape(shape);
@@ -149,6 +154,13 @@ public abstract class Body {
 	public void paint(Graphics2D g2d) {
 		if (!visible)
 			return;
+		
+		// XXX collider stuff
+		g2d.setColor(Color.GRAY);
+		for (Rectangle2D r : visuals)
+			g2d.draw(r);
+		visuals.clear();
+
 		if (temperatureColor)
 			color = calculateColor();
 		g2d.setColor(color);

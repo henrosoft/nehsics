@@ -60,8 +60,8 @@ public class Circle extends Body {
 		setVelocity(new Vector2d(cos(-theta)*cv2.getX() - sin(-theta)*cv2.getY(),
 			sin(-theta)*cv2.getX() + cos(-theta)*cv2.getY()));
 	}
-	public boolean testDirection(Vector2d p1, Vector2d v1, Vector2d p2, Vector2d v2)
-	{
+
+	public boolean testDirection(Vector2d p1, Vector2d v1, Vector2d p2, Vector2d v2) {
 		double distance = distance(p1,p2); 
 		Vector2d p1f = add(p1,scale(v1,.001));
 		Vector2d p2f = add(p2,scale(v2,.001)); 
