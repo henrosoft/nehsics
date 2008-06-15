@@ -16,17 +16,25 @@ public class World {
 	private double averageMaxKinetic = 0;
 	private double numCalculations = 0;
 	private Collider collider = new QuadSpaceCollider();
-
+	private boolean quad = true;
 	public void setCollider(Collider c) {
 		collider = c;
 	}
 
 	public void checkForCollisions() {
+		if(!quad)
+		{
+			checkForCollisionsSquared();
+			return;
+		}
 		if (wall)
 			checkForWalls();
 		collider.resolveCollisions(new QuadSpace(bodies));
 	}
-
+	public void setQuadSpaceEnabled(boolean q)
+	{
+		quad = q;
+	}
 	public void addBond(BindingForce b) {
 		bonds.add(b);
 	}

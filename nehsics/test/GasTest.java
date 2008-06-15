@@ -19,6 +19,7 @@ public class GasTest extends Tester {
 		PRECISION = 1;
 		world.setWallsEnabled(true);
 		world.setGravityEnabled(false);
+		world.setQuadSpaceEnabled(false);
         int temp = 100;
 		Circle c;
         for (int i = 0; i < 9; i++)
@@ -29,7 +30,7 @@ public class GasTest extends Tester {
 				c.setTempColorEnabled(true,world);
 			}
 	
-		for(int i = 0; i<3; i++)
+		for(int i = 0; i<2; i++)
 		{
 				world.addBody(c = new Circle(10,10));	
 				c.setPosition(v(5000+25*i, 0));

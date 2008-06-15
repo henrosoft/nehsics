@@ -19,8 +19,9 @@ public class CollideTester extends Tester {
 		PRECISION = 1;
 		SPEED = .05;
 		world.setGravityEnabled(false);
-		for (int i=0; i < 30; i++) {
-			for (int j=0; j < 30; j++) {
+		world.setQuadSpaceEnabled(false);
+		for (int i=0; i < 20; i++) {
+			for (int j=0; j < 20; j++) {
 				Circle c = new Circle(4, 4);
 				c.setPosition(v(j*8,i*8));
 				world.addBody(c);
