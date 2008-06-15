@@ -1,4 +1,5 @@
 package nehsics.test;
+import nehsics.collide.*;
 import nehsics.ui.*;
 import nehsics.bodies.*;
 import java.awt.*;
@@ -17,7 +18,7 @@ public class CollapseTest extends Tester {
 
 	protected void setup() {
 		display.setScale(3e-8);
-		world.setQuadSpaceEnabled(false);
+		world.setCollider(new Collider());
 		PRECISION = 1;
 		display.setScale(5e-8);
 		PRECISION = 10;

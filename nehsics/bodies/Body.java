@@ -26,8 +26,6 @@ public abstract class Body {
 	protected boolean temperatureColor;
 	protected Color color = Color.black;
 	protected World world;	
-	// XXX collider stuff
-	protected static Set<Rectangle2D> visuals = new HashSet<Rectangle2D>();
 
 	public boolean canHitForce(Body c) {
 		return distance(position, c.getPosition()) <= radius + c.radius;
@@ -57,9 +55,6 @@ public abstract class Body {
 	}
 
 	public boolean intersectsRectangle(Rectangle2D r) {
-		// XXX collider stuff
-		visuals.add(r);
-
 		AffineTransform af = AffineTransform.getTranslateInstance(
 			position.getX()-radius, position.getY()-radius);
 		Shape transformed = af.createTransformedShape(shape);
@@ -142,30 +137,14 @@ public abstract class Body {
 	}
 
 	public Color getColor(double f) {
-/*		f = 1.0-f;
-		double r = (Math.cos(f*Math.PI*2)+1)*(255.0/2.0);
-		double g = (-Math.cos((f*Math.PI*2)+Math.PI/3.0)+1)*(255.0/2.0);
-		double b = (-Math.cos((f*Math.PI*2)-Math.PI/3.0)+1)*(255.0/2.0);*/
 		double r=0,g=0,b=0;
-		if(f<.2)
+		if (f < .2)
 			b = 255*5*f;
-		else if(f<.4)
-		{
+		else if (f < .4) {
 			b = 255;
 			g=255*5*(f-.2);
 		}
-	/*	else if(f<.45)
-		{
-			g=255;
-			b=255-(255*20*(f-.4));
-		}
-		else if(f<.5)
-		{
-			g=255;
-			r=(255*20*(f-.45));
-		}*/
-		else if(f<=1)
-		{
+		else if(f <= 1) {
 			r=255;
 			g=255-(255*10*(f-.4)/6.0);	
 		}
@@ -176,7 +155,6 @@ public abstract class Body {
 
 	public Color calculateColor() {
 		Color c;
-//		double maxK = world.maxKineticEnergy();
 		double maxK = 100000;
 		double k = .5*mass*Math.pow(velocity.length(),2);
 		double fraction = k/maxK;
@@ -188,12 +166,6 @@ public abstract class Body {
 		if (!visible)
 			return;
 		
-		// XXX collider stuff
-		g2d.setColor(Color.GRAY);
-		for (Rectangle2D r : visuals)
-			g2d.draw(r);
-		visuals.clear();
-
 		if (temperatureColor)
 			color = calculateColor();
 		g2d.setColor(color);

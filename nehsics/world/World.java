@@ -16,17 +16,12 @@ public class World {
 	private double averageMaxKinetic = 0;
 	private double numCalculations = 0;
 	private Collider collider = new QuadSpaceCollider();
-	private boolean quad = true;
+
 	public void setCollider(Collider c) {
 		collider = c;
 	}
 
 	public void checkForCollisions() {
-		if(!quad)
-		{
-			checkForCollisionsSquared();
-			return;
-		}
 		if (wall)
 			checkForWalls();
 		collider.resolveCollisions(new QuadSpace(bodies));
@@ -52,15 +47,6 @@ public class World {
 	public void addBond(BindingForce b) {
 		bonds.add(b);
 	}
-
-    public void checkForCollisionsSquared() {
-		if (wall)
-			checkForWalls();
-        for (Body b : bodies)
-            for (Body b2 : bodies)
-				if (b != b2 && b.canHit(b2))
-					b.hit(b2);
-    }
 
 	public double maxKineticEnergy() {
 		double max = 0;
@@ -125,6 +111,7 @@ public class World {
 	}
 
 	public void paint(Graphics2D g2d) {
+		collider.paint(g2d);
 		for (Body body : bodies)
 			body.paint(g2d);
 	}

@@ -1,4 +1,5 @@
 package nehsics.test;
+import nehsics.collide.*;
 import nehsics.ui.*;
 import nehsics.bodies.*;
 import java.awt.*;
@@ -19,7 +20,7 @@ public class GasTest extends Tester {
 		PRECISION = 1;
 		world.setWallsEnabled(true);
 		world.setGravityEnabled(false);
-		world.setQuadSpaceEnabled(false);
+		world.setCollider(new Collider());
         int temp = 100;
 		Circle c;
         for (int i = 0; i < 9; i++)
