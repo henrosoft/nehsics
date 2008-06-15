@@ -5,6 +5,6 @@
 .project
 *.html
 *.jar
-#*#
+\#*#
 *~
 *.DS_Store

@@ -11,6 +11,7 @@ public abstract class Body {
 	// tmp forces will be cleared after each step!
 	protected Set<Vector2d> tmp = new HashSet<Vector2d>();
 	protected Set<Vector2d> forces = new HashSet<Vector2d>();
+	protected Set<Body> alreadyHit = new HashSet<Body>();
 	protected double mass; // kg
 	protected double charge; // coulombs
 	protected double radius;
@@ -24,6 +25,10 @@ public abstract class Body {
 	protected World world;	
 	public boolean canHit(Body other) {
 		return false;
+	}
+
+	public double getRadius() {
+		return radius;
 	}
 
 	public void hit(Body other) { }
@@ -62,8 +67,8 @@ public abstract class Body {
 			accel = add(accel, scale(f, 1/mass));
 		velocity = add(velocity, scale(accel, dt));
 		position = add(position, scale(velocity, dt));
-		alreadyHit.clear();
 		tmp.clear();
+		alreadyHit.clear();
 	}
 
 	public void applyForce(Vector2d f) {

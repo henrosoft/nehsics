@@ -11,20 +11,27 @@ public class World {
 	private boolean gravity = true;
 	private double averageMaxKinetic = 0;
 	private double numCalculations = 0;
+	private Collider collider = new QuadSpaceCollider();
 	public void addForce(Vector2d f) {
 		for (Body b : bodies)
 			if (b.getMass() < Double.POSITIVE_INFINITY)
 				b.addForce(f);
 	}
 
-    public void checkForCollisions() {
+	public void checkForCollisions() {
 		if (wall)
 			checkForWalls();
-        for (Body b : bodies)
-            for (Body b2 : bodies)
-				if (b.canHit(b2))
-					b.hit(b2);
-    }
+		collider.resolveCollisions(new QuadSpace(bodies));
+	}
+
+//    public void checkForCollisions() {
+//		if (wall)
+//			checkForWalls();
+//        for (Body b : bodies)
+//            for (Body b2 : bodies)
+//				if (b != b2 && b.canHit(b2))
+//					b.hit(b2);
+//    }
 /*	public void checkForCollisions()
 	{
 		if (wall)
