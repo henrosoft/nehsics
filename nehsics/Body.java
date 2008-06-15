@@ -10,12 +10,12 @@ import java.awt.geom.*;
 public abstract class Body {
 	// tmp forces will be cleared after each step!
 	protected Set<Vector2d> tmp = new HashSet<Vector2d>();
+	protected Set<BindingForce> bonds = new HashSet<BindingForce>();
 	protected Set<Vector2d> forces = new HashSet<Vector2d>();
 	protected Set<Body> alreadyHit = new HashSet<Body>();
 	protected double mass; // kg
 	protected double charge; // coulombs
 	protected double radius;
-    	protected List<Body> alreadyHit = new LinkedList<Body>();
 	protected Vector2d position; // m (pixels)
 	protected Vector2d velocity; // m/s
 	protected Shape shape;
@@ -65,12 +65,17 @@ public abstract class Body {
 			accel = add(accel, scale(f, 1/mass));
 		for (Vector2d f : tmp)
 			accel = add(accel, scale(f, 1/mass));
+		for(BindingForce b: bonds)
+			accel = add(accel, scale(b.getForce(), 1/mass));
 		velocity = add(velocity, scale(accel, dt));
 		position = add(position, scale(velocity, dt));
 		tmp.clear();
 		alreadyHit.clear();
 	}
-
+	public void addBond(BindingForce b)
+	{
+		bonds.add(b);
+	}
 	public void applyForce(Vector2d f) {
 		tmp.add(f);
 	}

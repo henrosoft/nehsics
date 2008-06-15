@@ -7,31 +7,44 @@ import java.util.*;
 public class World {
 	private List<Body> bodies = new LinkedList<Body>();
 	private List<ForceField> fields = new LinkedList<ForceField>();
+	private List<BindingForce> bonds = new LinkedList<BindingForce>();
 	private boolean wall;
 	private boolean gravity = true;
 	private double averageMaxKinetic = 0;
 	private double numCalculations = 0;
 	private Collider collider = new QuadSpaceCollider();
+	private boolean quadspace = true;
 	public void addForce(Vector2d f) {
 		for (Body b : bodies)
 			if (b.getMass() < Double.POSITIVE_INFINITY)
 				b.addForce(f);
 	}
-
+	public void setQuadSpaceEnabled(boolean q)
+	{
+		quadspace = q;
+	}
 	public void checkForCollisions() {
+		if(!quadspace)
+		{
+			checkForCollisionsSquared();
+			return;
+		}
 		if (wall)
 			checkForWalls();
 		collider.resolveCollisions(new QuadSpace(bodies));
 	}
-
-//    public void checkForCollisions() {
-//		if (wall)
-//			checkForWalls();
-//        for (Body b : bodies)
-//            for (Body b2 : bodies)
-//				if (b != b2 && b.canHit(b2))
-//					b.hit(b2);
-//    }
+	public void addBond(BindingForce b)
+	{
+		bonds.add(b);
+	}
+    public void checkForCollisionsSquared() {
+		if (wall)
+			checkForWalls();
+        for (Body b : bodies)
+            for (Body b2 : bodies)
+				if (b != b2 && b.canHit(b2))
+					b.hit(b2);
+    }
 /*	public void checkForCollisions()
 	{
 		if (wall)
@@ -120,6 +133,8 @@ public class World {
 	}
 
 	public void step(double dt) {
+		for(BindingForce b : bonds)
+			b.calculateForce();
 		checkForCollisions();
 		for (Body body : bodies)
 			for (ForceField field : fields)

@@ -20,7 +20,10 @@ public class Circle extends Body {
 			return false;
 		return distance(position, c.getPosition()) <= radius + c.radius;
 	}
-
+	public boolean canHitForce(Circle c)
+	{
+		return distance(position, c.getPosition()) <= radius + c.radius;
+	}
 	public void hit(Body b) {
 		if (!(b instanceof Circle))
 			return;
