@@ -25,7 +25,10 @@ public class World {
 	public void setVisualsEnabled(boolean b) {
 		colliderVisuals = b;
 	}
-
+	public void setQuadSpaceEnabled(boolean q)
+	{
+		quad = q;
+	}
 	public void checkForCollisions() {
 		if(!quad)
 		{

@@ -6,7 +6,7 @@ import java.awt.*;
 import static nehsics.math.Util.*;
 
 public class TestOneD extends Tester {
-	public final static String NAME = "One D <-- What?";
+	public final static String NAME = "Simple tester of basic features";
 
 	public static void main(String[] args) {
 		new Starter(NAME);

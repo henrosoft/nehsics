@@ -19,19 +19,19 @@ public class GasTest extends Tester {
 	protected void setup() {
 		PRECISION = 1;
 		world.setWallsEnabled(true);
+		display.setScale(.3);
 		world.setGravityEnabled(false);
-        int temp = 100;
+	        int temp = 100;
 		Circle c;
-        for (int i = 0; i < 9; i++)
-            for (int j = 0; j < 9; j++) {
-				world.addBody(c = new Circle(10,10));	
-				c.setPosition(v(50+25*i-150, 50+25*j-150));
-				c.setVelocity(v(temp*(Math.random()-.5), temp*(Math.random()-.5)));
-				c.setTempColorEnabled(true,world);
-			}
-	
-		for (int i = 0; i<2; i++) {
-				world.addBody(c = new Circle(10,10));	
+	        for (int i = 0; i < 19; i++)
+       		     for (int j = 0; j < 19; j++) {
+			world.addBody(c = new Circle(5,5));	
+			c.setPosition(v(50+15*i-150, 50+15*j-150));
+			c.setVelocity(v(temp*(Math.random()-.5), temp*(Math.random()-.5)));
+			c.setTempColorEnabled(true,world);
+		}	
+		for (int i = 0; i<4; i++) {
+				world.addBody(c = new Circle(5,5));	
 				c.setPosition(v(5000+25*i, 0));
 				c.setVelocity(v(1000, 0));
 				c.setTempColorEnabled(true,world);
@@ -45,9 +45,18 @@ public class GasTest extends Tester {
 		double ave = world.averageKineticWithinBounds(
 			new double[]{-250,-250,500,500})/1000;
 		double fraction = ave/200.0;
-		g2d.drawString("Temperature = " + (int)ave + " Kelvin", 30, -200);
+		g2d.setFont(new Font(null,Font.BOLD,30));
+		g2d.drawString("Temperature = " + (int)ave + " Kelvin", -50, -670);
 		g2d.setColor(getColor(fraction));
-		g2d.fillRect(30,-195,(int)(fraction*200),10);
+		g2d.fillRect(-50,-665,(int)(fraction*300),30);
+		g2d.setColor(Color.BLACK);
+		g2d.fillRect(-290,-450,40,710);
+		g2d.fillRect(-290,250,540,40);
+		g2d.fillRect(250,-450,50,440);
+		g2d.fillRect(250,10,50,280);
+
+		g2d.fillRect(-245,-290,490,40);
+		g2d.fillRect(-20,-400,40,130);
 	}
 
 	public Color getColor(double f) {
