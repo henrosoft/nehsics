@@ -5,7 +5,7 @@ import java.awt.*;
 import static nehsics.math.Util.*;
 
 public class CollapseTest extends Tester {
-	public final static String NAME = "Model Inaccuracies";
+	public final static String NAME = "Minimum PE Principle";
 
 	public static void main(String[] args) {
 		new Starter(NAME);
@@ -17,11 +17,11 @@ public class CollapseTest extends Tester {
 
 	protected void setup() {
 		display.setScale(3e-8);
-		world.setVisualsEnabled(true);
+		SPEED=.5;
 		PRECISION = 1;
-		for (int i=0; i < 10; i++)
-			for (int j=0; j < 10; j++) {
-				Circle tmp = new Circle(SUN_RADIUS/2, SUN_MASS*1000000);
+		for (int i=0; i < 11; i++)
+			for (int j=0; j < 11; j++) {
+				Circle tmp = new Circle(SUN_RADIUS/2, SUN_MASS*1e6);
 				tmp.setPosition(v(SUN_RADIUS*i-5*SUN_RADIUS,
 					SUN_RADIUS*j-5*SUN_RADIUS));
 				world.addBody(tmp);

@@ -1,6 +1,7 @@
 package nehsics.test;
 import nehsics.world.*;
 import nehsics.ui.*;
+import nehsics.ui.Timer;
 import nehsics.force.*;
 import nehsics.bodies.*;
 import static nehsics.math.Util.*;
@@ -133,6 +134,7 @@ public class Tester extends Test {
 		// fall as fast as small circles (high density here)	
 		Circle b = new Circle(15,500);
 		b.setPosition(v(-210,-150));
+		b.setVelocity(v(1,0));
 
 		// normal force opposes gravity
 		Circle stationary = new Circle(40,10);

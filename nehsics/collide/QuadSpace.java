@@ -40,7 +40,7 @@ public final class QuadSpace extends ArrayList<Body> {
 			box[MINX], box[MINY], box[MAXX]-box[MINX], box[MAXY]-box[MINY]);	
 		g2d.setColor(Color.BLUE);
 		g2d.draw(rect);
-		g2d.setColor(new Color(0,0,255,10));
+		g2d.setColor(new Color(0,0,255,5*size()));
 		g2d.fill(rect);
 	}
 
