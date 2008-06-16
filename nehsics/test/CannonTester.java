@@ -5,9 +5,8 @@ import java.awt.*;
 import static nehsics.math.Util.*;
 
 public class CannonTester extends Tester {
-	public final static String NAME = "Invisible Cannon Test";
-	protected int count = 400; // XXX go by dt
-	protected int i;
+	public final static String NAME = "Particle Stress Test";
+	protected long lastTime;
 
 	public static void main(String[] args) {
 		new Starter(NAME);
@@ -18,26 +17,25 @@ public class CannonTester extends Tester {
 	}
 
 	protected void update(double dt) {
-		if (i++ % 20 == 0)
+		if (System.currentTimeMillis() - lastTime > 500) {
 			newCannonBall();
+			lastTime = System.currentTimeMillis();
+		}
 	}
 
 	private void newCannonBall() {
-		Circle a = new Circle(EARTH_RADIUS/40, 2);
+		Circle a = new Circle(EARTH_RADIUS/100, 2);
 		a.setPosition(v(0,-EARTH_RADIUS-EARTH_RADIUS/9));
-		a.setVelocity(v(2000+2000*Math.random()+count*10,-1000));
-		a.setVisible(false);
+		a.setVelocity(v(4000+2000*Math.random(),-1000));
 		world.addBody(a);
 	}
 
 	protected void setup() {
 		display.setScale(2e-5);
+		world.setVisualsEnabled(true);
 		SPEED=500;
-
-		// earth is down there (its the floor)
-		Circle earth = new Circle(EARTH_RADIUS/10, EARTH_MASS);
-		earth.setPosition(v(0,0));
-
-		world.addBody(earth);
+		Circle center = new Circle(EARTH_RADIUS/10, EARTH_MASS);
+		center.setPosition(v(0,0));
+		world.addBody(center);
 	}
 }

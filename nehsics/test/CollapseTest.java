@@ -1,5 +1,4 @@
 package nehsics.test;
-import nehsics.collide.*;
 import nehsics.ui.*;
 import nehsics.bodies.*;
 import java.awt.*;
@@ -18,16 +17,14 @@ public class CollapseTest extends Tester {
 
 	protected void setup() {
 		display.setScale(3e-8);
-		world.setCollider(new Collider());
+		world.setVisualsEnabled(true);
 		PRECISION = 1;
-		display.setScale(5e-8);
-		PRECISION = 10;
-		for (int i=0; i < 10; i++) {
+		for (int i=0; i < 10; i++)
 			for (int j=0; j < 10; j++) {
 				Circle tmp = new Circle(SUN_RADIUS/2, SUN_MASS*1000000);
-				tmp.setPosition(v(SUN_RADIUS*i-5*SUN_RADIUS,SUN_RADIUS*j-5*SUN_RADIUS));
+				tmp.setPosition(v(SUN_RADIUS*i-5*SUN_RADIUS,
+					SUN_RADIUS*j-5*SUN_RADIUS));
 				world.addBody(tmp);
 			}
-		}
 	}
 }

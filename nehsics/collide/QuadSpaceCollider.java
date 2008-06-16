@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 
 public class QuadSpaceCollider extends Collider {
 	// some arbitrary constants; probably far from optimal
-	private final static int TARGET_SPACE_SIZE = 5;
+	private final static int TARGET_SPACE_SIZE = 10;
 	private Set<QuadSpace> visuals = new HashSet<QuadSpace>();
 	private double avg_rad;
 

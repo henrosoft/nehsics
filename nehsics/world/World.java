@@ -13,12 +13,17 @@ public class World {
 	private List<BindingForce> bonds = new LinkedList<BindingForce>();
 	private boolean wall;
 	private boolean gravity = true;
+	private boolean colliderVisuals;
 	private double averageMaxKinetic = 0;
 	private double numCalculations = 0;
 	private Collider collider = new QuadSpaceCollider();
 	private boolean quad = true;
 	public void setCollider(Collider c) {
 		collider = c;
+	}
+
+	public void setVisualsEnabled(boolean b) {
+		colliderVisuals = b;
 	}
 
 	public void checkForCollisions() {
@@ -39,24 +44,19 @@ public class World {
 				if (b != b2 && b.canHit(b2))
 					b.hit(b2);
     }
-	public double averageKineticWithinBounds(double[] bounds)
-	{
+	public double averageKineticWithinBounds(double[] bounds) {
 		double ave = 0;
 		double count = 0;
-		for(Body b: bodies)
-		{
-			if(b.intersects(new Rectangle((int)bounds[0],(int)bounds[1],(int)bounds[2],(int)bounds[3])))
-			{
+		for(Body b: bodies) {
+			if (b.intersects(new Rectangle((int)bounds[0],(int)bounds[1],
+					(int)bounds[2],(int)bounds[3]))) {
 				count++;
-				ave+=b.getKineticEnergy();
+				ave += b.getKineticEnergy();
 			}	
 		}
-		return (double)ave/(double)count;
+		return ave/count;
 	}
-	public void setQuadSpaceEnabled(boolean q)
-	{
-		quad = q;
-	}
+
 	public void addBond(BindingForce b) {
 		bonds.add(b);
 	}
@@ -85,20 +85,20 @@ public class World {
 
 	// XXX Implement real walls.
     public void checkForWalls() {
+		int WALL = 250;
         for (Body b : bodies) {
-            if (b.getMass() != Double.POSITIVE_INFINITY) {
-                Vector2d v = b.getVelocity();
-                Vector2d p = b.getPosition();
-                if (p.getX() < b.getRadius()-250 && v.getX()<0)
-                    v = v(Math.abs(v.getX()), v.getY());
-                if (p.getY()< b.getRadius()-250 && v.getY()<0)
-                    v = v(v.getX(), Math.abs(v.getY()));
-                if (p.getX()>250-b.getRadius() && v.getX()>0)
-                    v = v(-Math.abs(v.getX()), v.getY());
-                if (p.getY()>250-b.getRadius() && v.getY()>0)
-                    v = v(v.getX(), -Math.abs(v.getY()));
-				b.setVelocity(v);
-            }
+			Vector2d v = b.getVelocity();
+			Vector2d p = b.getPosition();
+			double x = p.getX(), y = p.getY(), r = b.getRadius();
+			if (x + r > WALL)
+				v = scale(v, v(v.getX() > 0 ? -1 : 1, 1));
+			else if (x - r < -WALL)
+				v = scale(v, v(v.getX() < 0 ? -1 : 1, 1));
+			if (y + r > WALL)
+				v = scale(v, v(1, v.getY() < 0 ? 1 : -1));
+			else if (y - r < -WALL)
+				v = scale(v, v(1, v.getY() > 0 ? 1 : -1));
+			b.setVelocity(v);
         }
     }
 
@@ -124,7 +124,8 @@ public class World {
 	}
 
 	public void paint(Graphics2D g2d) {
-		collider.paint(g2d);
+		if (colliderVisuals)
+			collider.paint(g2d);
 		for (Body body : bodies)
 			body.paint(g2d);
 	}

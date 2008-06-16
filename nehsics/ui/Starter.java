@@ -46,9 +46,13 @@ public class Starter {
 			KeyboardFocusManager.getCurrentKeyboardFocusManager();
 		manager.addKeyEventDispatcher(new KeyEventDispatcher() {
 			public boolean dispatchKeyEvent(KeyEvent e) {
-				if (e.getSource() == canvas)
-					return false;
+				switch (e.getKeyCode()) {
+					case KeyEvent.VK_UP:
+					case KeyEvent.VK_DOWN: return false;
+				}
 				manager.redispatchEvent(canvas, e);
+				if (!Character.isLetter(e.getKeyChar()))
+					manager.redispatchEvent(combo, e);
 				return true;
 			}
 		});

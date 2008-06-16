@@ -2,11 +2,11 @@ package nehsics.collide;
 import nehsics.bodies.*;
 import nehsics.math.*;
 import java.util.*;
-import java.awt.Graphics2D;
 import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.geom.*;
 
-public final class QuadSpace extends LinkedList<Body> {
+public final class QuadSpace extends ArrayList<Body> {
 	public static final long serialVersionUID = 123918391;
 	private final double[] box;
 	private final static int MINX = 0, MINY = 1, MAXX = 2, MAXY = 3;
@@ -40,6 +40,8 @@ public final class QuadSpace extends LinkedList<Body> {
 			box[MINX], box[MINY], box[MAXX]-box[MINX], box[MAXY]-box[MINY]);	
 		g2d.setColor(Color.BLUE);
 		g2d.draw(rect);
+		g2d.setColor(new Color(0,0,255,10));
+		g2d.fill(rect);
 	}
 
 	/**
@@ -76,13 +78,13 @@ public final class QuadSpace extends LinkedList<Body> {
 			tmp = body.getPosition();
 			r = body.getRadius();
 			if (box[MINX] > tmp.getX()-r)
-				box[MINX] = tmp.getX();
+				box[MINX] = tmp.getX()-r;
 			else if (box[MAXX] < tmp.getX()+r)
-				box[MAXX] = tmp.getX();
+				box[MAXX] = tmp.getX()+r;
 			if (box[MINY] > tmp.getY()-r)
-				box[MINY] = tmp.getY();
+				box[MINY] = tmp.getY()-r;
 			else if (box[MAXY] < tmp.getY()+r)
-				box[MAXY] = tmp.getY();
+				box[MAXY] = tmp.getY()+r;
 		}
 		return box;
 	}

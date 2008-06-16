@@ -61,6 +61,10 @@ public class Util {
 		return v(a.getX()*b.doubleValue(), a.getY()*b.doubleValue());
 	}
 
+	public static double sign(double d) {
+		return d > 0 ?  1 : -1;
+	}
+
 	public static void sleep(double seconds) {
 		try {
 			Thread.sleep((int)(seconds*1000));
