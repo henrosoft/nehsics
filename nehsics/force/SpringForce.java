@@ -13,6 +13,6 @@ public class SpringForce {
 	public Vector2d getForce(Vector2d p1, Vector2d p2) {
 		double length = distance(p1,p2);
 		Vector2d v = add(p1,scale(p2,-1));
-		return scale(v,springConstant*length);
+		return scale(v,springConstant*(length));
 	}
 }

@@ -14,6 +14,7 @@ public abstract class Body {
 	// tmp forces will be cleared after each step!
 	protected Set<Vector2d> tmp = new HashSet<Vector2d>();
 	protected Set<BindingForce> bonds = new HashSet<BindingForce>();
+	protected Set<Body> bondedBodies = new HashSet<Body>();
 	protected Set<Vector2d> forces = new HashSet<Vector2d>();
 	protected Set<Body> alreadyHit = new HashSet<Body>();
 	protected double mass; // kg
@@ -30,7 +31,10 @@ public abstract class Body {
 	public boolean canHitForce(Body c) {
 		return distance(position, c.getPosition()) <= radius + c.radius;
 	}
-
+	public Set<Body> getBondedBodies()
+	{
+		return bondedBodies;
+	}
 	public boolean canHit(Body other) {
 		return false;
 	}
@@ -88,9 +92,10 @@ public abstract class Body {
 		alreadyHit.clear();
 	}
 
-	public void addBond(BindingForce b) {
+	public void addBond(BindingForce b, Body body) {
 		bonds.add(b);
-	}
+		bondedBodies.add(body);
+	}	
 
 	public void applyForce(Vector2d f) {
 		tmp.add(f);

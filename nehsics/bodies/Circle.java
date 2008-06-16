@@ -20,8 +20,50 @@ public class Circle extends Body {
 			return false;
 		return distance(position, c.getPosition()) <= radius + c.radius;
 	}
+	public void hitInelastically(Body b)
+	{
+		if (!(b instanceof Circle))
+			return;
+		b.alreadyHit.add(this);
+		alreadyHit.add(b);
+		double m1 = b.getMass();
+		Vector2d p1 = b.getPosition();
+		Vector2d v1 = b.getVelocity();
+		double m2 = getMass();
+		Vector2d p2 = getPosition();
+		Vector2d v2 = getVelocity();
+		if(!testDirection(p1,v1,p2,v2))
+			return;
+		// rotate the vectors
+		double theta = 0;
+		try {
+			theta = Math.atan((p1.getY()-p2.getY())/((p1.getX()-p2.getX())));
+		} catch (ArithmeticException e) {
+			theta = Math.PI/2.0;
+		}
+		theta += Math.PI;
+		theta *= -1;
+		Vector2d cv1 = new Vector2d(cos(theta)*v1.getX()
+			- sin(theta)*v1.getY(), sin(theta)*v1.getX() + cos(theta)*v1.getY());
+		Vector2d cv2 = new Vector2d(cos(theta)*v2.getX()
+			- sin(theta)*v2.getY(), sin(theta)*v2.getX() + cos(theta)*v2.getY());
 
+		double px = m1*cv1.getX() + m2*cv2.getX();
+		cv1 = v((px)/(m1+m2),cv1.getY());
+		cv2 = v((px)/(m1+m2),cv2.getY());
+
+		b.setVelocity(new Vector2d(cos(-theta)*cv1.getX() - sin(-theta)*cv1.getY(),
+		  sin(-theta)*cv1.getX() + cos(-theta)*cv1.getY()));
+		setVelocity(new Vector2d(cos(-theta)*cv2.getX() - sin(-theta)*cv2.getY(),
+			sin(-theta)*cv2.getX() + cos(-theta)*cv2.getY()));
+
+	}
 	public void hit(Body b) {
+		if(bondedBodies.contains(b))
+		{
+			hitInelastically(b);
+			return;
+		}
 		if (!(b instanceof Circle))
 			return;
 		b.alreadyHit.add(this);
