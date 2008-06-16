@@ -1,4 +1,5 @@
 package nehsics.test;
+import nehsics.world.*;
 import nehsics.ui.*;
 import nehsics.bodies.*;
 import java.awt.*;
@@ -31,8 +32,15 @@ public class CannonTester extends Tester {
 	}
 
 	protected void setup() {
+		FieldManager f = new FieldManager();
+		Stats s = new Stats();
+		world.addListener(s);
+		world.addListener(f);
+		world.addListener(new Gravitation(f));
+		Collider col = new Collider(s);
+		world.addListener(col);
 		display.setScale(2e-5);
-		world.setVisualsEnabled(true);
+		col.setVisible(true);
 		SPEED=500;
 		Circle center = new Circle(EARTH_RADIUS/10, EARTH_MASS);
 		center.setPosition(v(0,0));

@@ -1,22 +1,21 @@
 package nehsics.collide;
+import nehsics.world.*;
 import nehsics.bodies.*;
 import java.util.*;
 import java.awt.Graphics2D;
 
-public class QuadSpaceCollider extends Collider {
+public class QuadSpaceCollider extends BasicCollider {
 	// some arbitrary constants; probably far from optimal
 	private final static int TARGET_SPACE_SIZE = 10;
 	private Set<QuadSpace> visuals = new HashSet<QuadSpace>();
-	private double avg_rad;
+	private Stats stats;
+
+	public QuadSpaceCollider(Stats s) {
+		stats = s;
+	}
 
 	public void resolveCollisions(List<Body> bodies) {
 		visuals.clear();
-		double i = 0, sum = 0;
-		for (Body body : bodies) {
-			i++;
-			sum += body.getRadius();
-		}
-		avg_rad = sum / i;
 		resolveCollisions(new QuadSpace(bodies));
 	}
 
@@ -26,6 +25,7 @@ public class QuadSpaceCollider extends Collider {
 	}
 
 	private void resolveCollisions(QuadSpace space) {
+		double avg_rad = stats.getAverageBodyRadius();
 		if (space.size() <= TARGET_SPACE_SIZE || space.dim() < avg_rad*5) {
 			visuals.add(space);
 			super.resolveCollisions(space);

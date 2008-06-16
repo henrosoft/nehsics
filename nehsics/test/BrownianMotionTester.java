@@ -1,4 +1,5 @@
 package nehsics.test;
+import nehsics.world.*;
 import nehsics.ui.*;
 import nehsics.bodies.*;
 import java.awt.*;
@@ -16,10 +17,12 @@ public class BrownianMotionTester extends Tester {
 	}
 
 	protected void setup() {
+		Stats s = new Stats();
+		world.addListener(s);
+		world.addListener(new Collider(s));
+		world.addListener(new Walls(250));
 		PRECISION = 1;
 		SPEED = .2;
-		world.setWallsEnabled(true);	
-		world.setGravityEnabled(false);
 		for (int i=0; i < 10; i++) {
 			for (int j=0; j < 10; j++) {
 				Circle c = new Circle(10, 10);

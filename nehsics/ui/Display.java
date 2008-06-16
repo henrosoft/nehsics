@@ -4,6 +4,7 @@ import nehsics.bodies.*;
 import static nehsics.math.Util.*;
 import nehsics.math.*;
 import java.awt.*;
+import java.awt.geom.*;
 import java.awt.image.*;
 
 public class Display {
@@ -31,12 +32,24 @@ public class Display {
 		x = y = 0;
 	}
 
+	public int h() {
+		return (int)canvas.getSize().getHeight();
+	}
+
+	public int w() {
+		return (int)canvas.getSize().getWidth();
+	}
+
 	public double getX() {
 		return x;
 	}
 
 	public double getY() {
 		return y;
+	}
+
+	public void unsetBufTransforms() {
+		buf.setTransform(new AffineTransform());
 	}
 
 	public void setX(double newX) {

@@ -1,4 +1,5 @@
 package nehsics.test;
+import nehsics.world.*;
 import nehsics.ui.*;
 import nehsics.bodies.*;
 import java.awt.*;
@@ -16,8 +17,12 @@ public class OrbitTest extends Tester {
 	}
 
 	protected void setup() {
-		world.setVisualsEnabled(true);
+		FieldManager f = new FieldManager();
+		world.addListener(f);
+		world.addListener(new Gravitation(f));
+
 		display.setScale(1e-9);
+
 		SPEED = 365*24*60; // 1 year / min
 
 		Circle sun = new Circle(SUN_RADIUS*10, SUN_MASS);

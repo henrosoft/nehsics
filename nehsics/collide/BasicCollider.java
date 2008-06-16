@@ -3,7 +3,7 @@ import nehsics.bodies.*;
 import java.util.*;
 import java.awt.Graphics2D;
 
-public class Collider {
+public class BasicCollider {
 
 	public void resolveCollisions(List<Body> bodies) {
 		for (Body b : bodies)

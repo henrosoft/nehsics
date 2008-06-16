@@ -1,4 +1,5 @@
 package nehsics.ui;
+import nehsics.math.*;
 
 public class Timer {
 	private final double target_ns;
@@ -7,28 +8,6 @@ public class Timer {
 	private long calcTime = System.nanoTime();
 	private long startTime;
 	private Average avg = new Average(), savg = new Average();
-
-	private class Average {
-		private double a;
-		private int n;
-		
-		public void add(double x) {
-			n++;
-			a -= a/n - x/n;
-		}
-		
-		public double getAvg() {
-			return a;
-		}
-
-		public double getNum() {
-			return n;
-		}
-
-		public void clear() {
-			a = n = 0;
-		}
-	}
 
 	/**
 	 * @param targetFPS The framerate this timer will try to keep.

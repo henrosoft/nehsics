@@ -1,9 +1,8 @@
 package nehsics.force;
-import nehsics.bodies.*;
 import nehsics.math.*;
 import static nehsics.math.Util.*;
 
-public class SpringForce {
+public abstract class SpringForce {
 	private double springConstant;
 
 	public SpringForce(double constant) {
@@ -15,4 +14,6 @@ public class SpringForce {
 		Vector2d v = add(p1,scale(p2,-1));
 		return scale(v,springConstant*(length));
 	}
+
+	public abstract void calculateForce();
 }

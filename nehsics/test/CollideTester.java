@@ -1,5 +1,6 @@
 package nehsics.test;
 import nehsics.ui.*;
+import nehsics.world.*;
 import nehsics.bodies.*;
 import java.awt.*;
 import static nehsics.math.Util.*;
@@ -16,10 +17,13 @@ public class CollideTester extends Tester {
 	}
 
 	protected void setup() {
-		world.setVisualsEnabled(true);
+		Stats s = new Stats();
+		world.addListener(s);
+		Collider collider = new Collider(s);
+		collider.setVisible(true);
+		world.addListener(collider);
 		PRECISION = 1;
 		SPEED = .1;
-		world.setGravityEnabled(false);
 		for (int i=0; i < 20; i++)
 			for (int j=0; j < 20; j++) {
 				Circle c = new Circle(4, 4);

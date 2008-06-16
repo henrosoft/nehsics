@@ -1,8 +1,8 @@
 package nehsics.test;
+import nehsics.force.*;
 import nehsics.world.*;
 import nehsics.ui.*;
 import nehsics.ui.Timer;
-import nehsics.force.*;
 import nehsics.bodies.*;
 import static nehsics.math.Util.*;
 import java.awt.*;
@@ -36,17 +36,17 @@ public class Tester extends Test {
 		canvas = c;
 		c.addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
-				switch (e.getKeyCode()) {
-					case KeyEvent.VK_LEFT:
+				switch (e.getKeyChar()) {
+					case 'h':
 						display.setX(display.getX() + 10);
 						return;
-					case KeyEvent.VK_RIGHT:
+					case 'l':
 						display.setX(display.getX() - 10);
 						return;
-					case KeyEvent.VK_UP:
+					case 'k':
 						display.setY(display.getY() + 10);
 						return;
-					case KeyEvent.VK_DOWN:
+					case 'j':
 						display.setY(display.getY() - 10);
 						return;
 				}
@@ -64,25 +64,24 @@ public class Tester extends Test {
 					case '-': display.zoomOut(); return;
 					case '0': display.zoomDefault(); following = -1;
 						display.setX(0); display.setY(0);
-						display.setTrackedBody(null); return;
-					case 'q': display.setX(0); display.setY(0);
-						display.setTrackedBody(
-							world.getBodyFromIndex(
-							following = world.nextBodyIndex(following))
-						); return;
-					case 'a': display.setX(0); display.setY(0);
-						display.setTrackedBody(
-							world.getBodyFromIndex(
-							following = world.prevBodyIndex(following))
-						); return;
+						display.setTrackedBody(null); setupDisplay(); return;
+//					case 'q': display.setX(0); display.setY(0);
+//						display.setTrackedBody(
+//							world.getBodyFromIndex(
+//							following = world.nextBodyIndex(following))
+//						); return;
+//					case 'a': display.setX(0); display.setY(0);
+//						display.setTrackedBody(
+//							world.getBodyFromIndex(
+//							following = world.prevBodyIndex(following))
+//						); return;
 					case 'v': showVelocity = !showVelocity; return;
 				}
 			}
 		});
 		display = new Display(c);
-		world = new World();
-		setup();
 		timer = new Timer(FPS);
+		reset();
 	}
 
 	private void reset() {
@@ -106,24 +105,34 @@ public class Tester extends Test {
 			update(dt);
 			display.clear();
 				
-			if (following >= 0) {
-				Body fBody = world.getBodyFromIndex(following);
-				if (showVelocity)
-				   g2d.drawString("" + fBody.getVelocity().length(), 100, 100);
-			}
+//			if (following >= 0) {
+//				Body fBody = world.getBodyFromIndex(following);
+//				if (showVelocity)
+//				   g2d.drawString("" + fBody.getVelocity().length(), 100, 100);
+//			}
 			
 			preWorld();
-			display.drawWorld(world);
+			world.paint(display.getGraphics());
 			postWorld();
+			display.unsetBufTransforms();
+			overlay();
 			display.show();
 		}
 	}
 
+	protected void setupDisplay() {}
 	protected void update(double dt) {}
 	protected void preWorld() {}
 	protected void postWorld() {}
+	protected void overlay() {}
 
 	protected void setup() {
+		FieldManager f = new FieldManager();
+		Stats s = new Stats();
+		world.addListener(s);
+		world.addListener(f);
+		world.addListener(new Gravitation(f));
+		world.addListener(new Collider(s));
 		SPEED = 5;
 		PRECISION = 15;
 
@@ -141,8 +150,6 @@ public class Tester extends Test {
 		stationary.setPosition(v(0,-150));
 		stationary.addForce(v(0,-SURFACE_G*stationary.getMass()));
 		
-		world.addField(new ResistiveForce(1));
-
 		// earth is down there (its the floor)
 		Circle earth = new Circle(EARTH_RADIUS, EARTH_MASS);
 		earth.setPosition(v(0,EARTH_RADIUS+150));

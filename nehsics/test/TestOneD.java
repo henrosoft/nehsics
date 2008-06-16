@@ -1,4 +1,5 @@
 package nehsics.test;
+import nehsics.world.*;
 import nehsics.ui.*;
 import nehsics.force.*;
 import nehsics.bodies.*;
@@ -17,9 +18,15 @@ public class TestOneD extends Tester {
 	}
 
 	protected void setup() {
+		FieldManager f = new FieldManager();
+		Stats s = new Stats();
+		world.addListener(s);
+		world.addListener(f);
+		world.addListener(new Gravitation(f));
+		world.addListener(new Collider(s));
+		Bonder bonder = new Bonder();
+		world.addListener(bonder);
 		PRECISION = 1;
-		world.setGravityEnabled(false);
-		world.setWallsEnabled(true);
 		Circle c1;
 		Circle c2;
 		Circle c3;
@@ -40,18 +47,18 @@ public class TestOneD extends Tester {
 
 		c1.addBond(b6,c3);
 		c3.addBond(b5,c1);
-		world.addBond(b6);
-		world.addBond(b5);
+		bonder.addBond(b6);
+		bonder.addBond(b5);
 
 
 		c2.addBond(b2,c1);
 		c3.addBond(b3,c2);
-		world.addBond(b2);
-		world.addBond(b3);
-		world.addBond(b4);
+		bonder.addBond(b2);
+		bonder.addBond(b3);
+		bonder.addBond(b4);
 		c2.addBond(b4,c3);
 		c1.addBond(b1,c2);
-		world.addBond(b1);
+		bonder.addBond(b1);
 //		world.addBody(c1 = new Circle(10,10));
 //		c1.setPosition(v(-500,-30));
 //		c1.setVelocity(v(90,0));

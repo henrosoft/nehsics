@@ -1,5 +1,5 @@
 package nehsics.test;
-import nehsics.collide.*;
+import nehsics.world.*;
 import nehsics.ui.*;
 import nehsics.bodies.*;
 import java.awt.*;
@@ -7,6 +7,7 @@ import static nehsics.math.Util.*;
 
 public class GasTest extends Tester {
 	public final static String NAME = "Ideal Gas Model";
+	private Stats stats;
 
 	public static void main(String[] args) {
 		new Starter(NAME);
@@ -16,22 +17,31 @@ public class GasTest extends Tester {
 		super(c);
 	}
 
-	protected void setup() {
-		PRECISION = 1;
-		world.setWallsEnabled(true);
-		display.setScale(.3);
-		world.setGravityEnabled(false);
-	        int temp = 100;
+	protected void setupDisplay() {
 		Circle c;
-	        for (int i = 0; i < 19; i++)
-       		     for (int j = 0; j < 19; j++) {
-			world.addBody(c = new Circle(5,5));	
-			c.setPosition(v(50+15*i-150, 50+15*j-150));
+		display.setTrackedBody(c = new Circle(0,0));
+		c.setPosition(v(0,-100));
+	}
+
+	protected void setup() {
+		setupDisplay();
+		stats = new Stats();
+		world.addListener(stats);
+		world.addListener(new Collider(stats));
+		world.addListener(new Walls(250, .9));
+		PRECISION = 1;
+		display.setScale(.4);
+		int temp = 100;
+		Circle c;
+		for (int i = 0; i < 19; i++)
+			 for (int j = 0; j < 19; j++) {
+			world.addBody(c = new Circle(10,5));	
+			c.setPosition(v(26*i-230, 26*j-230));
 			c.setVelocity(v(temp*(Math.random()-.5), temp*(Math.random()-.5)));
-			c.setTempColorEnabled(true,world);
+			c.setTempColorEnabled(true, world);
 		}	
 		for (int i = 0; i<4; i++) {
-				world.addBody(c = new Circle(5,5));	
+				world.addBody(c = new Circle(10,5));	
 				c.setPosition(v(5000+25*i, 0));
 				c.setVelocity(v(1000, 0));
 				c.setTempColorEnabled(true,world);
@@ -42,14 +52,6 @@ public class GasTest extends Tester {
 		super.postWorld();
 		Graphics2D g2d = display.getGraphics();
 		g2d.setColor(Color.BLACK);
-		double ave = world.averageKineticWithinBounds(
-			new double[]{-250,-250,500,500})/1000;
-		double fraction = ave/200.0;
-		g2d.setFont(new Font(null,Font.BOLD,30));
-		g2d.drawString("Temperature = " + (int)ave + " Kelvin", -50, -670);
-		g2d.setColor(getColor(fraction));
-		g2d.fillRect(-50,-665,(int)(fraction*300),30);
-		g2d.setColor(Color.BLACK);
 		g2d.fillRect(-290,-450,40,710);
 		g2d.fillRect(-290,250,540,40);
 		g2d.fillRect(250,-450,50,440);
@@ -57,6 +59,18 @@ public class GasTest extends Tester {
 
 		g2d.fillRect(-245,-290,490,40);
 		g2d.fillRect(-20,-400,40,130);
+	}
+
+	public void overlay() {
+		Graphics2D g2d = display.getGraphics();
+		g2d.setColor(Color.BLACK);
+		double ave = stats.averageKineticWithinBounds(
+			new double[]{-250,-250,500,500})/1000;
+		double fraction = ave/200.0;
+		g2d.setFont(new Font(null,Font.BOLD,10));
+		g2d.drawString("Temperature = " + (int)ave + " Kelvin", 5, 10);
+		g2d.setColor(getColor(fraction));
+		g2d.fillRect(5,15,(int)(fraction*300),10);
 	}
 
 	public Color getColor(double f) {
