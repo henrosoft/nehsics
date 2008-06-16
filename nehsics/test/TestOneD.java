@@ -5,9 +5,10 @@ import nehsics.force.*;
 import nehsics.bodies.*;
 import java.awt.*;
 import static nehsics.math.Util.*;
-
+import java.util.*;
 public class TestOneD extends Tester {
 	public final static String NAME = "Rotating Triangle";
+	private Bonder bonder;
 
 	public static void main(String[] args) {
 		new Starter(NAME);
@@ -24,7 +25,7 @@ public class TestOneD extends Tester {
 		world.addListener(f);
 		world.addListener(new Gravitation(f));
 		world.addListener(new Collider(s));
-		Bonder bonder = new Bonder();
+		bonder = new Bonder();
 		world.addListener(bonder);
 		PRECISION = 1;
 		Circle c1;
@@ -59,10 +60,11 @@ public class TestOneD extends Tester {
 		c2.addBond(b4,c3);
 		c1.addBond(b1,c2);
 		bonder.addBond(b1);
+//		createFilament();
 //		world.addBody(c1 = new Circle(10,10));
-//		c1.setPosition(v(-500,-30));
+//		c1.setPosition(v(-500,90));
 //		c1.setVelocity(v(90,0));
-		double temp = 100;
+	double temp = 100;
 		Circle c;
 	        for (int i = 0; i < 9; i++)
        		     for (int j = 0; j < 9; j++) {
@@ -74,5 +76,28 @@ public class TestOneD extends Tester {
 //		world.addBody(c1 = new Circle(10,10));
 //		c1.setPosition(v(100,10));
 //		c1.setVelocity(v(-50,0));
+	}
+
+	public void createFilament() {
+		ArrayList<Circle> circles = new ArrayList<Circle>();
+		Circle c;
+		for(int i = 0; i<10; i++) {
+			world.addBody(c = new Circle(10,10));
+			c.setPosition(v(0,i*20));
+			circles.add(c);
+		}
+		BindingForce b;
+		for(int i = 0; i<10; i++) {
+			if (i!=0) {
+				b = new BindingForce(circles.get(i-1),circles.get(i));
+				bonder.addBond(b);
+				circles.get(i).addBond(b,circles.get(i-1));
+			}
+			if (i!=9) {
+				b = new BindingForce(circles.get(i+1),circles.get(i));
+				bonder.addBond(b);
+				circles.get(i).addBond(b,circles.get(i+1));
+			}
+		}
 	}
 }
