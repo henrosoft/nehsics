@@ -28,12 +28,7 @@ public class BrownianMotionTester extends Tester {
 				c.setVisible(false);
 			}
 		}
-	/*	for(int i = 0; i<5; i++)
-		{
-			Circle c = new Circle(10,10);
-			c.setPosition(v(0,i*17));
-			world.addBody(c);
-		}*/
+
 		Circle x = new Circle(50, 200);
 		x.setPosition(v(-300, 35));
 		x.setVelocity(v(750,1));

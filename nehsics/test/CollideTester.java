@@ -16,6 +16,7 @@ public class CollideTester extends Tester {
 	}
 
 	protected void setup() {
+		world.setVisualsEnabled(true);
 		PRECISION = 1;
 		SPEED = .1;
 		world.setGravityEnabled(false);

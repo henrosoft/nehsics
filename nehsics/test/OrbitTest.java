@@ -16,6 +16,7 @@ public class OrbitTest extends Tester {
 	}
 
 	protected void setup() {
+		world.setVisualsEnabled(true);
 		display.setScale(1e-9);
 		SPEED = 365*24*60; // 1 year / min
 

@@ -4,10 +4,9 @@ import nehsics.force.*;
 import nehsics.bodies.*;
 import java.awt.*;
 import static nehsics.math.Util.*;
-import java.awt.*;
 
 public class TestOneD extends Tester {
-	public final static String NAME = "One D";
+	public final static String NAME = "One D <-- What?";
 
 	public static void main(String[] args) {
 		new Starter(NAME);
