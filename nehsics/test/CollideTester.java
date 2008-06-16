@@ -23,11 +23,11 @@ public class CollideTester extends Tester {
 		for (int i=0; i < 20; i++)
 			for (int j=0; j < 20; j++) {
 				Circle c = new Circle(4, 4);
-				c.setPosition(v(j*8,i*8));
+				c.setPosition(v(j*1,i*1));
 				world.addBody(c);
 			}
-		Circle x = new Circle(30, 5000);
-		x.setPosition(v(-200, 80));
+		Circle x = new Circle(20, 500);
+		x.setPosition(v(-200, 0));
 		x.setVelocity(v(500,0));
 		world.addBody(x);
 	}

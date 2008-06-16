@@ -2,9 +2,10 @@ package nehsics.test;
 import nehsics.collide.*;
 import nehsics.ui.*;
 import nehsics.bodies.*;
+import nehsics.force.*;
 import java.awt.*;
 import static nehsics.math.Util.*;
-
+import java.util.*;
 public class GasTest extends Tester {
 	public final static String NAME = "Ideal Gas Model";
 
@@ -15,6 +16,33 @@ public class GasTest extends Tester {
 	public GasTest(Canvas c) {
 		super(c);
 	}
+	public void createFilament()
+	{
+		ArrayList<Circle> circles = new ArrayList<Circle>();
+		Circle c;
+		for(int i = 0; i<10; i++)
+		{
+			world.addBody(c = new Circle(10,10));
+			c.setPosition(v(0,i*20));
+			circles.add(c);
+		}
+		BindingForce b;
+		for(int i = 0; i<10; i++)
+		{
+			if(i!=0)
+			{
+				b = new BindingForce(circles.get(i-1),circles.get(i));
+				world.addBond(b);
+				circles.get(i).addBond(b,circles.get(i-1));
+			}
+			if(i!=9)
+			{
+				b = new BindingForce(circles.get(i+1),circles.get(i));
+				world.addBond(b);
+				circles.get(i).addBond(b,circles.get(i+1));
+			}
+		}
+	}
 
 	protected void setup() {
 		PRECISION = 1;
@@ -22,6 +50,7 @@ public class GasTest extends Tester {
 		display.setScale(.3);
 		world.setGravityEnabled(false);
 	        int temp = 100;
+//		createFilament();
 		Circle c;
 	        for (int i = 0; i < 19; i++)
        		     for (int j = 0; j < 19; j++) {
