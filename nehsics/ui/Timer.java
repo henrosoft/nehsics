@@ -1,11 +1,12 @@
-package nehsics.world;
+package nehsics.ui;
 
 public class Timer {
 	private final double target_ns;
 	private long old_ns, now_ns, old_diff, now_diff, sleep_ms;
 	private long printTime = System.currentTimeMillis();
 	private long calcTime = System.nanoTime();
-	private Average avg = new Average();
+	private long startTime;
+	private Average avg = new Average(), savg = new Average();
 
 	private class Average {
 		private double a;
@@ -41,7 +42,10 @@ public class Timer {
 	 * Reset the timer, as if newly constructed.
 	 */
 	public void reset() {
+		System.out.print("\r                                                      ");
 		avg.clear();
+		savg.clear();
+		startTime = System.currentTimeMillis();
 		old_ns = System.nanoTime();
 		now_ns = old_ns;
 		now_diff = old_diff = 0;
@@ -63,6 +67,7 @@ public class Timer {
 			sleep_ms--;
 		old_diff = now_diff;
 		avg.add(System.nanoTime() - calcTime);
+		savg.add(System.nanoTime() - calcTime);
 		try {
 			Thread.sleep(sleep_ms);
 		} catch (InterruptedException e) {
@@ -71,8 +76,9 @@ public class Timer {
 		double frame_ns = now_ns - old_ns;
 		old_ns = now_ns;
 		if (System.currentTimeMillis() - printTime > 1000) {
-			System.out.println("Calculation time: " + (int)(avg.getAvg()/1e6) + "ms");
-			avg.clear();
+			System.out.print("\rCalculation time: " + (int)(savg.getAvg()/1e6)
+				+ "ms (avg " + (int)(avg.getAvg()/1e6) + "), Elapsed: " + (int)((System.currentTimeMillis()-startTime)/1000) + "s");
+			savg.clear();
 			printTime = System.currentTimeMillis();
 		}
 		calcTime = System.nanoTime();
