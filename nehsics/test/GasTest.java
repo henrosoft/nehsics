@@ -49,14 +49,13 @@ public class GasTest extends Tester {
 	}
 
 	protected void setup() {
-		setupDisplay();
 		stats = new Stats();
 		world.addListener(stats);
 		world.addListener(bonder = new Bonder());
 		world.addListener(new Collider(stats));
 		world.addListener(new Walls(250, .9));
 		display.setScale(.4);
-		int temp = 100;
+		int temp = 00;
 //		createFilament();
 		Circle c;
 		for (int i = 0; i < 19; i++)

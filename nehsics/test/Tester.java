@@ -63,16 +63,8 @@ public class Tester extends Test {
 					case '0': display.zoomDefault(); following = -1;
 						display.setX(0); display.setY(0);
 						display.setTrackedBody(null); setupDisplay(); return;
-//					case 'q': display.setX(0); display.setY(0);
-//						display.setTrackedBody(
-//							world.getBodyFromIndex(
-//							following = world.nextBodyIndex(following))
-//						); return;
-//					case 'a': display.setX(0); display.setY(0);
-//						display.setTrackedBody(
-//							world.getBodyFromIndex(
-//							following = world.prevBodyIndex(following))
-//						); return;
+					case 'q': display.trackPrevious(); return;
+					case 'a': display.trackNext(); return;
 					case 'v': showVelocity = !showVelocity; return;
 				}
 			}
@@ -89,6 +81,7 @@ public class Tester extends Test {
 		speed = 1;
 		sign = true;
 		following = -1;
+		setupDisplay();
 		setup();
 	}
 
@@ -110,7 +103,10 @@ public class Tester extends Test {
 		}
 	}
 
-	protected void setupDisplay() {}
+	protected void setupDisplay() {
+		world.addListener(display);
+	}
+
 	protected void update(double dt) {}
 	protected void preWorld() {}
 	protected void postWorld() {}
@@ -124,7 +120,7 @@ public class Tester extends Test {
 		world.addListener(new Gravitation(f));
 		world.addListener(new Collider(s));
 		SPEED = 5;
-		PRECISION = 15;
+		PRECISION = 5;
 
 		// large circles... (low density here)
 		Circle a = new Circle(45,10);

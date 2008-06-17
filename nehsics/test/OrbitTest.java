@@ -17,6 +17,7 @@ public class OrbitTest extends Tester {
 	}
 
 	protected void setup() {
+		PRECISION = 10;
 		FieldManager f = new FieldManager();
 		world.addListener(f);
 		world.addListener(new Gravitation(f));

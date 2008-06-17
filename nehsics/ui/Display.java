@@ -6,8 +6,9 @@ import nehsics.math.*;
 import java.awt.*;
 import java.awt.geom.*;
 import java.awt.image.*;
+import java.util.*;
 
-public class Display {
+public class Display extends WorldAdapter {
 	private BufferStrategy strategy;
 	private Graphics2D buf;
 	private Canvas canvas;
@@ -16,6 +17,7 @@ public class Display {
 	private boolean fade, clear;
 	private double x, y;
 	private Body center;
+	private LinkedList<Body> targets = new LinkedList<Body>();
 
 	public Display(Canvas c) {
 		canvas = c;
@@ -26,6 +28,9 @@ public class Display {
 	}
 
 	public void reset() {
+		synchronized (targets) {
+			targets.clear();
+		}
 		center = null;
 		zoom = scale = 1;
 		fade = clear = false;
@@ -64,9 +69,34 @@ public class Display {
 
 	public void setTrackedBody(Body b) {
 		center = b;
-		clear = true;
 	}
-	
+
+	public void trackNext() {
+		synchronized (targets) {
+			if (targets == null || targets.size() < 1)
+				return;
+			x = y = 0;
+			targets.addLast(targets.removeFirst());
+			center = targets.getFirst();
+		}
+	}
+
+	public void trackPrevious() {
+		synchronized (targets) {
+			if (targets == null || targets.size() < 1)
+				return;
+			x = y = 0;
+			targets.addFirst(targets.removeLast());
+			center = targets.getFirst();
+		}
+	}
+
+	public void newBody(World world, Body b) {
+		synchronized (targets) {
+			targets.addLast(b);	
+		}
+	}
+
 	public void setScale(double s) {
 		scale = s;
 		clear = true;
