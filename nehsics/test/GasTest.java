@@ -55,7 +55,6 @@ public class GasTest extends Tester {
 		world.addListener(bonder = new Bonder());
 		world.addListener(new Collider(stats));
 		world.addListener(new Walls(250, .9));
-		PRECISION = 1;
 		display.setScale(.4);
 		int temp = 100;
 //		createFilament();

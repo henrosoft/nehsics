@@ -1,5 +1,4 @@
 package nehsics.test;
-import nehsics.force.*;
 import nehsics.world.*;
 import nehsics.ui.*;
 import nehsics.ui.Timer;
@@ -10,7 +9,6 @@ import java.awt.event.*;
 
 public class Tester extends Test {
 	protected volatile boolean running = true;
-	private final static Font f = new Font("Serif", Font.PLAIN, 12);
 	protected Canvas canvas;
 	protected Display display;
 	protected World world;
@@ -18,8 +16,8 @@ public class Tester extends Test {
 	protected double SPEED = 1;
 	protected double speed = 1;
 	protected double FPS = 60;
-	private boolean sign = true;
-	protected int PRECISION = 5;
+	private boolean sign = true, reset;
+	protected int PRECISION = 1;
 	protected int following = -1;
 	protected boolean showVelocity = false;
 	public final static String NAME = "Falling Spheres";
@@ -51,7 +49,7 @@ public class Tester extends Test {
 						return;
 				}
 				switch (e.getKeyChar()) {
-					case 'r': reset(); return;
+					case 'r': reset = true; return;
 					case 'f':
 						display.setFadeEnabled(!display.getFadeEnabled()); return;
 					case '!': sign = !sign; return;
@@ -85,6 +83,7 @@ public class Tester extends Test {
 	}
 
 	private void reset() {
+		reset = false;
 		world = new World();
 		display.reset();
 		speed = 1;
@@ -95,22 +94,13 @@ public class Tester extends Test {
 
 	public void run() {
 		while (running) {
-			Graphics2D g2d = display.getGraphics();
-			g2d.setColor(Color.RED);
-			g2d.setFont(f);
-				
+			if (reset)
+				reset();
 			double dt = (sign ? 1 : -1)*timer.tick();
 			for (int i=0; i < PRECISION; i++)
 				world.step(SPEED*speed*dt/PRECISION);
-			update(dt);
 			display.clear();
-				
-//			if (following >= 0) {
-//				Body fBody = world.getBodyFromIndex(following);
-//				if (showVelocity)
-//				   g2d.drawString("" + fBody.getVelocity().length(), 100, 100);
-//			}
-			
+			update(dt);
 			preWorld();
 			world.paint(display.getGraphics());
 			postWorld();

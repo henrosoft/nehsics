@@ -21,7 +21,6 @@ public class BrownianMotionTester extends Tester {
 		world.addListener(s);
 		world.addListener(new Collider(s));
 		world.addListener(new Walls(250));
-		PRECISION = 1;
 		SPEED = .2;
 		for (int i=0; i < 10; i++) {
 			for (int j=0; j < 10; j++) {

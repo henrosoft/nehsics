@@ -18,14 +18,10 @@ public class CollapseTest extends Tester {
 
 	protected void setup() {
 		FieldManager f = new FieldManager();
-		Stats s = new Stats();
-		world.addListener(s);
 		world.addListener(f);
 		world.addListener(new Gravitation(f));
-		world.addListener(new Collider(s));
 		display.setScale(3e-8);
-		SPEED=.5;
-		PRECISION = 1;
+		SPEED = .25;
 		for (int i=0; i < 11; i++)
 			for (int j=0; j < 11; j++) {
 				Circle tmp = new Circle(SUN_RADIUS/2, SUN_MASS*1e6);

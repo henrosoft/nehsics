@@ -20,18 +20,22 @@ public class CollideTester extends Tester {
 		Stats s = new Stats();
 		world.addListener(s);
 		Collider collider = new Collider(s);
-		collider.setVisible(true);
 		world.addListener(collider);
-		PRECISION = 1;
 		SPEED = .1;
-		for (int i=0; i < 20; i++)
-			for (int j=0; j < 20; j++) {
-				Circle c = new Circle(4, 4);
-				c.setPosition(v(j*1,i*1));
+		long group = 424242424;
+		for (int i=0; i < 50; i++)
+			for (int j=0; j < 5; j++) {
+				Circle c = new Circle(4, 100);
+				c.setPosition(v(j*4,i*4-100));
+				c.setGroup(group);
 				world.addBody(c);
 			}
-		Circle x = new Circle(20, 500);
-		x.setPosition(v(-200, 0));
+		Circle x = new Circle(2, 50000);
+		x.setPosition(v(-900, 50));
+		x.setVelocity(v(2500,0));
+		world.addBody(x);
+		x = new Circle(20, 50);
+		x.setPosition(v(-200, -50));
 		x.setVelocity(v(500,0));
 		world.addBody(x);
 	}

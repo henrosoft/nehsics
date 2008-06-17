@@ -11,6 +11,8 @@ import java.util.*;
 import java.awt.geom.*;
 import java.awt.*;
 public abstract class Body {
+	private static long nextGroup = System.nanoTime();
+	protected long group = nextGroup++;
 	// tmp forces will be cleared after each step!
 	protected Set<Vector2d> tmp = new HashSet<Vector2d>();
 	protected Set<BindingForce> bonds = new HashSet<BindingForce>();
@@ -31,22 +33,32 @@ public abstract class Body {
 	public boolean canHitForce(Body c) {
 		return distance(position, c.getPosition()) <= radius + c.radius;
 	}
-	public Set<Body> getBondedBodies()
-	{
+
+	public Set<Body> getBondedBodies() {
 		return bondedBodies;
 	}
+
 	public boolean canHit(Body other) {
 		return false;
 	}
-	public boolean intersects(Rectangle r)
-	{
+
+	public boolean intersects(Rectangle r) {
 		AffineTransform af = AffineTransform.getTranslateInstance(
 			position.getX()-radius, position.getY()-radius);
 		Shape transformed = af.createTransformedShape(shape);
 		return transformed.intersects(r);
 	}
+
 	public double getRadius() {
 		return radius;
+	}
+
+	public void setGroup(long g) {
+		group = g;
+	}
+
+	public long getGroup() {
+		return group;
 	}
 
 	public void hit(Body other) { }

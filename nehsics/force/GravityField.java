@@ -12,7 +12,7 @@ public class GravityField implements ForceField {
 
 	public Vector2d getForce(Body body) {
 		Vector2d grav = v();
-		if (body != origin) {
+		if (body.getGroup() != origin.getGroup()) {
 			double mag = G*body.getMass()*origin.getMass()
 				/ Math.pow(distance(body.getPosition(), origin.getPosition()),2);
 			if (mag == Double.POSITIVE_INFINITY)

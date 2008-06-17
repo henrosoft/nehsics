@@ -27,7 +27,6 @@ public class TestOneD extends Tester {
 		world.addListener(new Collider(s));
 		bonder = new Bonder();
 		world.addListener(bonder);
-		PRECISION = 1;
 		Circle c1;
 		Circle c2;
 		Circle c3;
