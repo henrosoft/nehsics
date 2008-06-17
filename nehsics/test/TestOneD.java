@@ -11,7 +11,7 @@ public class TestOneD extends Tester {
 	private Bonder bonder;
 
 	public static void main(String[] args) {
-		new Starter(NAME);
+		new Starter("nehsics.test.TestOneD");
 	}
 
 	public TestOneD(Canvas c) {

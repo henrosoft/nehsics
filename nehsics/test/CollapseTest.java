@@ -9,7 +9,7 @@ public class CollapseTest extends Tester {
 	public final static String NAME = "Minimum PE Principle";
 
 	public static void main(String[] args) {
-		new Starter(NAME);
+		new Starter("nehsics.test.CollapseTest");
 	}
 
 	public CollapseTest(Canvas c) {

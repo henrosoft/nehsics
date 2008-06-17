@@ -9,7 +9,7 @@ public class CollideTester extends Tester {
 	public final static String NAME = "Collision Tester";
 
 	public static void main(String[] args) {
-		new Starter(NAME) ;
+		new Starter("nehsics.test.CollideTester") ;
 	}
 
 	public CollideTester(Canvas c) {

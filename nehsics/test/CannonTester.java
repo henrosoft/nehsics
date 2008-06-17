@@ -10,7 +10,7 @@ public class CannonTester extends Tester {
 	protected long lastTime;
 
 	public static void main(String[] args) {
-		new Starter(NAME);
+		new Starter("nehsics.test.CannonTester");
 	}
 
 	public CannonTester(Canvas c) {

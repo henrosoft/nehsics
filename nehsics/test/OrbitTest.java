@@ -9,7 +9,7 @@ public class OrbitTest extends Tester {
 	public final static String NAME = "Inner Solar System";
 
 	public static void main(String[] args) {
-		new Starter(NAME);
+		new Starter("nehsics.test.OrbitTest");
 	}
 
 	public OrbitTest(Canvas c) {
@@ -17,7 +17,7 @@ public class OrbitTest extends Tester {
 	}
 
 	protected void setup() {
-		PRECISION = 10;
+		PRECISION = 5;
 		FieldManager f = new FieldManager();
 		world.addListener(f);
 		world.addListener(new Gravitation(f));

@@ -1,5 +1,5 @@
-package nehsics.test;
-import nehsics.ui.*;
+package nehsics.ui;
+import nehsics.test.Test;
 import java.awt.*;
 
 public class LogoTest extends Test {
@@ -9,7 +9,7 @@ public class LogoTest extends Test {
 	private Display display;
 
 	public static void main(String[] args) {
-		new Starter(NAME);
+		new Starter("nehsics.ui.LogoTest");
 	}
 
 	public LogoTest(Canvas c) {

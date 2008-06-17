@@ -3,11 +3,15 @@ import nehsics.test.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import java.awt.FlowLayout;
+import java.lang.reflect.*;
+import java.io.*;
+import java.util.*;
+import java.util.List;
+import java.util.jar.*;
 
 public class Starter {
 	protected JFrame frame;
-	protected JSplitPane jsplit ;
+	protected JSplitPane jsplit;
 	protected JComboBox combo;
 	protected String s;
 	protected Canvas canvas;
@@ -29,16 +33,21 @@ public class Starter {
 		canvas.setMinimumSize(new Dimension(30000,30000));
 		jsplit.setDividerLocation(432);
 		jsplit.setResizeWeight(1);
-		combo.addItem(LogoTest.NAME);
-		combo.addItem(OrbitTest.NAME);
-		combo.addItem(Tester.NAME);
-		combo.addItem(CollideTester.NAME);
-		combo.addItem(BrownianMotionTester.NAME);
-		combo.addItem(GasTest.NAME);
-		combo.addItem(CannonTester.NAME);
-		combo.addItem(CollapseTest.NAME);
-		combo.addItem(TestOneD.NAME);
-		combo.setSelectedItem(init);
+
+		TestConstructor initCon = new TestConstructor(init);
+		boolean foundSelection = false;
+		for (TestConstructor testCon : getTestConstructors()) {
+			combo.addItem(testCon);
+			if (testCon.equals(initCon)) {
+				combo.setSelectedItem(testCon);
+				foundSelection = true;
+			}
+		}
+		if (!foundSelection) { // init must not be in the list, add it manually
+			combo.insertItemAt(initCon, 0);
+			combo.setSelectedItem(initCon);
+		}
+
 		frame.setContentPane(jsplit);
 		frame.setIgnoreRepaint(true);
 		frame.setVisible(true);
@@ -62,35 +71,90 @@ public class Starter {
 						t.printStackTrace();
 					}
 				}
-				t = makeTester((String)combo.getSelectedItem());
+				t = ((TestConstructor)combo.getSelectedItem()).newInstance(canvas);
 				t.start();
 			}
 		});
-		t = makeTester(init);
+		t = initCon.newInstance(canvas);
 		t.start();
 	}
 
-	private Test makeTester(String name) {
-		if (OrbitTest.NAME.equals(name))
-			return new OrbitTest(canvas);
-		else if (Tester.NAME.equals(name))
-			return new Tester(canvas);
-		else if (CollideTester.NAME.equals(name))
-			return new CollideTester(canvas);
-		else if (BrownianMotionTester.NAME.equals(name))
-			return new BrownianMotionTester(canvas);
-		else if (GasTest.NAME.equals(name))
-			return new GasTest(canvas);
-		else if (CannonTester.NAME.equals(name))
-			return new CannonTester(canvas);
-		else if (CollapseTest.NAME.equals(name))
-			return new CollapseTest(canvas);
-		else if (TestOneD.NAME.equals(name))
-			return new TestOneD(canvas);
-		return new LogoTest(canvas);
+	private List<TestConstructor> getTestConstructors() {
+		List<TestConstructor> cons = new LinkedList<TestConstructor>();
+		File dir = new File(getClass().getResource("/nehsics/test/").getFile());
+		String[] tests = dir.list();
+		if (tests == null) // in a jar file :(
+			tests = readTestsFromJar();
+		for (String test : tests) {
+			if (!test.endsWith(".class") || test.contains("$"))
+				continue;
+			String name = "nehsics.test." + test.split(".class")[0];
+			try {
+				cons.add(new TestConstructor(name));
+			} catch (Exception e) {}
+		}
+		return cons;
+	}
+
+	private String[] readTestsFromJar() {
+		List<String> tests = new LinkedList<String>();
+		try {
+			JarFile jar = new JarFile("NEHsics.jar");
+			for (Enumeration<JarEntry> e = jar.entries(); e.hasMoreElements();) {
+				String name = e.nextElement().toString();
+				if (name.matches("nehsics/test/[^$]*.class"))
+					tests.add(name.split("nehsics/test/")[1]);
+			}
+			jar.close();
+		} catch (Exception e) {
+			System.err.println(e);
+		}
+		return tests.toArray(new String[0]);
 	}
 
 	public static void main(String[] args) {
-		new Starter(LogoTest.NAME);
+		new Starter("nehsics.ui.LogoTest");
+	}
+
+	/**
+	 * Constructor wrapper for instantiating Tests, providing
+	 * that they have a suitable constructor.
+	 * The NAME field for tests is optional.
+	 */
+	private class TestConstructor {
+		private String name;
+		private Constructor<Test> cons;
+
+		@SuppressWarnings(value = "unchecked")
+		public TestConstructor(String init) {
+			try {
+				Class<Test> test = (Class<Test>)Class.forName(init);
+				cons = test.getConstructor(Class.forName("java.awt.Canvas"));
+				name = (String)test.getField("NAME").get(null);
+			} catch (Exception e) {
+				throw new IllegalArgumentException("Bad class '" + init + "'");
+			} finally {
+				if (name == null && cons != null)
+					name = cons.toString();
+			}
+		}
+
+		public String toString() {
+			return name;
+		}
+
+		public boolean equals(TestConstructor other) {
+			return other.cons.getDeclaringClass().equals(cons.getDeclaringClass());
+		}
+
+		public Test newInstance(Canvas canvas) {
+			Test test = null;
+			try {
+				test = cons.newInstance(canvas);
+			} catch (Exception e) {
+				System.err.println(e);
+			}
+			return test;
+		}
 	}
 }

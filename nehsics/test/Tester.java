@@ -1,5 +1,6 @@
 package nehsics.test;
 import nehsics.world.*;
+import nehsics.force.*;
 import nehsics.ui.*;
 import nehsics.ui.Timer;
 import nehsics.bodies.*;
@@ -19,7 +20,7 @@ public class Tester extends Test {
 	public final static String NAME = "Falling Spheres";
 
 	public static void main(String[] args) {
-		new Starter(NAME);
+		new Starter("nehsics.test.Tester");
 	}
 
 	public void quit() {
@@ -38,15 +39,13 @@ public class Tester extends Test {
 				}
 				switch (e.getKeyChar()) {
 					case 'r': reset = true; return;
-					case 'f':
-						display.setFadeEnabled(!display.getFadeEnabled()); return;
+					case 'f': display.toggleFade(); return;
 					case '!': reverseTime = !reverseTime; return;
-					
 					case 'w': speedModifier *= 1.2; return;
 					case 'x': speedModifier /= 1.2; return;
 					case 's': speedModifier = 1; return;
-					
-					case '+': case '=': display.zoomIn(); return;
+					case '+':
+					case '=': display.zoomIn(); return;
 					case '-': display.zoomOut(); return;
 					case '0': display.softReset(); return;
 					case 'q': display.trackPrevious(); return;
@@ -97,6 +96,7 @@ public class Tester extends Test {
 
 	protected void setup() {
 		FieldManager f = new FieldManager();
+		f.add(new ResistiveForce(1));
 		Stats s = new Stats();
 		world.addListener(s);
 		world.addListener(f);
@@ -116,7 +116,7 @@ public class Tester extends Test {
 
 		// normal force opposes gravity
 		Circle stationary = new Circle(40,10);
-		stationary.setPosition(v(0,-150));
+		stationary.setPosition(v(0,50));
 		stationary.addForce(v(0,-SURFACE_G*stationary.getMass()));
 		
 		// earth is down there (its the floor)

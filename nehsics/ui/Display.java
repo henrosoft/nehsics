@@ -28,7 +28,7 @@ public class Display extends WorldAdapter {
 	}
 
 	/**
-	 * Reset all parameters (prepare to switch tests)
+	 * Reset all parameters (restart test)
 	 */
 	public void reset() {
 		synchronized (targets) {
@@ -116,12 +116,8 @@ public class Display extends WorldAdapter {
 		clear = true;
 	}
 
-	public void setFadeEnabled(boolean b) {
-		fade = b;
-	}
-
-	public boolean getFadeEnabled() {
-		return fade;
+	public void toggleFade() {
+		fade = !fade;
 	}
 
 	public void drawWorld(World world) {

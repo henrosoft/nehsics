@@ -9,7 +9,7 @@ public class BrownianMotionTester extends Tester {
 	public final static String NAME = "Brownian Motion";
 
 	public static void main(String[] args) {
-		new Starter(NAME);
+		new Starter("nehsics.test.BrownianMotionTester");
 	}
 
 	public BrownianMotionTester(Canvas c) {

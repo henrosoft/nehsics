@@ -12,7 +12,7 @@ public class GasTest extends Tester {
 	private Stats stats;
 
 	public static void main(String[] args) {
-		new Starter(NAME);
+		new Starter("nehsics.test.GasTest");
 	}
 
 	public GasTest(Canvas c) {
@@ -55,7 +55,7 @@ public class GasTest extends Tester {
 		world.addListener(new Collider(stats));
 		world.addListener(new Walls(250, .9));
 		display.setScale(.4);
-		int temp = 00;
+		int temp = 100;
 //		createFilament();
 		Circle c;
 		for (int i = 0; i < 19; i++)
