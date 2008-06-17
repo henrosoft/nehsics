@@ -12,14 +12,10 @@ public class Tester extends Test {
 	protected Canvas canvas;
 	protected Display display;
 	protected World world;
-	protected Timer timer;
-	protected double SPEED = 1;
-	protected double speed = 1;
-	protected double FPS = 60;
-	private boolean sign = true, reset;
-	protected int PRECISION = 1;
-	protected int following = -1;
-	protected boolean showVelocity = false;
+	protected Timer timer = new Timer(60); // 60fps
+	private boolean reset, reverseTime; // doesn't work as advertised
+	protected double speedModifier = 1; // user adjusted
+	protected double SPEED = 1, PRECISION = 1; // not really constants
 	public final static String NAME = "Falling Spheres";
 
 	public static void main(String[] args) {
@@ -35,52 +31,39 @@ public class Tester extends Test {
 		c.addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
 				switch (e.getKeyChar()) {
-					case 'h':
-						display.setX(display.getX() + 10);
-						return;
-					case 'l':
-						display.setX(display.getX() - 10);
-						return;
-					case 'k':
-						display.setY(display.getY() + 10);
-						return;
-					case 'j':
-						display.setY(display.getY() - 10);
-						return;
+					case 'h': display.move(v(10,0)); return;
+					case 'l': display.move(v(-10,0)); return;
+					case 'k': display.move(v(0,10)); return;
+					case 'j': display.move(v(0,-10)); return;
 				}
 				switch (e.getKeyChar()) {
 					case 'r': reset = true; return;
 					case 'f':
 						display.setFadeEnabled(!display.getFadeEnabled()); return;
-					case '!': sign = !sign; return;
+					case '!': reverseTime = !reverseTime; return;
 					
-					case 'w': speed *= 1.2; return;
-					case 'x': speed /= 1.2; return;
-					case 's': speed = 1; return;
+					case 'w': speedModifier *= 1.2; return;
+					case 'x': speedModifier /= 1.2; return;
+					case 's': speedModifier = 1; return;
 					
 					case '+': case '=': display.zoomIn(); return;
 					case '-': display.zoomOut(); return;
-					case '0': display.zoomDefault(); following = -1;
-						display.setX(0); display.setY(0);
-						display.setTrackedBody(null); setupDisplay(); return;
+					case '0': display.softReset(); return;
 					case 'q': display.trackPrevious(); return;
 					case 'a': display.trackNext(); return;
-					case 'v': showVelocity = !showVelocity; return;
 				}
 			}
 		});
 		display = new Display(c);
-		timer = new Timer(FPS);
 		reset();
 	}
 
 	private void reset() {
 		reset = false;
+		reverseTime = false;
 		world = new World();
 		display.reset();
-		speed = 1;
-		sign = true;
-		following = -1;
+		speedModifier = 1;
 		setupDisplay();
 		setup();
 	}
@@ -89,9 +72,9 @@ public class Tester extends Test {
 		while (running) {
 			if (reset)
 				reset();
-			double dt = (sign ? 1 : -1)*timer.tick();
+			double dt = (reverseTime ? -1 : 1)*timer.tick();
 			for (int i=0; i < PRECISION; i++)
-				world.step(SPEED*speed*dt/PRECISION);
+				world.step(SPEED*speedModifier*dt/PRECISION);
 			display.clear();
 			update(dt);
 			preWorld();

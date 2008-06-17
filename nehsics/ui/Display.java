@@ -16,7 +16,7 @@ public class Display extends WorldAdapter {
 	private double zoom = 1; // zoom is controlled by the user
 	private boolean fade, clear;
 	private double x, y;
-	private Body center;
+	private Body center, manualCenter;
 	private LinkedList<Body> targets = new LinkedList<Body>();
 
 	public Display(Canvas c) {
@@ -27,11 +27,14 @@ public class Display extends WorldAdapter {
 		clear();
 	}
 
+	/**
+	 * Reset all parameters (prepare to switch tests)
+	 */
 	public void reset() {
 		synchronized (targets) {
 			targets.clear();
 		}
-		center = null;
+		center = manualCenter = null;
 		zoom = scale = 1;
 		fade = clear = false;
 		x = y = 0;
@@ -45,30 +48,26 @@ public class Display extends WorldAdapter {
 		return (int)canvas.getSize().getWidth();
 	}
 
-	public double getX() {
-		return x;
-	}
-
-	public double getY() {
-		return y;
-	}
-
 	public void unsetBufTransforms() {
 		buf.setTransform(new AffineTransform());
 	}
 
-	public void setX(double newX) {
-		x = newX;	
-		clear = true;
-	}
-
-	public void setY(double newY) {
-		y = newY;
-		clear = true;
+	public void move(Vector2d disp) {
+		x += disp.getX();	
+		y += disp.getY();
 	}
 
 	public void setTrackedBody(Body b) {
-		center = b;
+		center = manualCenter = b;
+	}
+
+	/**
+	 * Reset user modifications except for tracking order: TODO
+	 */
+	public void softReset() {
+		x = y = 0;
+		zoom = 1;
+		center = manualCenter;
 	}
 
 	public void trackNext() {

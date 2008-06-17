@@ -8,11 +8,6 @@ public class World {
 	protected List<Body> bodies = new LinkedList<Body>();
 	protected List<WorldListener> listeners = new LinkedList<WorldListener>();
 
-	// strongly discouraged
-	public List<Body> getBodies() {
-		return bodies;
-	}
-
 	public void addBody(Body b) {
 		bodies.add(b);
 		for (WorldListener listener : listeners)
