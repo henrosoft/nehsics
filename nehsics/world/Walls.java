@@ -2,11 +2,14 @@ package nehsics.world;
 import nehsics.math.*;
 import static nehsics.math.Util.*;
 import nehsics.bodies.*;
+import java.util.*;
 
 public class Walls extends WorldAdapter {
 	private int wall;
 	private double damping = 1;
 	private double internalEnergy = 0;
+	private Set<Body> withinWalls = new HashSet<Body>();
+
 	public Walls(int size) {
 		wall = size;
 	}
@@ -15,10 +18,11 @@ public class Walls extends WorldAdapter {
 		wall = size;
 		damping = d;
 	}
-	public double getInternalEnergy()
-	{
+
+	public double getInternalEnergy() {
 		return internalEnergy;
 	}
+
 	public void beginStep(World world, double dt) {
         for (Body b : world.bodies) {
 			double k = b.getKineticEnergy();
@@ -36,5 +40,19 @@ public class Walls extends WorldAdapter {
 			b.setVelocity(v);
 			internalEnergy += k-b.getKineticEnergy();
         }
+	}
+
+	public void endStep(World world, double dt) {
+		for (Body b : world.bodies) {
+			Vector2d p = b.getPosition();
+			double x = p.getX(), y = p.getY(), r = b.getRadius();
+			if (x - r > wall || x + r < -wall || y - r > wall || y + r < -wall) {
+				if (withinWalls.contains(b))
+					b.setVisible(false);
+			} else {
+				withinWalls.add(b);
+				b.setVisible(true);
+			}
+		}
 	}
 }

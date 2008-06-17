@@ -1,5 +1,4 @@
 package nehsics.math;
-import java.awt.geom.*;
 
 public final class Vector2d {
 	private final double x, y;
@@ -23,5 +22,10 @@ public final class Vector2d {
 
 	public String toString() {
 		return "(" + x + ", " + y + ")";
+	}
+
+	public boolean equals(Object other) {
+		Vector2d b = (Vector2d)other;
+		return b.x == x && b.y == y;
 	}
 }

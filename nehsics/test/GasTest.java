@@ -61,24 +61,24 @@ public class GasTest extends Tester {
 //		createFilament();
 		Circle c;
 		for (int i = 0; i < 19; i++)
-			 for (int j = 0; j < 19; j++) {
-			world.addBody(c = new Circle(10,5));	
-			c.setPosition(v(26*i-230, 26*j-230));
-			c.setVelocity(v(temp*(Math.random()-.5), temp*(Math.random()-.5)));
-			c.setTempColorEnabled(true, world);
-		}	
-		for (int i = 0; i<4; i++) {
+			for (int j = 0; j < 19; j++) {
 				world.addBody(c = new Circle(10,5));	
-				c.setPosition(v(5000+25*i, 0));
-				c.setVelocity(v(1000, 0));
-				c.setTempColorEnabled(true,world);
+				c.setPosition(v(26*i-230, 26*j-230));
+				c.setVelocity(v(temp*(Math.random()-.5), temp*(Math.random()-.5)));
+				c.setTempColorEnabled(true, world);
+			}	
+		for (int i = 0; i < 20; i++) {
+			world.addBody(c = new Circle(10,5));	
+			c.setPosition(v(5000+25*i, 0));
+			c.setVelocity(v(-1000, 0));
+			c.setTempColorEnabled(true, world);
 		}
 	}
 
 	public void postWorld() {
 		super.postWorld();
 		Graphics2D g2d = display.getGraphics();
-		double fraction = (double)walls.getInternalEnergy()/30000000.0;
+		double fraction = walls.getInternalEnergy()/3e7;
 		g2d.setColor(getColor(fraction));
 		g2d.fillRect(-290,-450,40,710);
 		g2d.fillRect(-290,250,540,40);

@@ -2,17 +2,17 @@ package nehsics.ui;
 import nehsics.test.Test;
 import java.awt.*;
 
-public class LogoTest extends Test {
+public class Logo extends Test {
 	private final static Font f = new Font("Serif", Font.BOLD, 50);
 	public final static String NAME = "NEHSICS";
 	protected volatile boolean running = true;
 	private Display display;
 
 	public static void main(String[] args) {
-		new Starter("nehsics.ui.LogoTest");
+		new Starter("nehsics.ui.Logo");
 	}
 
-	public LogoTest(Canvas c) {
+	public Logo(Canvas c) {
 		display = new Display(c);
 	}
 

@@ -6,7 +6,7 @@ import java.awt.*;
 import static nehsics.math.Util.*;
 
 public class CollapseTest extends Tester {
-	public final static String NAME = "Minimum PE Principle";
+	public final static String NAME = "Gravitational Collapse";
 
 	public static void main(String[] args) {
 		new Starter("nehsics.test.CollapseTest");

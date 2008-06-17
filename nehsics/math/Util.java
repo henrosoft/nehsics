@@ -36,11 +36,10 @@ public class Util {
 	}
 
 	public static double distance(Vector2d a, Vector2d b) {
-		return add(a,scale(b,-1)).length();
+		return sub(a,b).length();
 	}
 
-	public static Vector2d normalise(Vector2d a, Vector2d b) {
-		Vector2d diff = add(b, scale(a,-1));
+	public static Vector2d normalise(Vector2d diff) {
 		double scaler = Math.sqrt(Math.pow(diff.getX(),2) + Math.pow(diff.getY(),2));
 		return scale(diff, 1 / scaler);
 	}
@@ -49,8 +48,8 @@ public class Util {
 		return new Vector2d(a.getX()+b.getX(),a.getY()+b.getY());
 	}
 
-	public static Vector2d add(Vector2d a, Number b) {
-		return new Vector2d(a.getX()+b.doubleValue(),a.getY()+b.doubleValue());
+	public static Vector2d sub(Vector2d a, Vector2d b) {
+		return new Vector2d(a.getX()-b.getX(),a.getY()-b.getY());
 	}
 
 	public static Vector2d scale(Vector2d a, Vector2d b) {

@@ -46,6 +46,9 @@ public class Starter {
 		if (!foundSelection) { // init must not be in the list, add it manually
 			combo.insertItemAt(initCon, 0);
 			combo.setSelectedItem(initCon);
+		} else { // otherwise tack on the logo
+			TestConstructor logoCon = new TestConstructor("nehsics.ui.Logo");
+			combo.insertItemAt(logoCon, 0);
 		}
 
 		frame.setContentPane(jsplit);
@@ -113,11 +116,11 @@ public class Starter {
 	}
 
 	public static void main(String[] args) {
-		new Starter("nehsics.ui.LogoTest");
+		new Starter("nehsics.ui.Logo");
 	}
 
 	/**
-	 * Constructor wrapper for instantiating Tests, providing
+	 * Constructor wrapper for instantiating Tests, provided
 	 * that they have a suitable constructor.
 	 * The NAME field for tests is optional.
 	 */
