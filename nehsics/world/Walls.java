@@ -6,7 +6,7 @@ import nehsics.bodies.*;
 public class Walls extends WorldAdapter {
 	private int wall;
 	private double damping = 1;
-
+	private double internalEnergy = 0;
 	public Walls(int size) {
 		wall = size;
 	}
@@ -15,9 +15,13 @@ public class Walls extends WorldAdapter {
 		wall = size;
 		damping = d;
 	}
-
+	public double getInternalEnergy()
+	{
+		return internalEnergy;
+	}
 	public void beginStep(World world, double dt) {
         for (Body b : world.bodies) {
+			double k = b.getKineticEnergy();
 			Vector2d v = b.getVelocity();
 			Vector2d p = b.getPosition();
 			double x = p.getX(), y = p.getY(), r = b.getRadius();
@@ -30,6 +34,7 @@ public class Walls extends WorldAdapter {
 			else if (y - r < -wall)
 				v = scale(v, v(1, v.getY() > 0 ? 1 : -damping));
 			b.setVelocity(v);
+			internalEnergy += k-b.getKineticEnergy();
         }
 	}
 }
