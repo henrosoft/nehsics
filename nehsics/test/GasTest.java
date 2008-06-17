@@ -10,6 +10,7 @@ public class GasTest extends Tester {
 	public final static String NAME = "Ideal Gas Model";
 	private Bonder bonder;
 	private Stats stats;
+	private Walls walls;
 
 	public static void main(String[] args) {
 		new Starter(NAME);
@@ -53,7 +54,8 @@ public class GasTest extends Tester {
 		world.addListener(stats);
 		world.addListener(bonder = new Bonder());
 		world.addListener(new Collider(stats));
-		world.addListener(new Walls(250, .9));
+		walls = new Walls(250,.9);
+		world.addListener(walls);
 		display.setScale(.4);
 		int temp = 00;
 //		createFilament();
@@ -76,7 +78,8 @@ public class GasTest extends Tester {
 	public void postWorld() {
 		super.postWorld();
 		Graphics2D g2d = display.getGraphics();
-		g2d.setColor(Color.BLACK);
+		double fraction = (double)walls.getInternalEnergy()/30000000.0;
+		g2d.setColor(getColor(fraction));
 		g2d.fillRect(-290,-450,40,710);
 		g2d.fillRect(-290,250,540,40);
 		g2d.fillRect(250,-450,50,440);
