@@ -53,7 +53,7 @@ public class GasTest extends Tester {
 		stats = new Stats();
 		world.addListener(stats);
 		world.addListener(bonder = new Bonder());
-		world.addListener(new Collider(stats));
+		world.addListener(new BadCollider(30));
 		walls = new Walls(250,.9);
 		world.addListener(walls);
 		display.setScale(.4);
@@ -67,9 +67,9 @@ public class GasTest extends Tester {
 				c.setVelocity(v(temp*(Math.random()-.5), temp*(Math.random()-.5)));
 				c.setTempColorEnabled(true, world);
 			}	
-		for (int i = 0; i < 20; i++) {
+		for (int i = 0; i < 40; i++) {
 			world.addBody(c = new Circle(10,5));	
-			c.setPosition(v(5000+25*i, 0));
+			c.setPosition(v(5000+15*i, 0));
 			c.setVelocity(v(-1000, 0));
 			c.setTempColorEnabled(true, world);
 		}
@@ -84,7 +84,6 @@ public class GasTest extends Tester {
 		g2d.fillRect(-290,250,540,40);
 		g2d.fillRect(250,-450,50,440);
 		g2d.fillRect(250,10,50,280);
-
 		g2d.fillRect(-245,-290,490,40);
 		g2d.fillRect(-20,-400,40,130);
 	}

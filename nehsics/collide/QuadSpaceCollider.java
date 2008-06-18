@@ -14,7 +14,7 @@ public class QuadSpaceCollider extends BasicCollider {
 		stats = s;
 	}
 
-	public void resolveCollisions(List<Body> bodies) {
+	public void resolveCollisions(ArrayList<Body> bodies) {
 		visuals.clear();
 		resolveCollisions(new QuadSpace(bodies));
 	}
@@ -30,7 +30,6 @@ public class QuadSpaceCollider extends BasicCollider {
 			visuals.add(space);
 			super.resolveCollisions(space);
 		} else for (QuadSpace qspace : space.divide())
-			if (qspace.size() > 1)
-				resolveCollisions(qspace);
+			resolveCollisions(qspace);
 	}
 }

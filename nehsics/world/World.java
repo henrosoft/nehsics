@@ -1,11 +1,10 @@
 package nehsics.world;
 import nehsics.bodies.Body;
 import java.awt.Graphics2D;
-import java.util.List;
-import java.util.LinkedList;
+import java.util.*;
 
 public class World {
-	protected List<Body> bodies = new LinkedList<Body>();
+	protected ArrayList<Body> bodies = new ArrayList<Body>();
 	protected List<WorldListener> listeners = new LinkedList<WorldListener>();
 
 	public void addBody(Body b) {

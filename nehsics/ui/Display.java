@@ -62,12 +62,13 @@ public class Display extends WorldAdapter {
 	}
 
 	/**
-	 * Reset user modifications except for tracking order: TODO
+	 * Reset user modifications except for tracking order
 	 */
 	public void softReset() {
 		x = y = 0;
 		zoom = 1;
 		center = manualCenter;
+		clear = true;
 	}
 
 	public void trackNext() {
@@ -143,8 +144,8 @@ public class Display extends WorldAdapter {
 		buf.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		buf.translate(v2d.getX()+x+(double)canvas.getWidth()/2,
 			v2d.getY()+y+(double)canvas.getHeight()/2);
-		buf.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-			RenderingHints.VALUE_ANTIALIAS_ON);
+		buf.setRenderingHint(RenderingHints.KEY_RENDERING,
+			RenderingHints.VALUE_RENDER_SPEED);
 		buf.scale(scale*zoom, scale*zoom);
 	}
 }

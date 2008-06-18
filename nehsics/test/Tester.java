@@ -19,6 +19,9 @@ public class Tester extends Test {
 	protected double SPEED = 1, PRECISION = 1; // not really constants
 	public final static String NAME = "Falling Spheres";
 
+	// no guarantees if the user tampers with the controls
+	private static final boolean BE_DETERMINISTIC = true;
+
 	public static void main(String[] args) {
 		new Starter("nehsics.test.Tester");
 	}
@@ -71,7 +74,10 @@ public class Tester extends Test {
 		while (running) {
 			if (reset)
 				reset();
-			double dt = (reverseTime ? -1 : 1)*timer.tick();
+			double dt = timer.tick();
+			if (BE_DETERMINISTIC)
+				dt = .016;
+			dt *= reverseTime ? -1 : 1;
 			for (int i=0; i < PRECISION; i++)
 				world.step(SPEED*speedModifier*dt/PRECISION);
 			display.clear();

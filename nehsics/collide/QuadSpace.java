@@ -74,6 +74,8 @@ public final class QuadSpace extends ArrayList<Body> {
 	 * @return Bounding box defined by MIN/MAX array constants.
 	 */
 	private static double[] boundingBoxFor(List<Body> bodies) {
+		if (bodies.size() < 1)
+			return new double[]{0,0,0,0};
 		Vector2d tmp = bodies.get(0).getPosition();
 		double r = bodies.get(0).getRadius();
 		double[] box = {tmp.getX()-r, tmp.getY()-r, tmp.getX()+r, tmp.getY()+r};
