@@ -5,7 +5,7 @@ import nehsics.bodies.*;
 import java.awt.*;
 import static nehsics.math.Util.*;
 
-public class CollideTester extends Tester {
+public class CollideTester extends UserControlledScene {
 	public final static String NAME = "Collision Tester";
 
 	public static void main(String[] args) {

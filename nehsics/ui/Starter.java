@@ -1,5 +1,4 @@
 package nehsics.ui;
-import nehsics.test.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -15,7 +14,7 @@ public class Starter {
 	protected JComboBox combo;
 	protected String s;
 	protected Canvas canvas;
-	protected Test t;
+	protected Scene t;
 
 	public Starter(String init) {
 		frame = new JFrame();
@@ -34,9 +33,9 @@ public class Starter {
 		jsplit.setDividerLocation(432);
 		jsplit.setResizeWeight(1);
 
-		TestConstructor initCon = new TestConstructor(init);
+		SceneConstructor initCon = new SceneConstructor(init);
 		boolean foundSelection = false;
-		for (TestConstructor testCon : getTestConstructors()) {
+		for (SceneConstructor testCon : getSceneConstructors()) {
 			combo.addItem(testCon);
 			if (testCon.equals(initCon)) {
 				combo.setSelectedItem(testCon);
@@ -47,7 +46,7 @@ public class Starter {
 			combo.insertItemAt(initCon, 0);
 			combo.setSelectedItem(initCon);
 		} else { // otherwise tack on the logo
-			TestConstructor logoCon = new TestConstructor("nehsics.ui.Logo");
+			SceneConstructor logoCon = new SceneConstructor("nehsics.ui.Logo");
 			combo.insertItemAt(logoCon, 0);
 		}
 
@@ -67,14 +66,13 @@ public class Starter {
 		combo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (t != null) {
-					t.quit();
 					try {
-						t.join();
+						t.quit();
 					} catch (Exception t) {
 						t.printStackTrace();
 					}
 				}
-				t = ((TestConstructor)combo.getSelectedItem()).newInstance(canvas);
+				t = ((SceneConstructor)combo.getSelectedItem()).newInstance(canvas);
 				t.start();
 			}
 		});
@@ -82,27 +80,29 @@ public class Starter {
 		t.start();
 	}
 
-	private List<TestConstructor> getTestConstructors() {
-		List<TestConstructor> cons = new LinkedList<TestConstructor>();
+	private List<SceneConstructor> getSceneConstructors() {
+		List<SceneConstructor> cons = new LinkedList<SceneConstructor>();
 		File dir = new File(getClass().getResource("/nehsics/test/").getFile());
 		String[] tests = dir.list();
 		if (tests == null) // in a jar file :(
-			tests = readTestsFromJar();
+			tests = readScenesFromJar();
 		for (String test : tests) {
 			if (!test.endsWith(".class") || test.contains("$"))
 				continue;
 			String name = "nehsics.test." + test.split(".class")[0];
 			try {
-				cons.add(new TestConstructor(name));
+				cons.add(new SceneConstructor(name));
 			} catch (Exception e) {}
 		}
 		return cons;
 	}
 
-	private String[] readTestsFromJar() {
+	private String[] readScenesFromJar() {
 		List<String> tests = new LinkedList<String>();
 		try {
-			JarFile jar = new JarFile("NEHsics.jar");
+			JarFile jar = new JarFile(getClass().getProtectionDomain()
+				.getCodeSource().getLocation().getPath());
+			System.out.println(jar);
 			for (Enumeration<JarEntry> e = jar.entries(); e.hasMoreElements();) {
 				String name = e.nextElement().toString();
 				if (name.matches("nehsics/test/[^$]*.class"))
@@ -120,18 +120,18 @@ public class Starter {
 	}
 
 	/**
-	 * Constructor wrapper for instantiating Tests, provided
+	 * Constructor wrapper for instantiating Scenes, provided
 	 * that they have a suitable constructor.
 	 * The NAME field for tests is optional.
 	 */
-	private class TestConstructor {
+	private class SceneConstructor {
 		private String name;
-		private Constructor<Test> cons;
+		private Constructor<Scene> cons;
 
 		@SuppressWarnings(value = "unchecked")
-		public TestConstructor(String init) {
+		public SceneConstructor(String init) {
 			try {
-				Class<Test> test = (Class<Test>)Class.forName(init);
+				Class<Scene> test = (Class<Scene>)Class.forName(init);
 				cons = test.getConstructor(Class.forName("java.awt.Canvas"));
 				name = (String)test.getField("NAME").get(null);
 			} catch (Exception e) {
@@ -146,12 +146,12 @@ public class Starter {
 			return name;
 		}
 
-		public boolean equals(TestConstructor other) {
+		public boolean equals(SceneConstructor other) {
 			return other.cons.getDeclaringClass().equals(cons.getDeclaringClass());
 		}
 
-		public Test newInstance(Canvas canvas) {
-			Test test = null;
+		public Scene newInstance(Canvas canvas) {
+			Scene test = null;
 			try {
 				test = cons.newInstance(canvas);
 			} catch (Exception e) {

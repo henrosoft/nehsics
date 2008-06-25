@@ -6,7 +6,7 @@ import nehsics.bodies.*;
 import java.awt.*;
 import static nehsics.math.Util.*;
 import java.util.*;
-public class TestOneD extends Tester {
+public class TestOneD extends UserControlledScene {
 	public final static String NAME = "Rotating Triangle";
 	private Bonder bonder;
 

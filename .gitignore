@@ -3,6 +3,7 @@
 .hidden
 .classpath
 .project
+doc
 *.html
 *.jar
 \#*#

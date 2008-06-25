@@ -1,5 +1,8 @@
 package nehsics.collide;
 import nehsics.bodies.*;
+import java.awt.geom.*;
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.util.*;
 
 /**
@@ -11,6 +14,7 @@ import java.util.*;
 public class ApproxCollider {
 	private List<Integer> indicies = new LinkedList<Integer>();
 	private final int bucketSize; // lower == insanity
+	private Set<Line2D> visuals = new HashSet<Line2D>();
 
 	public ApproxCollider(int precision) {
 		bucketSize = precision;
@@ -18,6 +22,7 @@ public class ApproxCollider {
 
 	public void resolveCollisions(ArrayList<Body> tree) {
 		indicies.clear();
+		visuals.clear();
 		quickSortV(tree, 0, tree.size()-1);
 		indicies.add(tree.size());
 		Collections.sort(indicies);
@@ -34,6 +39,9 @@ public class ApproxCollider {
 		int g = first, h = last;
 		int midIndex = (first + last) / 2;
 		double dividingValue = tree.get(midIndex).getPosition().getX();
+
+		visuals.add(new Line2D.Double(dividingValue, -32000,
+		                              dividingValue, 32000));
 
 		do {
 			while (tree.get(g).getPosition().getX() < dividingValue)
@@ -58,6 +66,8 @@ public class ApproxCollider {
 		int midIndex = (first + last) / 2;
 		double dividingValue = tree.get(midIndex).getPosition().getY();
 
+		visuals.add(new Line2D.Double(-32000, dividingValue,
+		                              32000, dividingValue));
 		do {
 			while (tree.get(g).getPosition().getY() < dividingValue)
 				g++;
@@ -84,5 +94,11 @@ public class ApproxCollider {
 					a.hit(b);
 			}
 		}
+	}
+
+	public void paint(Graphics2D g2d) {
+		g2d.setColor(Color.RED);
+		for (Line2D line : visuals)
+			g2d.draw(line);
 	}
 }

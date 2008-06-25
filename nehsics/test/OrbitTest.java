@@ -5,7 +5,7 @@ import nehsics.bodies.*;
 import java.awt.*;
 import static nehsics.math.Util.*;
 
-public class OrbitTest extends Tester {
+public class OrbitTest extends UserControlledScene {
 	public final static String NAME = "Inner Solar System";
 
 	public static void main(String[] args) {

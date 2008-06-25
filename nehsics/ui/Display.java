@@ -14,7 +14,7 @@ public class Display extends WorldAdapter {
 	private Canvas canvas;
 	private double scale = 1; // scale is set by the program
 	private double zoom = 1; // zoom is controlled by the user
-	private boolean fade, clear;
+	private boolean fade, clear, antialias;
 	private double x, y;
 	private Body center, manualCenter;
 	private LinkedList<Body> targets = new LinkedList<Body>();
@@ -134,6 +134,10 @@ public class Display extends WorldAdapter {
 		strategy.show();
 	}
 
+	public void enableAA() {
+		antialias = true;
+	}
+
 	public void clear() {
 		Vector2d v2d = v();
 		if (center != null)
@@ -146,6 +150,9 @@ public class Display extends WorldAdapter {
 			v2d.getY()+y+(double)canvas.getHeight()/2);
 		buf.setRenderingHint(RenderingHints.KEY_RENDERING,
 			RenderingHints.VALUE_RENDER_SPEED);
+		buf.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+			antialias ? RenderingHints.VALUE_ANTIALIAS_ON
+			          : RenderingHints.VALUE_ANTIALIAS_OFF);
 		buf.scale(scale*zoom, scale*zoom);
 	}
 }

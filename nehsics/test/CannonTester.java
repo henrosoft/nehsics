@@ -5,7 +5,7 @@ import nehsics.bodies.*;
 import java.awt.*;
 import static nehsics.math.Util.*;
 
-public class CannonTester extends Tester {
+public class CannonTester extends UserControlledScene {
 	public final static String NAME = "Particle Stress Test";
 	protected long lastTime;
 
