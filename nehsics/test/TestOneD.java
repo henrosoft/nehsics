@@ -20,6 +20,8 @@ public class TestOneD extends Tester {
 
 	protected void setup() {
 		FieldManager f = new FieldManager();
+		Walls walls = new Walls(250,.9);
+		world.addListener(walls);
 		Stats s = new Stats();
 		world.addListener(s);
 		world.addListener(f);

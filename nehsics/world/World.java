@@ -13,6 +13,10 @@ public class World {
 			listener.newBody(this, b);
 	}
 
+	public Body getBody(int i)
+	{
+		return bodies.get(i);
+	}
 	public void addListener(WorldListener l) {
 		listeners.add(l);
 	}

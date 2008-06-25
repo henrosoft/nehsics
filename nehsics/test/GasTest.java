@@ -6,12 +6,15 @@ import nehsics.force.*;
 import java.awt.*;
 import static nehsics.math.Util.*;
 import java.util.*;
+import java.awt.event.*;
 public class GasTest extends Tester {
 	public final static String NAME = "Ideal Gas Model";
 	private Bonder bonder;
 	private Stats stats;
 	private Walls walls;
-
+	private int size = 0;
+	private int count = 0;
+	private ArrayList<Circle> circles = new ArrayList<Circle>();
 	public static void main(String[] args) {
 		new Starter("nehsics.test.GasTest");
 	}
@@ -22,11 +25,19 @@ public class GasTest extends Tester {
 
 	public void createFilament() {
 		ArrayList<Circle> circles = new ArrayList<Circle>();
-		Circle c;
-		for (int i = 0; i<10; i++) {
+		Circle x;
+/*		for (int i = 0; i<10; i++) {
 			world.addBody(c = new Circle(10,10));
 			c.setPosition(v(0,i*20));
 			circles.add(c);
+		}*/
+		for(int i = 0; i<100; i++)
+		{
+			x = new Circle(10, 10);
+			x.setPosition(v(250, 50));
+			x.setVelocity(v(0,0));
+			world.addBody(x);
+			circles.add(x);
 		}
 		BindingForce b;
 		for (int i = 0; i<10; i++) {
@@ -50,28 +61,54 @@ public class GasTest extends Tester {
 	}
 
 	protected void setup() {
+		canvas.addKeyListener(new KeyAdapter() {
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_P)
+				{
+					Circle c = (Circle)world.getBody(count);
+					count++;
+					c.setPosition(v(500, 0));
+					c.setVelocity(v(-1000,0));
+				}
+			}
+		});
 		stats = new Stats();
 		world.addListener(stats);
 		world.addListener(bonder = new Bonder());
 		world.addListener(new BadCollider(30));
-		walls = new Walls(250,.9);
+		walls = new Walls(250,1);
 		world.addListener(walls);
 		display.setScale(.4);
 		int temp = 100;
-//		createFilament();
 		Circle c;
 		for (int i = 0; i < 19; i++)
 			for (int j = 0; j < 19; j++) {
 				world.addBody(c = new Circle(10,5));	
+				size ++;
 				c.setPosition(v(26*i-230, 26*j-230));
 				c.setVelocity(v(temp*(Math.random()-.5), temp*(Math.random()-.5)));
 				c.setTempColorEnabled(true, world);
 			}	
-		for (int i = 0; i < 40; i++) {
+/*		for (int i = 0; i < 5; i++) {
 			world.addBody(c = new Circle(10,5));	
 			c.setPosition(v(5000+15*i, 0));
 			c.setVelocity(v(-1000, 0));
 			c.setTempColorEnabled(true, world);
+		}*/
+		Circle x;
+/*		for (int i = 0; i<10; i++) {
+			world.addBody(c = new Circle(10,10));
+			c.setPosition(v(0,i*20));
+			circles.add(c);
+		}*/
+		count = size;
+		for(int i = 0; i<100; i++)
+		{
+			x = new Circle(10, 5);
+			x.setPosition(v(1000 - i+80, 0));
+			x.setVelocity(v(0,0));
+			world.addBody(x);
+			x.setTempColorEnabled(true, world);
 		}
 	}
 
