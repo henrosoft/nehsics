@@ -20,6 +20,8 @@ public class AccretionDisk extends UserControlledScene {
 		for (int i=0; i < 30; i++)
 			for (int j=0; j < 30; j++) {
 				Circle a = new Circle(EARTH_RADIUS/80, 2);
+				a.scaleTempColor(1e4);
+				a.setTempColorEnabled(true, world);
 				a.setPosition(v(j*EARTH_RADIUS/120,
 					-.3*EARTH_RADIUS-i*EARTH_RADIUS/120));
 				a.setVelocity(v(12000, 0));
@@ -31,7 +33,7 @@ public class AccretionDisk extends UserControlledScene {
 		world.addListener(new Gravitation(f));
 		world.addListener(new BadCollider(10));
 		display.setScale(3e-5);
-		SPEED = 300;
+		SPEED = 200;
 		Circle center = new Circle(0, EARTH_MASS);
 		center.setPosition(v(0,0));
 		world.addBody(center);

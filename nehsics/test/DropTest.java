@@ -31,15 +31,20 @@ public class DropTest extends UserControlledScene {
 
 		// large circles... (low density here)
 		Circle a = new Circle(45,10);
+		a.scaleTempColor(.5);
+		a.setTempColorEnabled(true, world);
 		a.setPosition(v(-110,-150));
 
 		// fall as fast as small circles (high density here)	
 		Circle b = new Circle(15,500);
+		b.setTempColorEnabled(true, world);
+		b.scaleTempColor(50);
 		b.setPosition(v(-210,-150));
 		b.setVelocity(v(1,0));
 
 		// normal force opposes gravity
 		Circle stationary = new Circle(40,10);
+		stationary.setTempColorEnabled(true, world);
 		stationary.setPosition(v(0,50));
 		stationary.addForce(v(0,-SURFACE_G*stationary.getMass()));
 		

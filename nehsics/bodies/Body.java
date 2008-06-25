@@ -29,6 +29,7 @@ public abstract class Body {
 	protected boolean temperatureColor;
 	protected Color color = Color.black;
 	protected World world;	
+	protected double maxK = 100000;
 
 	public boolean canHitForce(Body c) {
 		return distance(position, c.getPosition()) <= radius + c.radius;
@@ -95,7 +96,7 @@ public abstract class Body {
 		radius = r;
 	}
 
-	public void setTempColorEnabled(boolean t,World w) {
+	public void setTempColorEnabled(boolean t, World w) {
 		temperatureColor = t;
 		world = w;
 	}
@@ -182,11 +183,14 @@ public abstract class Body {
 
 	public Color calculateColor() {
 		Color c;
-		double maxK = 100000;
 		double k = .5*mass*Math.pow(velocity.length(),2);
 		double fraction = k/maxK;
 		c = getColor(fraction);
 		return c;
+	}
+
+	public void scaleTempColor(double scale) {
+		maxK *= scale;
 	}
 
 	public void paint(Graphics2D g2d) {

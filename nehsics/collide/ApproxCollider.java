@@ -20,7 +20,7 @@ public class ApproxCollider {
 		bucketSize = precision;
 	}
 
-	public void resolveCollisions(ArrayList<Body> tree) {
+	public void resolveCollisions(List<Body> tree) {
 		indicies.clear();
 		visuals.clear();
 		quickSortV(tree, 0, tree.size()-1);
@@ -33,7 +33,7 @@ public class ApproxCollider {
 		}
 	}
 
-	private void quickSortV(ArrayList<Body> tree, int first, int last) {
+	private void quickSortV(List<Body> tree, int first, int last) {
 		if (last - first < bucketSize)
 			return;
 		int g = first, h = last;
@@ -59,7 +59,7 @@ public class ApproxCollider {
 			quickSortH(tree,g,last);
 	}
 
-	private void quickSortH(ArrayList<Body> tree, int first, int last) {
+	private void quickSortH(List<Body> tree, int first, int last) {
 		if (last - first < bucketSize)
 			return;
 		int g = first, h = last;
@@ -84,7 +84,7 @@ public class ApproxCollider {
 			quickSortV(tree,g,last);
 	}
 
-	private void resolveCollisions(ArrayList<Body> tree, int first, int last) {
+	private void resolveCollisions(List<Body> tree, int first, int last) {
 		Body a, b;
 		for (int i = first; i < last; i++) {
 			a = tree.get(i);

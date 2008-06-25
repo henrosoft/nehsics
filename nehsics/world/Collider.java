@@ -1,6 +1,11 @@
 package nehsics.world;
-import nehsics.collide.QuadSpaceCollider;
+import nehsics.bodies.*;
+
 import java.awt.Graphics2D;
+
+import java.util.List;
+
+import nehsics.collide.QuadSpaceCollider;
 
 public class Collider extends WorldAdapter {
 	private QuadSpaceCollider collider;
@@ -10,8 +15,8 @@ public class Collider extends WorldAdapter {
 		collider = new QuadSpaceCollider(s);
 	}
 
-	public void beginStep(World world, double dt) {
-		collider.resolveCollisions(world.bodies);
+	public void beginStep(List<Body> bodies, double dt) {
+		collider.resolveCollisions(bodies);
 	}
 
 	public void setVisible(boolean b) {

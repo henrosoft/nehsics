@@ -1,15 +1,20 @@
 package nehsics.world;
-import nehsics.bodies.*;
-import nehsics.math.*;
+
 import java.awt.*;
+
+import java.util.List;
+
+import nehsics.bodies.*;
+
+import nehsics.math.*;
 
 public class Stats extends WorldAdapter {
 	private Average avgRadius = new Average();
-	private World world;
+	private List<Body> bodies;
 
-	public void newBody(World world, Body body) {
+	public void newBody(List<Body> bodies, Body body) {
 		avgRadius.add(body.getRadius());	
-		this.world = world; // XXX
+		this.bodies = bodies;
 	}
 
 	public double getAverageBodyRadius() {
@@ -17,14 +22,14 @@ public class Stats extends WorldAdapter {
 	}
 
 	public double averageKineticWithinBounds(double[] bounds) {
-		if (world == null)
+		if (bodies == null)
 			return 0;
 		Average a = new Average();
 		Rectangle rect = new Rectangle (
 			(int)bounds[0],(int)bounds[1],
 			(int)bounds[2],(int)bounds[3]
 		);
-		for (Body b : world.bodies)
+		for (Body b : bodies)
 			if (b.intersects(rect))
 				a.add(b.getKineticEnergy());
 		return a.getAvg();

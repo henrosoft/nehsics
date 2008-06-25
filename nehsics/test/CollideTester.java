@@ -21,22 +21,27 @@ public class CollideTester extends UserControlledScene {
 		world.addListener(s);
 		Collider collider = new Collider(s);
 		world.addListener(collider);
-		SPEED = .1;
+		SPEED = .05;
 		long group = 424242424;
-		for (int i=0; i < 50; i++)
-			for (int j=0; j < 5; j++) {
+		for (int i=0; i < 20; i++)
+			for (int j=0; j < 20; j++) {
 				Circle c = new Circle(4, 100);
-				c.setPosition(v(j*4,i*4-100));
+				c.setTempColorEnabled(true, world);
+				c.scaleTempColor(100);
+				c.setPosition(v(j*4,i*4));
+				c.setVelocity(v(-500,0));
 				c.setGroup(group);
 				world.addBody(c);
 			}
-		Circle x = new Circle(2, 50000);
-		x.setPosition(v(-900, 50));
-		x.setVelocity(v(2500,0));
-		world.addBody(x);
-		x = new Circle(20, 50);
-		x.setPosition(v(-200, -50));
-		x.setVelocity(v(500,0));
-		world.addBody(x);
+		for (int i=3; i < 7; i++)
+			for (int j=0; j < 10; j++) {
+				Circle c = new Circle(4, 500);
+				c.setTempColorEnabled(true, world);
+				c.scaleTempColor(1000);
+				c.setPosition(v(-100+j*4,i*2));
+				c.setVelocity(v(1000,0));
+				c.setGroup(group);
+				world.addBody(c);
+			}
 	}
 }

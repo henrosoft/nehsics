@@ -28,8 +28,8 @@ public class Walls extends WorldAdapter {
 		withinWalls.clear();
 	}
 
-	public void beginStep(World world, double dt) {
-        for (Body b : world.bodies) {
+	public void beginStep(List<Body> bodies, double dt) {
+        for (Body b : bodies) {
 			double k = b.getKineticEnergy();
 			Vector2d v = b.getVelocity();
 			Vector2d p = b.getPosition();
@@ -47,8 +47,8 @@ public class Walls extends WorldAdapter {
         }
 	}
 
-	public void endStep(World world, double dt) {
-		for (Body b : world.bodies) {
+	public void endStep(List<Body> bodies, double dt) {
+		for (Body b : bodies) {
 			Vector2d p = b.getPosition();
 			double x = p.getX(), y = p.getY(), r = b.getRadius();
 			if (x - r > wall || x + r < -wall || y - r > wall || y + r < -wall) {

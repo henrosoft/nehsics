@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 
 public class BasicCollider {
 
-	public void resolveCollisions(ArrayList<Body> bodies) {
+	public void resolveCollisions(List<Body> bodies) {
 		Body a, b;
 		for (int i=0; i < bodies.size(); i++) {
 			a = bodies.get(i);

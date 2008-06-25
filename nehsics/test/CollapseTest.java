@@ -25,6 +25,8 @@ public class CollapseTest extends UserControlledScene {
 		for (int i=0; i < 11; i++)
 			for (int j=0; j < 11; j++) {
 				Circle tmp = new Circle(SUN_RADIUS/2, SUN_MASS*1e6);
+				tmp.setTempColorEnabled(true, world);
+				tmp.scaleTempColor(SUN_MASS*1e20);
 				tmp.setPosition(v(SUN_RADIUS*i-5*SUN_RADIUS,
 					SUN_RADIUS*j-5*SUN_RADIUS));
 				world.addBody(tmp);

@@ -1,5 +1,10 @@
 package nehsics.world;
+import nehsics.bodies.*;
+
 import java.awt.*;
+
+import java.util.List;
+
 import nehsics.collide.ApproxCollider;
 
 public class BadCollider extends WorldAdapter {
@@ -12,8 +17,8 @@ public class BadCollider extends WorldAdapter {
 		collider = new ApproxCollider(precision);
 	}
 
-	public void beginStep(World world, double dt) {
-		collider.resolveCollisions(world.bodies);
+	public void beginStep(List<Body> bodies, double dt) {
+		collider.resolveCollisions(bodies);
 	}
 
 	public void setVisible(boolean b) {

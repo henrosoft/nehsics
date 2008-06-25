@@ -1,5 +1,9 @@
 package nehsics.world;
+
+import java.util.List;
+
 import nehsics.bodies.*;
+
 import nehsics.force.*;
 
 public class Gravitation extends WorldAdapter {
@@ -9,7 +13,7 @@ public class Gravitation extends WorldAdapter {
 		fields = f;
 	}
 
-	public void newBody(World world, Body origin) {
+	public void newBody(List<Body> bodies, Body origin) {
 		fields.add(new GravityField(origin));
 	}
 }

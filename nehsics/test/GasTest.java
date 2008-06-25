@@ -7,14 +7,13 @@ import java.awt.*;
 import static nehsics.math.Util.*;
 import java.util.*;
 import java.awt.event.*;
+
 public class GasTest extends UserControlledScene {
 	public final static String NAME = "Ideal Gas Model";
 	private Bonder bonder;
 	private Stats stats;
 	private Walls walls;
-	private int size = 0;
-	private int count = 0;
-	private ArrayList<Circle> circles = new ArrayList<Circle>();
+
 	public static void main(String[] args) {
 		new Starter("nehsics.test.GasTest");
 	}
@@ -26,13 +25,7 @@ public class GasTest extends UserControlledScene {
 	public void createFilament() {
 		ArrayList<Circle> circles = new ArrayList<Circle>();
 		Circle x;
-/*		for (int i = 0; i<10; i++) {
-			world.addBody(c = new Circle(10,10));
-			c.setPosition(v(0,i*20));
-			circles.add(c);
-		}*/
-		for(int i = 0; i<100; i++)
-		{
+		for(int i = 0; i<100; i++) {
 			x = new Circle(10, 10);
 			x.setPosition(v(250, 50));
 			x.setVelocity(v(0,0));
@@ -63,12 +56,11 @@ public class GasTest extends UserControlledScene {
 	protected void setup() {
 		canvas.addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
-				if(e.getKeyCode() == KeyEvent.VK_P)
-				{
-					Circle c = (Circle)world.getBody(count);
-					count++;
-					c.setPosition(v(500, 0));
+				if (e.getKeyCode() == KeyEvent.VK_P) {
+					Body c = new Circle(8,5);
+					c.setPosition(v(600, 0));
 					c.setVelocity(v(-1000,0));
+					world.addBody(c);
 				}
 			}
 		});
@@ -83,27 +75,13 @@ public class GasTest extends UserControlledScene {
 		Circle c;
 		for (int i = 0; i < 19; i++)
 			for (int j = 0; j < 19; j++) {
-				world.addBody(c = new Circle(10,5));	
-				size ++;
+				world.addBody(c = new Circle(8,5));	
 				c.setPosition(v(26*i-230, 26*j-230));
 				c.setVelocity(v(temp*(Math.random()-.5), temp*(Math.random()-.5)));
 				c.setTempColorEnabled(true, world);
 			}	
-/*		for (int i = 0; i < 5; i++) {
-			world.addBody(c = new Circle(10,5));	
-			c.setPosition(v(5000+15*i, 0));
-			c.setVelocity(v(-1000, 0));
-			c.setTempColorEnabled(true, world);
-		}*/
 		Circle x;
-/*		for (int i = 0; i<10; i++) {
-			world.addBody(c = new Circle(10,10));
-			c.setPosition(v(0,i*20));
-			circles.add(c);
-		}*/
-		count = size;
-		for(int i = 0; i<100; i++)
-		{
+		for (int i = 0; i<100; i++) {
 			x = new Circle(10, 5);
 			x.setPosition(v(1000 - i+80, 0));
 			x.setVelocity(v(0,0));
@@ -120,7 +98,7 @@ public class GasTest extends UserControlledScene {
 		g2d.fillRect(-290,-450,40,710);
 		g2d.fillRect(-290,250,540,40);
 		g2d.fillRect(250,-450,50,440);
-		g2d.fillRect(250,10,50,280);
+		g2d.fillRect(250,8,50,280);
 		g2d.fillRect(-245,-290,490,40);
 		g2d.fillRect(-20,-400,40,130);
 	}

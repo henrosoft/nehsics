@@ -4,10 +4,10 @@ import nehsics.force.*;
 import java.util.*;
 
 public class FieldManager extends WorldAdapter {
-	private Set<ForceField> fields = new HashSet<ForceField>();
+	protected Set<ForceField> fields = new HashSet<ForceField>();
 
-	public void beginStep(World world, double dt) {
-		for (Body body : world.bodies)
+	public void beginStep(List<Body> bodies, double dt) {
+		for (Body body : bodies)
 			for (ForceField field : fields)
 				body.applyForce(field.getForce(body));
 	}
