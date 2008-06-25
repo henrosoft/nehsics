@@ -6,7 +6,8 @@ import nehsics.force.*;
 import java.awt.*;
 import static nehsics.math.Util.*;
 import java.util.*;
-public class GasTest extends Tester {
+
+public class GasTest extends UserControlledScene {
 	public final static String NAME = "Ideal Gas Model";
 	private Bonder bonder;
 	private Stats stats;

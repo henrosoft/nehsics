@@ -23,6 +23,11 @@ public class Walls extends WorldAdapter {
 		return internalEnergy;
 	}
 
+	public void rescale(int size) {
+		wall = size;
+		withinWalls.clear();
+	}
+
 	public void beginStep(World world, double dt) {
         for (Body b : world.bodies) {
 			double k = b.getKineticEnergy();
@@ -48,10 +53,10 @@ public class Walls extends WorldAdapter {
 			double x = p.getX(), y = p.getY(), r = b.getRadius();
 			if (x - r > wall || x + r < -wall || y - r > wall || y + r < -wall) {
 				if (withinWalls.contains(b))
-					b.setVisible(false);
+					b.hide();
 			} else {
 				withinWalls.add(b);
-				b.setVisible(true);
+				b.unhide();
 			}
 		}
 	}

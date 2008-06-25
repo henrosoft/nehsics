@@ -5,7 +5,7 @@ import nehsics.bodies.*;
 import java.awt.*;
 import static nehsics.math.Util.*;
 
-public class BrownianMotionTester extends Tester {
+public class BrownianMotionTester extends UserControlledScene {
 	public final static String NAME = "Brownian Motion";
 
 	public static void main(String[] args) {
@@ -14,6 +14,7 @@ public class BrownianMotionTester extends Tester {
 
 	public BrownianMotionTester(Canvas c) {
 		super(c);
+		display.enableAA();
 	}
 
 	protected void setup() {

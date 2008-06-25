@@ -25,7 +25,7 @@ public abstract class Body {
 	protected Vector2d position; // m (pixels)
 	protected Vector2d velocity; // m/s
 	protected Shape shape;
-	protected boolean visible = true;
+	protected boolean visible = true, hidden;
 	protected boolean temperatureColor;
 	protected Color color = Color.black;
 	protected World world;	
@@ -79,6 +79,16 @@ public abstract class Body {
 
 	public void setVisible(boolean v) {
 		visible = v;
+	}
+
+	// hide body; may be unhidden by world
+	public void hide() {
+		hidden = true;
+	}
+
+	// unhide body, may be rehidden by world
+	public void unhide() {
+		hidden = false;
 	}
 
 	public void setRadius(double r) {
@@ -180,7 +190,7 @@ public abstract class Body {
 	}
 
 	public void paint(Graphics2D g2d) {
-		if (!visible)
+		if (!visible || hidden)
 			return;
 		
 		if (temperatureColor)

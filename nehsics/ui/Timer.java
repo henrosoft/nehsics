@@ -7,6 +7,7 @@ public class Timer {
 	private long printTime = System.currentTimeMillis();
 	private long calcTime = System.nanoTime();
 	private long startTime;
+	// where s- = short-term
 	private Average avg = new Average(), savg = new Average();
 
 	/**
@@ -52,15 +53,21 @@ public class Timer {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		if (System.currentTimeMillis() - printTime > 1000) {
+			System.out.print("\r");
+			printStats();
+			printTime = System.currentTimeMillis();
+			savg.clear();
+		}
 		double frame_ns = now_ns - old_ns;
 		old_ns = now_ns;
-		if (System.currentTimeMillis() - printTime > 1000) {
-			System.out.print("\rCalculation time: " + (int)(savg.getAvg()/1e6)
-				+ "ms (avg " + (int)(avg.getAvg()/1e6) + "), Elapsed: " + (int)((System.currentTimeMillis()-startTime)/1000) + "s");
-			savg.clear();
-			printTime = System.currentTimeMillis();
-		}
 		calcTime = System.nanoTime();
 		return frame_ns/1e9;
+	}
+
+	public void printStats() {
+		System.out.print("Calculation time: " + (int)(savg.getAvg()/1e6)
+			+ "ms (avg " + (int)(avg.getAvg()/1e6) + "), Elapsed: "
+			+ (int)((System.currentTimeMillis()-startTime)/1000) + "s");
 	}
 }

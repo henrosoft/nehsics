@@ -5,7 +5,7 @@ import nehsics.bodies.*;
 import java.awt.*;
 import static nehsics.math.Util.*;
 
-public class CollapseTest extends Tester {
+public class CollapseTest extends UserControlledScene {
 	public final static String NAME = "Gravitational Collapse";
 
 	public static void main(String[] args) {

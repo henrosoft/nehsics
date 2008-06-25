@@ -30,7 +30,15 @@
 				<include name="**/*~"/>
 			</fileset>
 		</delete>
+		<delete dir="doc"/>
 	</target>
 
-	<target name="all" depends="clean,compile,jar"/>
+	<target name="doc" depends="compile">
+		<javadoc
+			sourcepath="."
+			packagenames="nehsics.*"
+			destdir="doc"/>
+	</target>
+
+	<target name="all" depends="clean,compile,jar,doc"/>
 </project>
