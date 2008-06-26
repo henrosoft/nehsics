@@ -29,9 +29,11 @@ public class Stats extends WorldAdapter {
 			(int)bounds[0],(int)bounds[1],
 			(int)bounds[2],(int)bounds[3]
 		);
-		for (Body b : bodies)
-			if (b.intersects(rect))
-				a.add(b.getKineticEnergy());
+		synchronized (World.lock) {
+			for (Body b : bodies)
+				if (b.intersects(rect))
+					a.add(b.getKineticEnergy());
+		}
 		return a.getAvg();
 	}
 }

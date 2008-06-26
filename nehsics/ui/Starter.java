@@ -110,7 +110,7 @@ public class Starter {
 			}
 			jar.close();
 		} catch (Exception e) {
-			System.err.println(e);
+			e.printStackTrace();
 		}
 		return tests.toArray(new String[0]);
 	}
@@ -155,7 +155,7 @@ public class Starter {
 			try {
 				test = cons.newInstance(canvas);
 			} catch (Exception e) {
-				System.err.println(e);
+				e.printStackTrace();
 			}
 			return test;
 		}

@@ -6,9 +6,10 @@ import java.util.*;
 public class World {
 	private final List<Body> bodies = new ArrayList<Body>();
 	private final List<WorldListener> listeners = new LinkedList<WorldListener>();
+	public static Object lock = new Object();
 
 	public void addBody(Body b) {
-		synchronized (this) {
+		synchronized (lock) {
 			bodies.add(b);
 			for (WorldListener listener : listeners)
 				listener.newBody(bodies, b);
@@ -16,17 +17,19 @@ public class World {
 	}
 
 	public Body[] copyBodies() {
-		return (Body[])bodies.toArray();
+		Body[] out = new Body[bodies.size()];
+		bodies.toArray(out);
+		return out;
 	}
 
 	public void addListener(WorldListener l) {
-		synchronized (this) {
+		synchronized (lock) {
 			listeners.add(l);
 		}
 	}
 
 	public void step(double dt) {
-		synchronized (this) {
+		synchronized (lock) {
 			for (WorldListener listener : listeners)
 				listener.beginStep(bodies, dt);
 			for (Body body : bodies)
@@ -37,7 +40,7 @@ public class World {
 	}
 
 	public void paint(Graphics2D g2d) {
-		synchronized (this) {
+		synchronized (lock) {
 			for (WorldListener listener : listeners)
 				listener.paint(g2d);
 			for (Body body : bodies)

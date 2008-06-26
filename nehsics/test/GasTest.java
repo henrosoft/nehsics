@@ -58,8 +58,9 @@ public class GasTest extends UserControlledScene {
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_P) {
 					Body c = new Circle(8,5);
-					c.setPosition(v(600, 0));
+					c.setPosition(v(400, 0));
 					c.setVelocity(v(-1000,0));
+					c.setTempColorEnabled(true, world);
 					world.addBody(c);
 				}
 			}
@@ -68,7 +69,7 @@ public class GasTest extends UserControlledScene {
 		world.addListener(stats);
 		world.addListener(bonder = new Bonder());
 		world.addListener(new BadCollider(30));
-		walls = new Walls(250,1);
+		walls = new Walls(250,.95);
 		world.addListener(walls);
 		display.setScale(.4);
 		int temp = 100;
@@ -80,14 +81,6 @@ public class GasTest extends UserControlledScene {
 				c.setVelocity(v(temp*(Math.random()-.5), temp*(Math.random()-.5)));
 				c.setTempColorEnabled(true, world);
 			}	
-		Circle x;
-		for (int i = 0; i<100; i++) {
-			x = new Circle(10, 5);
-			x.setPosition(v(1000 - i+80, 0));
-			x.setVelocity(v(0,0));
-			world.addBody(x);
-			x.setTempColorEnabled(true, world);
-		}
 	}
 
 	public void postWorld() {
@@ -101,6 +94,7 @@ public class GasTest extends UserControlledScene {
 		g2d.fillRect(250,8,50,280);
 		g2d.fillRect(-245,-290,490,40);
 		g2d.fillRect(-20,-400,40,130);
+		g2d.fillRect(400,-15,100,30);
 	}
 
 	public void overlay() {
@@ -111,6 +105,7 @@ public class GasTest extends UserControlledScene {
 		double fraction = ave/200.0;
 		g2d.setFont(new Font(null,Font.BOLD,10));
 		g2d.drawString("Temperature = " + (int)ave + " Kelvin", 5, 10);
+		g2d.drawString("P - fire particle",400,420);
 		g2d.setColor(getColor(fraction));
 		g2d.fillRect(5,15,(int)(fraction*300),10);
 	}
