@@ -7,6 +7,7 @@ import java.io.*;
 import java.util.*;
 import java.util.List;
 import java.util.jar.*;
+import java.net.URLDecoder;
 
 public class Starter {
 	protected JFrame frame;
@@ -100,12 +101,12 @@ public class Starter {
 	private String[] readScenesFromJar() {
 		List<String> tests = new LinkedList<String>();
 		try {
-			JarFile jar = new JarFile(getClass().getProtectionDomain()
-				.getCodeSource().getLocation().getPath());
-			System.out.println(jar);
+			JarFile jar = new JarFile(
+				URLDecoder.decode(getClass().getProtectionDomain()
+					.getCodeSource().getLocation().getPath(), "UTF-8"));
 			for (Enumeration<JarEntry> e = jar.entries(); e.hasMoreElements();) {
 				String name = e.nextElement().toString();
-				if (name.matches("nehsics/test/[^$]*.class"))
+				if (name.matches("nehsics/test/[^$]*\\.class"))
 					tests.add(name.split("nehsics/test/")[1]);
 			}
 			jar.close();
