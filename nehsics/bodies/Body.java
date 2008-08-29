@@ -132,6 +132,10 @@ public abstract class Body {
 		this.shape = shape;
 	}
 
+	public Shape getShape() {
+		return shape;
+	}
+
 	public double getMass() {
 		return mass;
 	}
