@@ -98,6 +98,7 @@ public class GasTest extends UserControlledScene {
 	}
 
 	public void overlay() {
+		super.overlay();
 		Graphics2D g2d = display.getGraphics();
 		g2d.setColor(Color.BLACK);
 		double ave = stats.averageKineticWithinBounds(

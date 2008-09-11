@@ -35,6 +35,10 @@ public abstract class Body {
 		return distance(position, c.getPosition()) <= radius + c.radius;
 	}
 
+	public double getMaxK() {
+		return maxK;
+	}
+
 	public Set<Body> getBondedBodies() {
 		return bondedBodies;
 	}
@@ -168,7 +172,7 @@ public abstract class Body {
 		this.position = position;
 	}
 
-	public Color getColor(double f) {
+	public static Color getColor(double f) {
 		double r=0,g=0,b=0;
 		if (f < .2)
 			b = 255*5*f;

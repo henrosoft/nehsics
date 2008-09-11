@@ -51,6 +51,10 @@ public class Starter {
 			combo.insertItemAt(logoCon, 0);
 		}
 
+		// tack on Player
+		SceneConstructor player = new SceneConstructor("nehsics.ui.Player");
+		combo.insertItemAt(player, 1);
+
 		frame.setContentPane(jsplit);
 		frame.setIgnoreRepaint(true);
 		frame.setVisible(true);
@@ -58,10 +62,11 @@ public class Starter {
 			KeyboardFocusManager.getCurrentKeyboardFocusManager();
 		manager.addKeyEventDispatcher(new KeyEventDispatcher() {
 			public boolean dispatchKeyEvent(KeyEvent e) {
-				manager.redispatchEvent(canvas, e);
-				if (!Character.isLetter(e.getKeyChar()))
-					manager.redispatchEvent(combo, e);
-				return true;
+				if (e.getSource() instanceof JComboBox) {
+					manager.redispatchEvent(canvas, e);
+					return true;
+				}
+				return false;
 			}
 		});
 		combo.addActionListener(new ActionListener() {
@@ -74,7 +79,8 @@ public class Starter {
 					}
 				}
 				t = ((SceneConstructor)combo.getSelectedItem()).newInstance(canvas);
-				t.start();
+				if (t != null)
+					t.start();
 			}
 		});
 		t = initCon.newInstance(canvas);

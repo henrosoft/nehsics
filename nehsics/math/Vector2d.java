@@ -1,6 +1,7 @@
 package nehsics.math;
 
-public final class Vector2d {
+public final class Vector2d implements java.io.Serializable {
+	public final static long serialVersionUID = 1112318919211L;
 	private final double x, y;
 
 	public Vector2d(double x, double y) {

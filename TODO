@@ -1,2 +1,0 @@
-- make quadtree faster
-- make gravity not O(n^2)

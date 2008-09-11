@@ -21,10 +21,12 @@ public class CollideTester extends UserControlledScene {
 		world.addListener(s);
 		Collider collider = new Collider(s);
 		world.addListener(collider);
+		display.setScale(5);
 		SPEED = .05;
+		PRECISION = 50;
 		long group = 424242424;
-		for (int i=0; i < 20; i++)
-			for (int j=0; j < 20; j++) {
+		for (int i=0; i < 10; i++)
+			for (int j=0; j < 10; j++) {
 				Circle c = new Circle(4, 100);
 				c.setTempColorEnabled(true, world);
 				c.scaleTempColor(100);
@@ -33,12 +35,12 @@ public class CollideTester extends UserControlledScene {
 				c.setGroup(group);
 				world.addBody(c);
 			}
-		for (int i=3; i < 7; i++)
-			for (int j=0; j < 10; j++) {
+		for (int i=3; i < 6; i++)
+			for (int j=0; j < 3; j++) {
 				Circle c = new Circle(4, 500);
 				c.setTempColorEnabled(true, world);
 				c.scaleTempColor(1000);
-				c.setPosition(v(-100+j*4,i*2));
+				c.setPosition(v(-50+j*4,i*2));
 				c.setVelocity(v(1000,0));
 				c.setGroup(group);
 				world.addBody(c);

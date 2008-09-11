@@ -27,6 +27,10 @@ public class Display extends WorldAdapter {
 		clear();
 	}
 
+	public double getScale() {
+		return scale;
+	}
+
 	/**
 	 * Reset all parameters (restart test)
 	 */

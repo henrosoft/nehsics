@@ -1,22 +1,30 @@
 package nehsics.ui;
-import nehsics.world.*;
-import nehsics.ui.Timer;
-import static nehsics.math.Util.*;
+
 import java.awt.*;
+
 import java.awt.event.*;
+
+import java.io.File;
+
+import javax.swing.JFileChooser;
+
+import nehsics.ui.Timer;
+
+import nehsics.world.*;
+
+import static nehsics.math.Util.*;
 
 public abstract class UserControlledScene extends Scene {
 	protected Canvas canvas;
 	protected Display display;
 	protected World world;
+	protected StateTracker tracker;
 	protected Timer timer = new Timer(60); // 60fps
-	private boolean reset, reverseTime; // doesn't work as advertised
+	protected final static double DT = .016;
+	private boolean reset, rtoggle, reverseTime; // doesn't work as advertised
 	protected double speedModifier = 1; // user adjusted
 	protected double SPEED = 1, PRECISION = 1; // not really constants
 	public final static String NAME = "Falling Spheres";
-
-	// no guarantees if the user tampers with the controls
-	private static final boolean BE_DETERMINISTIC = true;
 
 	public UserControlledScene(Canvas c) {
 		canvas = c;
@@ -29,6 +37,7 @@ public abstract class UserControlledScene extends Scene {
 					case 'j': display.move(v(0,-10)); return;
 				}
 				switch (e.getKeyChar()) {
+					case ' ': rtoggle = true; return;
 					case 'r': reset = true; return;
 					case 'f': display.toggleFade(); return;
 					case '!': reverseTime = !reverseTime; return;
@@ -51,6 +60,8 @@ public abstract class UserControlledScene extends Scene {
 	private void reset() {
 		reset = false;
 		reverseTime = false;
+		if (tracker != null)
+			toggleRecord();
 		world = new World();
 		display.reset();
 		speedModifier = 1;
@@ -58,14 +69,35 @@ public abstract class UserControlledScene extends Scene {
 		setup();
 	}
 
+	private void toggleRecord() {
+		rtoggle = false;
+		if (tracker == null) {
+			tracker = new StateTracker(display.getScale());
+			world.addListener(tracker);
+		} else {
+			tracker.finalize();
+			world.step(DT);
+			JFileChooser fc = new JFileChooser();
+			fc.showSaveDialog(canvas);
+			File selected = fc.getSelectedFile();
+			try {
+				tracker.save(selected);
+			} catch (Exception e) {
+			} finally {
+				world.removeListener(tracker);
+				tracker = null;
+			}
+		}
+	}
+
 	public void run() {
 		while (running) {
 			if (reset)
 				reset();
-			double dt = timer.tick();
-			if (BE_DETERMINISTIC)
-				dt = .016;
-			dt *= reverseTime ? -1 : 1;
+			if (rtoggle)
+				toggleRecord();
+			timer.tick();
+			double dt = DT * (reverseTime ? -1 : 1);
 			for (int i=0; i < PRECISION; i++)
 				world.step(SPEED*speedModifier*dt/PRECISION);
 			display.clear();
@@ -83,9 +115,16 @@ public abstract class UserControlledScene extends Scene {
 		world.addListener(display);
 	}
 
+	protected void overlay() {
+		if (tracker != null) {
+			Graphics2D g2d = display.getGraphics();
+			g2d.setColor(Color.RED);
+			g2d.drawString("RECORDING", 8, 20);
+		}
+	}
+
 	protected void update(double dt) {}
 	protected void preWorld() {}
 	protected void postWorld() {}
-	protected void overlay() {}
 	protected void setup() {}
 }

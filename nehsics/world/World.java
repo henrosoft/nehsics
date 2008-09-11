@@ -28,6 +28,12 @@ public class World {
 		}
 	}
 
+	public void removeListener(WorldListener l) {
+		synchronized (lock) {
+			listeners.remove(l);
+		}
+	}
+
 	public void step(double dt) {
 		synchronized (lock) {
 			for (WorldListener listener : listeners)

@@ -40,12 +40,16 @@ public class Util {
 	}
 
 	public static Vector2d normalise(Vector2d diff) {
-		double scaler = Math.sqrt(Math.pow(diff.getX(),2) + Math.pow(diff.getY(),2));
-		return scale(diff, 1 / scaler);
+		return scale(diff, 1 / diff.length());
 	}
 
-	public static Vector2d add(Vector2d a, Vector2d b) {
-		return new Vector2d(a.getX()+b.getX(),a.getY()+b.getY());
+	public static Vector2d add(Vector2d ... vectors) {
+		double x = 0, y = 0;
+		for (int i=0; i < vectors.length; i++) {
+			x += vectors[i].getX();
+			y += vectors[i].getY();
+		}
+		return v(x,y);
 	}
 
 	public static Vector2d sub(Vector2d a, Vector2d b) {

@@ -5,7 +5,7 @@ import nehsics.bodies.*;
 import java.awt.*;
 import static nehsics.math.Util.*;
 
-public class AccretionDisk extends RecordedScene {
+public class AccretionDisk extends UserControlledScene {
 	public final static String NAME = "Accretion Disk";
 
 	public static void main(String[] args) {
