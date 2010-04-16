@@ -14,9 +14,9 @@ public class QuadSpaceCollider extends BasicCollider {
 		stats = s;
 	}
 
-	public void resolveCollisions(ArrayList<Body> bodies) {
+	public void resolveCollisions(List<Body> bodies) {
 		visuals.clear();
-		resolveCollisions(new QuadSpace(bodies));
+		resolveCollisionsSpace(new QuadSpace(bodies));
 	}
 
 	public void paint(Graphics2D g2d) {
@@ -24,12 +24,12 @@ public class QuadSpaceCollider extends BasicCollider {
 			q.paint(g2d);
 	}
 
-	private void resolveCollisions(QuadSpace space) {
+	private void resolveCollisionsSpace(QuadSpace space) {
 		double avg_rad = stats.getAverageBodyRadius();
 		if (space.size() <= TARGET_SPACE_SIZE || space.dim() < avg_rad*5) {
 			visuals.add(space);
 			super.resolveCollisions(space);
 		} else for (QuadSpace qspace : space.divide())
-			resolveCollisions(qspace);
+			resolveCollisionsSpace(qspace);
 	}
 }

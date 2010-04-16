@@ -31,7 +31,9 @@ public class AccretionDisk extends UserControlledScene {
 		FieldManager f = new FieldManager();
 		world.addListener(f);
 		world.addListener(new Gravitation(f));
-		world.addListener(new BadCollider(10));
+		BadCollider x = new BadCollider(10);
+		x.setVisible(true);
+		world.addListener(x);
 		display.setScale(3e-5);
 		SPEED = 200;
 		Circle center = new Circle(0, EARTH_MASS);
